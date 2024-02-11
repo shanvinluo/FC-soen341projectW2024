@@ -1,12 +1,12 @@
 # FC-soen341projectW2024
 
-##Car Rental Application
+## Car Rental Application
 This repository contains the source code for a car rental application, which is a software platform designed to streamline the process of renting vehicles for short periods.
 
-###Overview
+### Overview
 The car rental application serves as an interface between customers looking to rent vehicles and the car rental company offering those services. It facilitates various actions for different types of users, including customers, customer service representatives (CSRs), and system administrators.
 
-###Primary Users
+### Primary Users
 Customers: Individuals looking to rent vehicles for short periods.
 Customer Service Representatives (CSRs): Employees responsible for assisting customers with the rental process.
 System Administrators: Personnel responsible for managing the application and its resources.
@@ -42,7 +42,7 @@ README.md: This file providing an overview of the car rental application and its
 Getting Started
 To set up the car rental application locally, follow the instructions provided in the documentation.
 
-Contributors and roles
+## Contributors and roles
 Shanvin Luo (40248485) (github.com/shanvinluo): Product Manager, Full-Stack Developer
 Mamadou Kaba (27070179) (github.com/mdkaba): QA Front-End, Frontend Developer
 Lina Taalba (40250168) (github.com/ltaalba): Frontend Designer, Frontend Developer
