@@ -9,6 +9,7 @@ The objective of this project is to become familiar with the software developmen
 
 ### Overview
 This repository hosts the source code for a car rental application designed to streamline the process of renting vehicles for short periods. The application acts as a platform connecting customers seeking rental vehicles with the car rental company offering these services. <br>
+<br>
 The core features are: 
 1. Browse Vehicles for Rent: Customers can explore a comprehensive catalog of available rental vehicles, filtering by type (e.g., cars, SUVs, vans, trucks), category (e.g., compact, standard, intermediate), and price range.
 2. Start a Reservation: By providing location details (postal code, city, or airport) and pickup/return dates, customers can initiate a reservation process. The system presents available vehicles matching specified criteria for selection.
