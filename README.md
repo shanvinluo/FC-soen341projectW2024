@@ -16,7 +16,7 @@ tests/: Unit and integration tests for the application. <br>
 config/: Configuration files for the application. <br>
 README.md: This file providing an overview of the car rental application and its main use cases. <br>
 ## Getting Started
-To set up the car rental application locally, follow the instructions provided in the wiki. <br>
+To set up the car rental application locally, follow the instructions provided in the [Arbitrary Link Text](Wiki). <br>
 
 ## Contributors and roles
 * <strong> Shanvin Luo (40248485) (github.com/shanvinluo) </strong>: Product Manager, Full-Stack Developer: <br>
