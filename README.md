@@ -48,7 +48,7 @@ The repository will be split into 4 sprint folders. All of those folders will in
 * Frontend: React
 * Backend and deployment: Python and Flask
 * DBMS: PostgreSQL
-* Architecture: MVC
+* Architecture: Microservices arcitectural pattern
 
 ### Contributors and roles
 * <strong> Shanvin Luo (40248485) (github.com/shanvinluo) </strong>: Product Manager, Full-Stack Developer: <br>
