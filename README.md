@@ -1,24 +1,55 @@
 # FC-soen341projectW2024
 
 ## Car Rental Application
-This repository contains the source code for a car rental application, which is a software platform designed to streamline the process of renting vehicles for short periods.
+![image](https://github.com/shanvinluo/FC-soen341projectW2024/assets/107290656/44d37f1e-fe43-454e-a5cc-ee40c007662e) <br>
+_Home page of Web app Designed on Figma by Lina Taalba_
 
 ### Objective
 The objective of this project is to become familiar with the software development process by developing a web application for a Car Rental Application. Users can browse through vehicles that they want to rent and reserve them through the platform. Other features will be implemented to help facilitate the reservation process for the customers as well. Agile development (4 sprints) will be the software development methodology to implement the web application.   
 
 ### Overview
-This repository hosts the source code for a car rental application designed to streamline the process of renting vehicles for short periods. The application acts as a platform connecting customers seeking rental vehicles with the car rental company offering these services.
+This repository hosts the source code for a car rental application designed to streamline the process of renting vehicles for short periods. The application acts as a platform connecting customers seeking rental vehicles with the car rental company offering these services. <br>
+The core features are: 
+1. Browse Vehicles for Rent: Customers can explore a comprehensive catalog of available rental vehicles, filtering by type (e.g., cars, SUVs, vans, trucks), category (e.g., compact, standard, intermediate), and price range.
+2. Start a Reservation: By providing location details (postal code, city, or airport) and pickup/return dates, customers can initiate a reservation process. The system presents available vehicles matching specified criteria for selection.
+3. Customizable Reservations: During the reservation process, customers have the option to add extra equipment to their booking, with additional costs clearly outlined.
+4. Manage Reservations: Customers can conveniently view, modify, or cancel their reservations as needed, ensuring flexibility in their rental plans.
+5. Find Nearest Branch: Customers can input a postal code or airport location to locate the nearest rental branch, facilitating convenient pickup and return of vehicles.
+6. Rating and Review: After completing a rental, customers have the opportunity to provide feedback and ratings for the rented vehicle and overall rental experience, contributing to transparency and improving service quality.
+<br> An additional feature:
+8. Phone alerts: Customers can get phone alerts for their reservations via SMS. 
 
-## Repository Structure
-src/: Contains the source code for the car rental application. <br>
-docs/: Documentation files related to the application. <br>
-tests/: Unit and integration tests for the application. <br>
-config/: Configuration files for the application. <br>
-README.md: This file providing an overview of the car rental application and its main use cases. <br>
-## Getting Started
-To set up the car rental application locally, follow the instructions provided in the [Arbitrary Link Text](Wiki). <br>
+### Installation and Usage Guidelines
+For more details on usage guidelines visit our [Wiki](https://github.com/shanvinluo/FC-soen341projectW2024/wiki)
+1. Clone the Repository: ```git clone git@github.com:your_username/FC-soen341projectW2024.git``` <br>
+<strong>** Note </strong>: Replace ```your_username``` with your actual GitHub username.
 
-## Contributors and roles
+2. Install Dependencies:
+* Make sure you have Python installed on your system.
+* Navigate to the project directory: ```cd car-rental-app```
+* Create a virtual environment: ```python -m venv venv```
+* Activate the virtual environment:
+* On Windows: ```venv\Scripts\activate```
+** On macOS and Linux: ```source venv/bin/activate```
+** Install dependencies: ```pip install -r requirements.txt```
+3. Run the Application:
+* Set the Flask app environment variable:
+* On Windows: ```set FLASK_APP=app.py```
+* On macOS and Linux: ```export FLASK_APP=app.py```
+* Start the Flask development server: ```flask run```
+4. Access the Application: Navigate to ```http://localhost:5000 in your web browser.``` <br>
+<strong>** Note </strong>: Ensure that no other application is running on port 5000 on your local machine. 
+
+### Repository Structure
+The repository will be split into 4 sprint folders. All of those folders will include the code done during and before the sprint, the meeting minutes, the documentation needed as well as a detailed log of each member's activity. User stories and plans for the next sprint can be found in the wiki. 
+
+### Languages and Technology used (Stack)
+* Frontend: React
+* Backend and deployment: Python and Flask
+* DBMS: PostgreSQL
+* Architecture: MVC
+
+### Contributors and roles
 * <strong> Shanvin Luo (40248485) (github.com/shanvinluo) </strong>: Product Manager, Full-Stack Developer: <br>
 As the Product Manager, I oversee the strategic development and execution of our car rental website, managing all aspects of its development while also actively participating in full-stack coding to ensure a seamless and robust application.
 * <strong> Mamadou Kaba (27070179) (github.com/mdkaba) </strong>: QA Front-End, Mainly Frontend Developer: <br>
