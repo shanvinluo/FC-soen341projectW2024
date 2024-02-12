@@ -5,10 +5,10 @@
 _Home page of Web app Designed on Figma by Lina Taalba_
 
 ### Objective
-The objective of this project is to become familiar with the software development process by developing a web application for a Car Rental Application. Users can browse through vehicles that they want to rent and reserve them through the platform. Other features will be implemented to help facilitate the reservation process for the customers as well. Agile development (4 sprints) will be the software development methodology to implement the web application.   
+The objective of this project is to become familiar with the software development process by developing a middle-fidelity prototype of a car rental application. Users can browse through vehicles that they want to rent and reserve them through the platform. Other features will be implemented to help facilitate the reservation process for the customers as well. Agile development (4 sprints) will be the software development methodology to implement the web application.   
 
 ### Overview
-This repository hosts the source code for a car rental application designed to streamline the process of renting vehicles for short periods. The application acts as a platform connecting customers seeking rental vehicles with the car rental company offering these services. <br>
+This repository hosts the source code for a middle-fidelity prototype of a car rental application designed to streamline the process of renting vehicles for short periods. The application acts as a platform connecting customers seeking rental vehicles with the car rental company offering these services. <br>
 <br>
 The core features are: 
 1. Browse Vehicles for Rent: Customers can explore a comprehensive catalog of available rental vehicles, filtering by type (e.g., cars, SUVs, vans, trucks), category (e.g., compact, standard, intermediate), and price range.
