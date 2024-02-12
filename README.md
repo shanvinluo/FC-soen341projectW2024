@@ -27,7 +27,7 @@ For more details on usage guidelines visit our [Wiki](https://github.com/shanvin
 
 2. Install Dependencies:
 * Make sure you have Python installed on your system.
-* Navigate to the project directory: ```cd car-rental-app```
+* Navigate to the project directory: ```cd FC-soen341projectW2024```
 * Create a virtual environment: ```python -m venv venv```
 * Activate the virtual environment:
 * On Windows: ```venv\Scripts\activate```
