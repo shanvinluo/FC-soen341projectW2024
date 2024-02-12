@@ -9,37 +9,14 @@ The objective of this project is to become familiar with the software developmen
 ### Overview
 This repository hosts the source code for a car rental application designed to streamline the process of renting vehicles for short periods. The application acts as a platform connecting customers seeking rental vehicles with the car rental company offering these services.
 
-### Primary Users
-* Customers: Individuals looking to rent vehicles for short periods. <br>
-* Customer Service Representatives (CSRs): Employees responsible for assisting customers with the rental process. <br>
-* System Administrators: Personnel responsible for managing the application and its resources. <br>
-### Main Use Cases
-#### Customer
-* Browse Vehicles for Rent: View a catalog of available rental vehicles.
-* Start a Reservation: Specify location, pickup and return dates, and view vehicles matching criteria such as type, category, and price range.
-* Add Extra Equipment: During reservation, add extra equipment at an additional price.
-* View/Modify/Cancel Reservation: Access reservation details and make changes or cancelations.
-* Find a Branch: Locate the nearest branch by providing a postal code or airport.
-* Rating and Review: Provide feedback and ratings for rented vehicles and the overall rental experience.
-#### Customer Service Representative
-
-* Check-in Process: Assist customers with or without reservations, creating new reservations if necessary.
-* Check-out Process: Inspect rental vehicles, review rental agreements, process billing, and confirm return completion in the system.
-
-#### System Administrator
-* CRUD Operations on Vehicles: Create, read, update, and delete operations on vehicle information.
-* CRUD Operations on User Accounts: Manage user accounts, including creation, modification, and deletion.
-* CRUD Operations on Reservations: Handle reservation data, allowing for creation, modification, and deletion of reservations.
-
-Repository Structure
-src/: Contains the source code for the car rental application.
-docs/: Documentation files related to the application.
-tests/: Unit and integration tests for the application.
-config/: Configuration files for the application.
-LICENSE: License information for the repository.
-README.md: This file providing an overview of the car rental application and its main use cases.
-Getting Started
-To set up the car rental application locally, follow the instructions provided in the documentation.
+## Repository Structure
+src/: Contains the source code for the car rental application. <br>
+docs/: Documentation files related to the application. <br>
+tests/: Unit and integration tests for the application. <br>
+config/: Configuration files for the application. <br>
+README.md: This file providing an overview of the car rental application and its main use cases. <br>
+## Getting Started
+To set up the car rental application locally, follow the instructions provided in the wiki. <br>
 
 ## Contributors and roles
 * <strong> Shanvin Luo (40248485) (github.com/shanvinluo) </strong>: Product Manager, Full-Stack Developer: <br>
