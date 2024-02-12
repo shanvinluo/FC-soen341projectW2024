@@ -44,6 +44,12 @@ For more details on usage guidelines visit our [Wiki](https://github.com/shanvin
 ### Repository Structure
 The repository will be split into 4 sprint folders. All of those folders will include the code done during and before the sprint, the meeting minutes, the documentation needed as well as a detailed log of each member's activity. User stories and plans for the next sprint can be found in the wiki. 
 
+### [Wiki](https://github.com/shanvinluo/FC-soen341projectW2024/wiki) Contents Table
+* [Git Rules for the Project](https://github.com/shanvinluo/FC-soen341projectW2024/wiki/Git-rules-for-the-project.)
+* [Label Rules](https://github.com/shanvinluo/FC-soen341projectW2024/wiki/Label-rules)
+* [Team managment rules and project management.](https://github.com/shanvinluo/FC-soen341projectW2024/wiki/Team-managment-rules-and-project-management.)
+
+
 ### Languages and Technology used (Stack)
 * Frontend: React
 * Backend and deployment: Python and Flask
