@@ -20,8 +20,7 @@ The core features are:
 <br> An additional feature:
 8. Phone alerts: Customers can get phone alerts for their reservations via SMS. 
 
-### Installation and Usage Guidelines
-For more details on usage guidelines visit our [Wiki](https://github.com/shanvinluo/FC-soen341projectW2024/wiki)
+### Installation
 1. Clone the Repository: ```git clone git@github.com:your_username/FC-soen341projectW2024.git``` <br>
 <strong>** Note </strong>: Replace ```your_username``` with your actual GitHub username.
 
@@ -70,6 +69,11 @@ As the Documentation Coordinator, I oversee the review and organization of our d
 * <strong> Michael Shokralla (40209659) (github.com/Mike67911) </strong>: QA Backend, Mainly Backend Developer, Secretary: <br>
 As QA Frontend, I will be the main person reviewing, commenting, and approving the backend-related codes. Whilst I will be involved in all coding processes, I will mainly be working on the back-end aspect. As secretary, I am also one of the people in charge of the meeting notes. 
 
+### Contributing
+Contributions are welcome! Please follow these guidelines:
 
+* Fork the repository and create a new branch.
+* Make your changes and ensure the codebase passes linting and tests.
+* Submit a pull request with a clear description of your changes.
 
 
