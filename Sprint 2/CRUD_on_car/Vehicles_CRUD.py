@@ -25,6 +25,15 @@ def get_Car(vehicule_id):
 def create_Car():
     if not request.json:
         abort(400)
+    #this portion makes sure that we don't have vehicule_id collisions   
+    #*******************************************
+    cars = Car.query.all() #gets all the cars
+    car_ids = [ i.to_json()["vehicule_id"] for i in cars] #isolates their ids
+    check_id = request.json.get('vehicule_id') #retrieves the id
+    while(check_id in car_ids):
+        check_id = check_id + 1 #if such id exists, increment until it doesn't
+        request.json["vehicule_id"] = check_id #assign the new id to the car's json
+    #*******************************************
     car = Car(
         vehicule_id=request.json.get('vehicule_id'),
         model_name=request.json.get('model_name'),
