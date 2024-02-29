@@ -1,0 +1,107 @@
+/* 
+    .home {
+      justify-content: center;
+      align-items: center;
+    }
+  
+
+   
+  
+  .search-bar {
+    display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+    padding: 20px;
+  }
+  .inputs {
+    margin-top: 55px;
+    display: flex;
+    flex-direction: column;
+    gap:25px;}
+
+  .search-bar input[type="text"],
+  .search-bar input[type="date"] {
+    width: 400px;
+    height: 50px;
+    border: none;
+
+    outline: none;
+    color:#797979;
+    font-size: 19px;
+  }
+  
+  .Carbutton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 59px;
+    color:#fff;
+    background: #4c00b4;
+    border-radius: 50px;
+    font-size: 19px;
+    font-weight: 700;
+    cursor: pointer;
+  } */
+
+  .containerHome{
+    display: flex;
+    width: 90%;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 100px;
+    background:#fff;
+}
+
+.inputss{
+    margin-top: 55px;
+    display: flex;
+    gap:25px;
+
+}
+.inputa,p{
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 480px;
+    height: 80px;
+    background: #eaeaea;
+    border-radius: 6px;
+}
+
+.inputa input,select,p{
+    width: 400px;
+    height: 50px;
+    border: none;
+    background: transparent;
+    outline: none;
+    color:#797979;
+    font-size: 19px;
+}
+
+
+.submit-containerr{
+    display: flex;
+    gap:30px;
+    margin: 60px auto;
+}
+
+.submitButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 59px;
+    color:#fff;
+    background: #4c00b4;
+    border-radius: 50px;
+    font-size: 19px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.gray{
+    background: #EAEAEA;
+    color:#676767;
+}
