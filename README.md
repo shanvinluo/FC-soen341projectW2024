@@ -46,14 +46,16 @@ The repository will be split into 4 sprint folders. All of those folders will in
 ### [Wiki](https://github.com/shanvinluo/FC-soen341projectW2024/wiki) Contents Table
 * [Git Rules for the Project](https://github.com/shanvinluo/FC-soen341projectW2024/wiki/Git-rules-for-the-project.)
 * [Label Rules](https://github.com/shanvinluo/FC-soen341projectW2024/wiki/Label-rules)
-* [Team managment rules and project management.](https://github.com/shanvinluo/FC-soen341projectW2024/wiki/Team-managment-rules-and-project-management.)
+* [Team management rules and project management.](https://github.com/shanvinluo/FC-soen341projectW2024/wiki/Team-management-rules-and-project-management.)
 
 
 ### Languages and Technology used (Stack)
 * Frontend: React
 * Backend and deployment: Python and Flask
+* Testing Library: PyTest
 * DBMS: MySQL
 * Architecture: Microservices architectural pattern
+
 
 ### Contributors and roles
 * <strong> Shanvin Luo (40248485) (github.com/shanvinluo) </strong>: Product Manager, Full-Stack Developer: <br>
