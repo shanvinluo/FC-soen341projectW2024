@@ -1,9 +1,12 @@
 from CRUD_on_car.VehiclesDB import create_app, db
 from CRUD_on_car.Vehicles_model import Car
 from flask import jsonify, abort, request
+from flask_cors import CORS
 
+# After creating your Flask app
 
 app1 = create_app('default')
+CORS(app1)
 
 @app1.route("/")
 def hello_world():

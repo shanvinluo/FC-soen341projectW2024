@@ -18,7 +18,11 @@ function CarCard({ car }) {
         <div className="car-details">
           <div className="car-feature">
             <span className="icon">🚗</span>
-            <span>{car.name}</span>
+            <span>{car.model_name}{car.make_name}</span>
+          </div>
+          <div className="car-feature">
+            <span className="icon"></span>
+            <span>{car.features}</span>
           </div>
           <div className="car-feature">
             <span className="icon"> <img src={user_icon} alt=""/></span>
