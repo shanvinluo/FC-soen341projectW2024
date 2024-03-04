@@ -52,7 +52,7 @@ The repository will be split into 4 sprint folders. All of those folders will in
 ### Languages and Technology used (Stack)
 * Frontend: React
 * Backend and deployment: Python and Flask
-* DBMS: PostgreSQL
+* DBMS: MySQL
 * Architecture: Microservices architectural pattern
 
 ### Contributors and roles
