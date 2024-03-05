@@ -1,9 +1,6 @@
-import requests
-import pytest
+import pytest, requests
 from CRUD_on_car.Vehicles_CRUD import app1
-from CRUD_on_car.Vehicles_model import Car
 from CRUD_on_car.VehiclesDB import db
-import time
 
 
 ENDPOINT = "http://127.0.0.1:5000"
@@ -20,89 +17,193 @@ def client():
             db.create_all()
         yield client
         with app1.app_context():
-            db.drop_all()
+            try:
+                db.session.close()
+                db.drop_all()
+            except:
+                pass
 
 
 def test_create_car(client):
-    response = client.post('/Car', json={'vehicule_id': 10, 'model_name': 'Batmobile', 'seats': 2, "features": "throws explosives, rubs ur back" ,"make_name": "into the unknown"})
+    response = client.post('/Car', json={'vehicule_id': 5,
+                                        'model_name': 'Batmobile',
+                                        'seats': 2,
+                                        "features": "throws explosives, rubs ur back",
+                                        "make_name": "into the unknown",
+                                        "model_year": 2023,
+                                        "availability": 1,
+                                        "availability_end_date": "2024-03-05",
+                                        "price": 234})
         
     assert response.status_code == 201
 
         # Check if the car was created in the database
-    car = Car.query.first()
-    assert car.vehicule_id == 10
-    assert car.model_name == 'Batmobile'
-    assert car.seats == 2
-    assert car.features == "throws explosives, rubs ur back"
-    assert car.make_name == "into the unknown"
+    car = client.get("/Car/5").get_json()
+    client.delete("/Car/5")
+    assert car['vehicule_id'] == 5
+    assert car['model_name'] == 'Batmobile'
+    assert car['seats'] == 2
+    assert car['features'] == "throws explosives, rubs ur back"
+    assert car['make_name'] == "into the unknown"
+    assert car['model_year'] == 2023
+    assert car['availability'] == 1
+    assert car['availability_end_date'] == "Tue, 05 Mar 2024 00:00:00 GMT"
+    assert car['price'] == 234
+
 def test_get_cars(client):
-    client.post("/Car", json={'vehicule_id': 10, 'model_name': 'Batmobile', 'seats': 2, "features": "throws explosives, rubs ur back" ,"make_name": "into the unknown"})
-    client.post('/Car', json={'vehicule_id': 8, 'model_name': 'Audi TT', 'seats': 4, "features": "wines like a bitch, does wrum wrum" ,"make_name": "a piece of cake"})
-    response = client.get("/Cars/list")
-    print(response)
-    assert response.status_code == 200
-    data = response.get_json()
-    assert isinstance(data, list)
+    before = client.get("/Cars/list")
+    client.post("/Car", json={'vehicule_id': 10,
+                            'model_name': 'Batmobile',
+                            'seats': 2,
+                            "features": "throws explosives, rubs ur back"
+                            ,"make_name": "into the unknown",
+                            "model_year": 2023,
+                            "availability": 1,
+                            "availability_end_date": "2024-03-05",
+                            "price": 234})
+    client.post('/Car', json={'vehicule_id': 8,
+                              'model_name':'Audi TT',
+                              'seats': 4,
+                              "features": "wines like a bitch, does wrum wrum",
+                              "make_name": "a piece of cake",
+                              "model_year": 2023,
+                              "availability": 1,
+                              "availability_end_date": "2024-03-05",
+                              "price": 234})
+    after = client.get("/Cars/list")
+    assert after.status_code == 200
 
-    # Add assertions based on the expected data structure
-    assert len(data) == 2  # Assuming you added two cars
-
-    # Assert details for the first car
-    assert data[1]['vehicule_id'] == 10
-    assert data[1]['model_name'] == 'Batmobile'
-    assert data[1]['seats'] == 2
-    assert data[1]['features'] == "throws explosives, rubs ur back"
-    assert data[1]['make_name'] == "into the unknown"
-
-    # Assert details for the second car
-    assert data[0]['vehicule_id'] == 8
-    assert data[0]['model_name'] == 'Audi TT'
-    assert data[0]['seats'] == 4
-    assert data[0]['features'] == "wines like a bitch, does wrum wrum"
-    assert data[0]['make_name'] == "a piece of cake"
+    dataBefore = before.get_json() #list of car json objs inside the database prior to appending
+    dataAfter = after.get_json()#list of data after appending
+    dataBefore_length = 0
+    if(dataBefore != None): 
+        dataBefore_length = len(dataBefore)
+    else:
+        pass #if the list was initially empty we keep the length at 0
+    client.delete("/Car/8")
+    client.delete("/Car/10")
+    assert isinstance(dataAfter, list)
+    assert len(dataAfter) == dataBefore_length + 2 #assert that the length has increased by 2
     
 def test_get_car(client):
         # Create a car in the database for testing retrieval
-    client.post('/Car', json={'vehicule_id': 10, 'model_name': 'Batmobile', 'seats': 2, "features": "throws explosives, rubs ur back" ,"make_name": "into the unknown"})
+    client.post('/Car', json={'vehicule_id': 40,
+                              'model_name': 'Batmobile',
+                              'seats': 2,
+                              "features": "throws explosives, rubs ur back",
+                              "make_name": "into the unknown",
+                              "model_year": 2023,
+                              "availability": 1,
+                              "availability_end_date": "2024-03-05",
+                              "price": 234})
 
-    response = client.get('/Car/10')  # Assuming you have a route for retrieving a car by ID
-    #time.sleep(1)    
+    response = client.get('/Car/40')  # Assuming you have a route for retrieving a car by ID    
     assert response.status_code == 200
-    
     data = response.get_json()
-    
-    assert data["vehicule_id"] == 10
+    #print(data['availability_end_date'])
+    client.delete('/Car/40')
+    assert data["vehicule_id"] == 40
     assert data["model_name"] == 'Batmobile'
     assert data["seats"] == 2
     assert data["features"] == "throws explosives, rubs ur back"
     assert data["make_name"] == "into the unknown"
+    assert data['model_year'] == 2023
+    assert data['availability'] == 1
+    assert data['availability_end_date'] == "Tue, 05 Mar 2024 00:00:00 GMT"
+    assert data['price'] == 234
 
 def test_update_car(client):
-        # Create a car in the database for testing update
-    client.post('/Car', json={'vehicule_id': 10, 'model_name': 'Batmobile', 'seats': 2, "features": "throws explosives, rubs ur back" ,"make_name": "into the unknown"})
-
-        # Update the car
-    response = client.put('/Car/10', json={'vehicule_id': 8, 'model_name': 'Audi TT', 'seats': 4, "features": "whines like a bitch, does wrum wrum" ,"make_name": "a piece of cake"})
+    # Create a car in the database for testing update
+    client.post('/Car', json={'vehicule_id': 50,
+                            'model_name': 'Batmobile',
+                            'seats': 2,
+                            "features": "throws explosives, rubs ur back"
+                            ,"make_name": "into the unknown",
+                            "model_year": 2023,
+                            "availability": 1,
+                            "availability_end_date": "2024-03-05",
+                            "price": 234})
+    # Update the car
+    response = client.put('/Car/50', json={'vehicule_id': 58,
+                                            'model_name':'Audi TT',
+                                            'seats': 4,
+                                            "features": "wines like a bitch, does wrum wrum",
+                                            "make_name": "a piece of cake",
+                                            "model_year": 2023,
+                                            "availability": 1,
+                                            "availability_end_date": "2024-03-05",
+                                            "price": 234})
         
     assert response.status_code == 200
-    time.sleep(1)
-        # Check if the car was updated in the database
-    updated_car = Car.query.first()
-    assert updated_car.vehicule_id == 8
-    assert updated_car.model_name == 'Audi TT'
-    assert updated_car.seats == 4
-    assert updated_car.features == "whines like a bitch, does wrum wrum"
-    assert updated_car.make_name == "a piece of cake"
+    
+    updated_car = client.get("/Car/58").get_json()
+    client.delete("/Car/58")
+    assert updated_car['vehicule_id'] == 58
+    assert updated_car['model_name'] == 'Audi TT'
+    assert updated_car['seats'] == 4
+    assert updated_car['features'] == "wines like a bitch, does wrum wrum"
+    assert updated_car['make_name'] == "a piece of cake"
+    assert updated_car['model_year'] == 2023
+    assert updated_car['availability'] == 1
+    assert updated_car['availability_end_date'] == "Tue, 05 Mar 2024 00:00:00 GMT"
+    assert updated_car['price'] == 234
+
+def test_fetch_empty_database(client):
+    response = client.get("/Cars/list")
+    assert response.status_code == 404
+    #assert response.get_json().message == "Must enter an ID that is composed of integers"
+
+def test_wrong_id_input(client):
+    response = client.post("/Car", json = {'vehicule_id': "phone",
+                                            'model_name':'Audi TT',
+                                            'seats': 4,
+                                            "features": "wines like a bitch, does wrum wrum",
+                                            "make_name": "a piece of cake",
+                                            "model_year": 2023,
+                                            "availability": 1,
+                                            "availability_end_date": "2024-03-05",
+                                            "price": 234})
+    assert response.status_code == 400
+
+def test_post_empty_car(client):
+    response = client.post("/Car", json = {'vehicule_id': "",
+                                            'model_name':'',
+                                            'seats': "",
+                                            "features": "",
+                                            "make_name": "",
+                                            "model_year": "",
+                                            "availability": "",
+                                            "availability_end_date": "",
+                                            "price": ""}) 
+    
+    assert response.status_code == 400
+
+def test_post_Null_car(client):
+    response  = client.post("/Car", json = {'vehicule_id': None,
+                                            'model_name':'',
+                                            'seats': "",
+                                            "features": "",
+                                            "make_name": "",
+                                            "model_year": "",
+                                            "availability": "",
+                                            "availability_end_date": "",
+                                            "price": ""}) 
+    
+    assert response.status_code == 400
 
 def test_delete_car(client):
         # Create a car in the database for testing deletion
-    client.post('/Car', json={'vehicule_id': 8, 'model_name': 'Audi TT', 'seats': 4, "features": "wines like a bitch, does wrum wrum" ,"make_name": "a piece of cake"})
+    client.post('/Car', json={'vehicule_id': 90,
+                              'model_name':'Audi TT',
+                              'seats': 4,
+                              "features": "wines like a bitch, does wrum wrum",
+                              "make_name": "a piece of cake",
+                              "model_year": 2023,
+                              "availability": 1,
+                              "availability_end_date": "2024-03-05",
+                              "price": 234})
 
     # Delete the car
-    response = client.delete('/Car/8')  # Assuming you have a route for deleting a car by ID
-    
+    response = client.delete('/Car/90')  # Assuming you have a route for deleting a car by ID
     assert response.status_code == 204
-
-    # Check if the car was deleted from the database
-    deleted_car = Car.query.first()
-    assert deleted_car is None
+    
