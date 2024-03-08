@@ -15,8 +15,12 @@ const Reservation = () => {
             <h3 className="locationTitle">Current Location</h3>
             <div className="locationMap"></div>
             <h3 className="historyTitle">Car Rental History</h3>
+            <div className="reservedCars"></div>
           </div>
-          <div className="sideButtons"></div>
+          <div className="sideButtons">
+            <button className="userInformation">Modify Rental Period</button>
+            <button className="manageRentals">Cancel Reservation</button>
+          </div>
         </div>
       </div>
     </body>
