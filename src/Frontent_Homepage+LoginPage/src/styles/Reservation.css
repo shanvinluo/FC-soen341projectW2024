@@ -66,5 +66,9 @@ button {
 
 .sideButtons {
   width: 40%;
-  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  padding-bottom: 5%;
 }
