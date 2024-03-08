@@ -35,7 +35,8 @@
   width: 20%;
 }
 .mainContent {
-  display: block;
+  display: flex;
+  flex-direction: row;
   min-height: 100%;
   width: 90%;
   background-color: #3c009d;
@@ -44,6 +45,7 @@
 button {
   margin: 15px;
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   width: 80%;
@@ -54,4 +56,15 @@ button {
   font-size: 19px;
   font-weight: 700;
   cursor: pointer;
+}
+.locationHistory {
+  color: black;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+
+.sideButtons {
+  width: 40%;
+  background-color: white;
 }
