@@ -4,13 +4,15 @@ import { useState } from "react";
 
 const Reservation = () => {
   return (
-    <div className="container">
-      <div className="sideContent">
-        <button className="userInformation">User Information</button>
-        <button className="manageRentals">Manage manageRentals</button>
+    <body className="bodyReserv">
+      <div className="containerReserv">
+        <div className="sideContent">
+          <button className="userInformation">User Information</button>
+          <button className="manageRentals">Manage manageRentals</button>
+        </div>
+        <div className="mainContent"></div>
       </div>
-      <div className="mainContent"></div>
-    </div>
+    </body>
   );
 };
 
