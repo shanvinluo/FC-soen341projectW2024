@@ -6,6 +6,7 @@ import Signup from "./pages/Signup"; // Ensure you have a Signup component
 import Login from "./pages/Login";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ConfirmPayment from "./pages/ConfirmPayment";
+import Reservation from "./pages/Reservation";
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/Home" element={<Home />} />
-          <Route path="/ConfirmPayment" element={<ConfirmPayment />} />{" "}
+          <Route path="/ConfirmPayment" element={<ConfirmPayment />} />
+          <Route path="/Reservation" element={<Reservation />} />{" "}
           {/* Add more Route components as needed */}
           {/* Add more Route components as needed */}
         </Routes>
