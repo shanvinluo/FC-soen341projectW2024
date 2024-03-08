@@ -3,12 +3,11 @@ import "../styles/Home.css";
 import CarCard from "../components/CarCard";
 
 function Home() {
-  const [priceRange, setPriceRange] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [priceRange, setPriceRange] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [results, setResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
-  
 
   // const fetchResults = () => {
   //   // Simulated fetching of data
@@ -27,7 +26,7 @@ function Home() {
   //   const filteredCars = allCars.filter(car => {
   //     // const carAvailableFrom = new Date(car.availableFrom);
   //     // const carAvailableUntil = new Date(car.availableUntil);
-      
+
   //     // Check if the car's price is within the selected range
   //     const isWithinPriceRange = (!priceLimits[0] || car.price >= priceLimits[0]) && (!priceLimits[1] || car.price <= priceLimits[1]);
   //     // Check if the selected date range falls within the car's availability range
@@ -40,29 +39,32 @@ function Home() {
   // };
   const fetchResults = async () => {
     // Construct the URL with query parameters for price range, start date, and end date if needed
-    const url = new URL('http://localhost:5000/Cars/list');
-  
+    const url = new URL("http://localhost:5000/Cars/list");
+
     try {
       const response = await fetch(url);
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
       const allCars = await response.json();
-  
+
       // You can implement any additional filtering on the client side if necessary
-      const filteredCars = allCars.filter(car => {
+      const filteredCars = allCars.filter((car) => {
         // Example: Filter by price range, you can add more conditions as needed
-        const priceLimits = priceRange.split('-').map(Number);
-        return (!priceLimits[0] || car.price >= priceLimits[0]) && (!priceLimits[1] || car.price <= priceLimits[1]);
+        const priceLimits = priceRange.split("-").map(Number);
+        return (
+          (!priceLimits[0] || car.price >= priceLimits[0]) &&
+          (!priceLimits[1] || car.price <= priceLimits[1])
+        );
       });
-  
+
       return filteredCars;
     } catch (error) {
-      console.error('Failed to fetch cars:', error);
+      console.error("Failed to fetch cars:", error);
       return []; // Return an empty array in case of error
     }
   };
-  
+
   // const handleSubmit = (e) => {
   //   e.preventDefault();
   //   const fetchedResults = fetchResults();
@@ -75,7 +77,7 @@ function Home() {
     const fetchedResults = await fetchResults(); // Use await here
     setResults(fetchedResults);
     setShowResults(true);
-  }
+  };
 
   return (
     <div>
@@ -83,7 +85,10 @@ function Home() {
         <div className="inputss">
           <div className="inputa">
             <p> Price Range</p>
-            <select value={priceRange} onChange={e => setPriceRange(e.target.value)}>
+            <select
+              value={priceRange}
+              onChange={(e) => setPriceRange(e.target.value)}
+            >
               <option value="">Price Range</option>
               <option value="0-100">0-100$</option>
               <option value="100-200">100-200$</option>
@@ -95,29 +100,39 @@ function Home() {
           </div>
           <div className="inputa">
             <p> Start Date</p>
-            <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} />
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
           </div>
           <div className="inputa">
             <p> End Date</p>
-            <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} />
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
           </div>
         </div>
         <div className="submit-container">
-          <button type="submit" className="submitButton">Select Car</button>
+          <button type="submit" className="submitButton">
+            Select Car
+          </button>
         </div>
       </form>
-       {showResults &&(
+      {showResults && (
         <div className="containerHome">
-        <h1>Results</h1>
-        <ul>
-       {results.map(car => (
-          <CarCard key={car.id} car={car} />
-        ))}
-        </ul>
-      </div>)}
+          <h1>Results</h1>
+          <ul>
+            {results.map((car) => (
+              <CarCard key={car.id} car={car} />
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
 
 export default Home;
-

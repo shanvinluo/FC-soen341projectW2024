@@ -19,11 +19,18 @@ const ConfirmPayment = () => {
             type="text"
             placeholder="Credit Card Number"
             id="creditCardNumber"
+            autocomplete="cc-number"
+            maxLength="16"
           />
         </div>
         <div className="input">
-          <input type="text" placeholder="MM/YY" id="expiryDate" />
-          <input type="text" placeholder="CVV" id="cvv" />
+          <input
+            type="text"
+            placeholder="MM/YY"
+            id="expiryDate"
+            maxLength="5"
+          />
+          <input type="text" placeholder="CVV" id="cvv" maxLength="3" />
         </div>
         <div className="pay-container">
           <div className="pay">Pay Now</div>
