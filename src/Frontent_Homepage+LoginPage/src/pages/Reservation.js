@@ -13,9 +13,9 @@ const Reservation = () => {
         <div className="mainContent">
           <div className="locationHistory">
             <h3 className="locationTitle">Current Location</h3>
-            <div className="locationMap"></div>
+            <div className="locationMap">insert map here</div>
             <h3 className="historyTitle">Car Rental History</h3>
-            <div className="reservedCars"></div>
+            <div className="reservedCars">insert vehicle history here</div>
           </div>
           <div className="sideButtons">
             <button className="userInformation">Modify Rental Period</button>
