@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_mysqldb import MySQL
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -12,6 +13,7 @@ app.config['MYSQL_PORT'] = 3306
 
 mysql = MySQL(app)
 
+current_date = datetime.now().strftime("%a, %d %b %Y %H:%M:%S GMT")
 
 @app.route('/reservation/<int:id>', methods=['GET'])
 def get_reservation(id):
@@ -36,50 +38,63 @@ def get_reservation(id):
 #of not existant then wont work 
 @app.route('/reservation/create', methods=['POST'])
 def create_reservation():
-    
     cur = mysql.connection.cursor()
+
     data = request.json 
     date_start = data['date_start']
     date_end = data['date_end']
     username = data['username']
     vehicule_id = data['vehicule_id']
-    
      #if not exist (userrname or id of the car), throw message for the error
      
     cur.execute("SELECT * FROM user_account WHERE username = %s", (username,))
     user = cur.fetchone()
+
     if not user:
         return jsonify({'error': 'the username you entered does not exist'}), 400
     
     cur.execute("SELECT * FROM vehicule WHERE vehicule_id = %s", (vehicule_id,))
     vehicule = cur.fetchone()
+    
+    vehicule_availability = vehicule[6]#vehicle availability fetched from the car database
+
     if not vehicule:
         #not the good id for the vehicle
         return jsonify({'error': 'the vehicle does not exist'}), 400
+    
+    if vehicule_availability == 0:
+        #if the vehicle isn't available, no reservation for you, sweetheart
+        return jsonify({'error': 'the vehicle is not available for rent'}), 400
+    
     
     cur.execute("INSERT INTO reservation (date_start, date_end, username, vehicule_id) VALUES (%s, %s, %s, %s)", (date_start, date_end, username, vehicule_id))
     mysql.connection.commit()
     cur.close()
     #succeed message
-    return jsonify({'message': 'REservation succeed!!'}), 201
+    return jsonify({'message': 'Reservation succeed!!'}), 201
 
 #to test it frm terminal 
 #curl -X DELETE http://127.0.0.1:5000/reservation/(PUT ID THAT YOU WANT TO DELETE)
 @app.route('/reservation/<int:id>', methods=['DELETE'])
 def delete_reservation(id):
     cur = mysql.connection.cursor()
-    
-    #throw message in case does not exist
-    cur.execute("SELECT * FROM reservation WHERE reservation_id = %s", (id,))
-    user = cur.fetchone()
+
+    cur.execute("SELECT * FROM reservation WHERE reservation_id = %s", (id,)) 
+    user = cur.fetchone() #get the reservation
+    #cur.execute("SELECT * FROM vehicule WHERE vehicule_id = %s", (vehicule_id,))
+    #vehicule = cur.fetchone() #fetch that car
     if not user:
+        #if no such reservation, dne
         return jsonify({'error': 'reservation does not exist'}), 400
     
-    cur.execute("DELETE FROM reservation WHERE reservation_id = %s", (id,))
+    vehicule_id = user[4] #get the id of the reserved car
+    cur.execute("DELETE FROM reservation WHERE reservation_id = %s", (id,)) #delete reservation if it's there
+    cur.execute("UPDATE vehicule SET availability = %s WHERE reservation_id = %s",(1, vehicule_id)) #once the reservation has been updated, the car has become available
     mysql.connection.commit()
     cur.close()
     #deletion succeded message
     return jsonify({'message': 'your reservation got canceled correctly!!'}), 200
+
 
 
 @app.route('/reservation/<int:id>', methods=['PUT'])
@@ -95,12 +110,22 @@ def modify_reservation(id):
 
     # get update
     data = request.json 
+
     date_start_new = data['date_start']
     date_end_new = data['date_end']
-    vehicule_id_new = data['vehicule_id']
+    vehicule_id_new = data['vehicule_id'] #get the new reservation's car id
+    vehicule_id_old = existing_reservation[4] #get the existing reservation's car id
 
-    # update stuff
-    cur.execute("UPDATE reservation SET date_start = %s, date_end = %s, vehicule_id = %s WHERE reservation_id = %s",
+    if vehicule_id_new == vehicule_id_old:
+        # if the car is the same, change the dates
+        cur.execute("UPDATE reservation SET date_start = %s, date_end = %s, vehicule_id = %s WHERE reservation_id = %s",
+                (date_start_new, date_end_new, vehicule_id_new, id))
+    else:
+        #if the cars are different, assign appropriate availability to each car
+        cur.execute("UPDATE vehicule SET availability = %s WHERE reservation_id = %s",(0, vehicule_id_new)) 
+        cur.execute("UPDATE vehicule SET availability = %s WHERE reservation_id = %s",(1, vehicule_id_old)) 
+        #update everything
+        cur.execute("UPDATE reservation SET date_start = %s, date_end = %s, vehicule_id = %s WHERE reservation_id = %s",
                 (date_start_new, date_end_new, vehicule_id_new, id))
     mysql.connection.commit()
     cur.close()
