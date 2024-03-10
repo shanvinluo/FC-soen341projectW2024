@@ -13,9 +13,8 @@ def home():
 def get_Cars():
     Cars = Car.query.all()
     cars_info = [Car.to_json() for Car in Cars]
-    print(cars_info)
     if cars_info == []:
-        return "Currently there are no cars"
+        return "Currently there are no cars",204
     
     return jsonify(cars_info)
 
@@ -59,6 +58,7 @@ def create_Car():
             model_year = request.json.get("model_year"),
             availability = request.json.get("availability"),
             availability_end_date = request.json.get("availability_end_date"),
+            availability_start_date = request.json.get("availability_start_date"),
             price = request.json.get("price")
         )
         db.session.add(car)
@@ -91,6 +91,7 @@ def update_Car(vehicule_id):
     car.model_year = request.json.get("model_year", car.make_name)
     car.availability = request.json.get("availability", car.availability)
     car.availability_end_date = request.json.get("availability_end_date", car.availability_end_date)
+    car.availability_start_date = request.json.get("availability_start_date", car.availability_start_date)
     car.price = request.json.get("price", car.price)
     db.session.commit()
     return jsonify(car.to_json()),200

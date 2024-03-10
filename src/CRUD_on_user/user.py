@@ -1,8 +1,9 @@
 from flask import Flask, request, jsonify
 from flask_mysqldb import MySQL
-
+from werkzeug.security import generate_password_hash, check_password_hash
+from flaskcors import CORS #modification
 app = Flask(__name__)
-
+CORS(app) #modification
 # Configure MySQL
 app.config['MYSQL_HOST'] = 'sql5.freemysqlhosting.net'
 app.config['MYSQL_USER'] = 'sql5686988'
@@ -32,8 +33,8 @@ def add_user():
     email = data['email']
     password = data['password']
     cur = mysql.connection.cursor()
-
-    cur.execute("INSERT INTO user_account (username, email, password) VALUES (%s, %s, %s)", (username, email, password))
+    hashed_password = generate_password_hash(password)
+    cur.execute("INSERT INTO user_account (username, email, password) VALUES (%s, %s, %s)", (username, email, hashed_password))
 
     mysql.connection.commit()
 
@@ -62,9 +63,10 @@ def update_user(user):
 
     new_username = data['username']
     new_email = data['email']
-    new_password = data['password']
+    new_password = generate_password_hash(data['password'])
 
     cur = mysql.connection.cursor()
+    
     cur.execute("UPDATE user_account SET username = %s, email = %s, password = %s WHERE username = %s OR email = %s",
                 (new_username, new_email, new_password, user, user))
     
