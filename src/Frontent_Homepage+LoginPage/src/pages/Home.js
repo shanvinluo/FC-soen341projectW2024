@@ -144,7 +144,8 @@ function Home() {
           <h1>Results</h1>
           <ul>
             {results.map((car) => (
-              <CarCard key={car.id} car={car} />
+              <CarCard key={car.id} car={car} startDesiredDate={formatDate(startDesiredDate)}
+              endDesiredDate={formatDate(endDesiredDate)}/>
             ))}
           </ul>
         </div>

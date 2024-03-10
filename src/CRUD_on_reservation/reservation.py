@@ -1,9 +1,10 @@
 from flask import Flask, request, jsonify
 from flask_mysqldb import MySQL
 from datetime import datetime
+from flask_cors import CORS
 
 app = Flask(__name__)
-
+CORS(app)
 # Configure MySQL
 app.config['MYSQL_HOST'] = 'sql5.freemysqlhosting.net'
 app.config['MYSQL_USER'] = 'sql5686988'
@@ -62,9 +63,9 @@ def create_reservation():
         #not the good id for the vehicle
         return jsonify({'error': 'the vehicle does not exist'}), 400
     
-    if vehicule_availability == 0:
-        #if the vehicle isn't available, no reservation for you, sweetheart
-        return jsonify({'error': 'the vehicle is not available for rent'}), 400
+    # if vehicule_availability == 0:
+    #     #if the vehicle isn't available, no reservation for you, sweetheart
+    #     return jsonify({'error': 'the vehicle is not available for rent'}), 400
     
     
     cur.execute("INSERT INTO reservation (date_start, date_end, username, vehicule_id) VALUES (%s, %s, %s, %s)", (date_start, date_end, username, vehicule_id))
@@ -134,6 +135,6 @@ def modify_reservation(id):
     return jsonify({'message': 'Reservation modified successfully'}), 200
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5001)
 
 

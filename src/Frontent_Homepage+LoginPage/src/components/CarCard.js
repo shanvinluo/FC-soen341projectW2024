@@ -5,13 +5,43 @@ import { useState } from 'react';
 
 
 
-function CarCard({ car }) {
+function CarCard({ car , startDesiredDate, endDesiredDate}) {
     const [carAdded, setCarAdded] = useState(false); // State to track if car is successfully added
 
-    const handleAddCar = () => {
-        // Logic to add car goes here...
-        // After the car is added successfully:
-        setCarAdded(true);}
+    const handleAddCar = async () => {
+      if (!startDesiredDate || !endDesiredDate) {
+          alert("Please select start and end dates before adding a car.");
+          return;
+      }
+
+      const reservationData = {
+          date_start: startDesiredDate,
+          date_end: endDesiredDate,
+          username: "new_username", // Placeholder: Replace with actual user logic.
+          vehicule_id: car.vehicule_id,
+      };
+
+      try {
+          const response = await fetch('http://127.0.0.1:5001/reservation/create', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(reservationData),
+          });
+
+          if (response.ok) {
+              setCarAdded(true);
+              alert('Car added to reservations!');
+          } else {
+              const errorData = await response.json();
+              alert(`Failed to add car: ${errorData.error}`);
+          }
+      } catch (error) {
+          console.error("Failed to add car to reservations:", error);
+          alert('Network error when trying to add car.');
+      }
+  };
     return (
       <div className="car-card">
         <div className="car-image" />
