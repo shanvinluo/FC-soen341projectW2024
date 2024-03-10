@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/Home.css";
 import CarCard from "../components/CarCard";
-
+const formatDate = (dateString) => {
+  return dateString ? new Date(dateString).toISOString().slice(0, 10) : "";
+};
 function Home() {
   const [priceRange, setPriceRange] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [startDesiredDate, setDestiredStartDate] = useState("");
+  const [endDesiredDate, setDesiredEndDate] = useState("");
   const [results, setResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
 
+  
   // const fetchResults = () => {
   //   // Simulated fetching of data
   //   const allCars = [
@@ -20,19 +23,18 @@ function Home() {
 
   //   // Filter the dataset based on price range and date range
   //   const priceLimits = priceRange.split('-').map(Number);
-  //   const startDateObj = new Date(startDate);
-  //   const endDateObj = new Date(endDate);
+  //   const startDateObj = startDesiredDate ? new Date(startDesiredDate) : null;
+  //   const endDateObj = endDesiredDate ? new Date(endDesiredDate) : null;
 
   //   const filteredCars = allCars.filter(car => {
-  //     // const carAvailableFrom = new Date(car.availableFrom);
-  //     // const carAvailableUntil = new Date(car.availableUntil);
-
-  //     // Check if the car's price is within the selected range
+  //     const carAvailableFrom = new Date(car.availableFrom);
+  //     const carAvailableUntil = new Date(car.availableUntil);
   //     const isWithinPriceRange = (!priceLimits[0] || car.price >= priceLimits[0]) && (!priceLimits[1] || car.price <= priceLimits[1]);
-  //     // Check if the selected date range falls within the car's availability range
-  //     // const isAvailable = startDateObj >= carAvailableFrom && endDateObj <= carAvailableUntil;
 
-  //     return isWithinPriceRange ;
+  //     // Check if dates are valid and if the selected date range falls within the car's availability range
+  //     const isAvailable = (!startDateObj || !endDateObj) ? true : (startDateObj >= carAvailableFrom && endDateObj <= carAvailableUntil);
+
+  //     return isWithinPriceRange && isAvailable;
   //   });
 
   //   return filteredCars;
@@ -40,6 +42,8 @@ function Home() {
   const fetchResults = async () => {
     // Construct the URL with query parameters for price range, start date, and end date if needed
     const url = new URL("http://localhost:5000/Cars/list");
+
+   
 
     try {
       const response = await fetch(url);
@@ -50,12 +54,22 @@ function Home() {
 
       // You can implement any additional filtering on the client side if necessary
       const filteredCars = allCars.filter((car) => {
+        const carAvailableFrom = new Date(car.availability_start_date);
+        const carAvailableUntil = new Date(car.availability_end_date);
         // Example: Filter by price range, you can add more conditions as needed
-        const priceLimits = priceRange.split("-").map(Number);
-        return (
-          (!priceLimits[0] || car.price >= priceLimits[0]) &&
-          (!priceLimits[1] || car.price <= priceLimits[1])
-        );
+        const priceLimits = priceRange.split('-').map(Number);
+    const startDateObj = startDesiredDate ? new Date(startDesiredDate) : null;
+    const endDateObj = endDesiredDate ? new Date(endDesiredDate) : null;
+
+    const isAvailable = (!startDateObj || !endDateObj) ? true : (startDateObj >= carAvailableFrom && endDateObj <= carAvailableUntil);
+
+ 
+
+  
+    const isWithinPriceRange = (!priceLimits[0] || car.price >= priceLimits[0]) && (!priceLimits[1] || car.price <= priceLimits[1]);
+
+    return isWithinPriceRange && isAvailable;
+
       });
 
       return filteredCars;
@@ -77,7 +91,11 @@ function Home() {
     const fetchedResults = await fetchResults(); // Use await here
     setResults(fetchedResults);
     setShowResults(true);
-  };
+  }
+
+  useEffect(() => {
+    // Optionally, fetch results immediately on component mount or when certain states change
+  }, [priceRange, startDesiredDate, endDesiredDate]);
 
   return (
     <div>
@@ -95,24 +113,24 @@ function Home() {
               <option value="200-300">200$-300$</option>
               <option value="300-400">300$-400$</option>
               <option value="400-500">400$-500$</option>
-              <option value="500+">500$+</option>
+              <option value="500">500$+</option>
             </select>
           </div>
           <div className="inputa">
             <p> Start Date</p>
             <input
               type="date"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-            />
+              value={formatDate(startDesiredDate)}
+  onChange={(e) => setDestiredStartDate(new Date(e.target.value))}
+/>
           </div>
           <div className="inputa">
             <p> End Date</p>
             <input
               type="date"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-            />
+              value={formatDate(endDesiredDate)}
+  onChange={(e) => setDesiredEndDate(new Date(e.target.value))}
+/>
           </div>
         </div>
         <div className="submit-container">
