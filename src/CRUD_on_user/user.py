@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
-from flaskcors import CORS #modification
+from flask_cors import CORS #modification
 app = Flask(__name__)
 CORS(app) #modification
 # Configure MySQL
@@ -40,7 +40,8 @@ def add_user():
 
     cur.close()
 
-    return jsonify({'message': 'account created successfully!!'}), 201
+    return jsonify({'message': 'account created successfully!!', 'code': 'OK'}), 201
+
 
     
 @app.route('/user/<string:user>', methods=['DELETE'])
