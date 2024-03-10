@@ -2,8 +2,11 @@ from CRUD_on_car.VehiclesDB import create_app, db
 from CRUD_on_car.Vehicles_model import Car
 from flask import jsonify, abort, request, make_response
 from sqlalchemy.exc import IntegrityError
+from flask_cors import CORS
+from datetime import datetime
 
 app1 = create_app('default')
+CORS(app1)
 @app1.route("/")
 def home():
     return "welcome"
@@ -12,7 +15,7 @@ def home():
 @app1.route("/Cars/list", methods=["GET"])
 def get_Cars():
     Cars = Car.query.all()
-    cars_info = [Car.to_json() for Car in Cars]
+    cars_info = [car.to_json() for car in Cars]
     print(cars_info)
     if cars_info == []:
         abort(404)
@@ -54,6 +57,7 @@ def create_Car():
             make_name=request.json.get("make_name"),
             model_year = request.json.get("model_year"),
             availability = request.json.get("availability"),
+            availability_start_date = request.json.get("availability_start_date"),
             availability_end_date = request.json.get("availability_end_date"),
             price = request.json.get("price")
         )
@@ -84,6 +88,7 @@ def update_Car(vehicule_id):
     car.make_name=request.json.get("make_name", car.make_name)
     car.model_year = request.json.get("model_year", car.make_name)
     car.availability = request.json.get("availability", car.availability)
+    car.availability_start_date = request.json.get("availability_start_date", car.availability_start_date)
     car.availability_end_date = request.json.get("availability_end_date", car.availability_end_date)
     car.price = request.json.get("price", car.price)
     db.session.commit()
