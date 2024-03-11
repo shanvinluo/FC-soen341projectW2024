@@ -112,17 +112,17 @@ def update_user(user):
 @app.route('/api/login', methods=['POST'])
 def authenticate():
     data = request.json
-    if 'email' not in data or 'password' not in data:
+    if 'username' not in data or 'password' not in data:
         return jsonify({'error': 'Missing field!!'}), 400
 
-    new_email = data['email']
+    new_username = data['username']
     new_password = data['password']
     print(new_password)
     #new_password = generate_password_hash(data['password'])
 
     cur = mysql.connection.cursor()
     
-    cur.execute("SELECT * FROM user_account WHERE email = %s",  (new_email,))
+    cur.execute("SELECT * FROM user_account WHERE username = %s",  (new_username,))
     user = cur.fetchone()
     
     if user and check_password_hash(user[2], new_password):

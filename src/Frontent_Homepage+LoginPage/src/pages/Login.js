@@ -6,33 +6,29 @@ import user_icon from "../Assets/person.png";
 import email_icon from "../Assets/email.png";
 import password_icon from "../Assets/password.png";
 
-const Login = (username) => {
-  const [email, setEmail] = useState("");
+const Login = () => {
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://127.0.0.1:5002/api/login", {
-        email: email,
+      const response = await axios.post("/api/login", {
+        username: username,
         password: password,
       });
 
       if (response && response.data && response.data.code === "OK") {
         console.log("Login successful!");
 
-        const usernameResponse = await axios.get("http://127.0.0.1:5002/user", {
-          params: { email: email },
-        });
-
         localStorage.setItem("isLoggedIn", true);
-        localStorage.setItem("user_session_name", email);
+        localStorage.setItem("user_session_name", username);
         const storedUsername = localStorage.getItem("user_session_name");
         console.log("user_session_name:", storedUsername);
         window.location.href = "/home";
       } else {
         console.log("Login pas successful womp womp!");
-        alert("email or password not correct try again");
+        alert("username or password not correct try again");
         const isLoggedIn = localStorage.getItem("isLoggedIn");
         console.log(isLoggedIn);
       }
@@ -50,12 +46,12 @@ const Login = (username) => {
       </div>
       <div className="inputs">
         <div className="input">
-          <img src={email_icon} alt="" />
+          <img src={user_icon} alt="" />
           <input
             type="text"
-            placeholder="Email"
+            placeholder="Name"
             onChange={(e) => {
-              setEmail(e.target.value);
+              setUsername(e.target.value);
             }}
           />
         </div>

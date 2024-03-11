@@ -9,7 +9,7 @@ const Reservation = () => {
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
 
-    if (isLoggedIn !== "true") {
+    if (isLoggedIn !== true && isLoggedIn !== "true") {
       window.location.href = "/login";
     }
 
