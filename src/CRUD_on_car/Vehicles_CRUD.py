@@ -40,7 +40,7 @@ def create_Car():
     if (not isinstance(request.json.get('vehicule_id'),int) or request.json.get('vehicule_id') == None):
         db.session.rollback()
         return "Must enter an ID that is composed of integers", 400
-    if (request.json.get("availability_end_date") != 0 or request.json.get("availability_end_date") != 0):
+    if (request.json.get("availability") != 1 or request.json.get("availability") != 0):
         return "The vehicle availability can't be anything other than 1 or 0", 400
     else:
         #increment the id, if such an id already exists
@@ -83,7 +83,7 @@ def update_Car(vehicule_id):
         abort(404)
     if not request.json:
         abort(400)
-    if (request.json.get("availability_end_date") != 0 or request.json.get("availability_end_date") != 0):
+    if (request.json.get("availability") != 1 or request.json.get("availability") != 0):
         return "The vehicle availability can't be anything other than 1 or 0", 400
     car.vehicule_id=check_id
     car.model_name=request.json.get('model_name', car.model_name)
