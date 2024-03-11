@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Reservation.css";
-import CarCardReservation from "./CarCardReservation";
+import CarCardReservation from "../components/CarCardReservation";
 
 const Reservation = () => {
   const [results, setResults] = useState([]);
