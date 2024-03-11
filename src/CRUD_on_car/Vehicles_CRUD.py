@@ -3,7 +3,7 @@ from CRUD_on_car.Vehicles_model import Car
 from flask import jsonify, abort, request, make_response
 from sqlalchemy.exc import IntegrityError
 from flask_cors import CORS
-from datetime import datetime
+
 
 app1 = create_app('default')
 CORS(app1)
@@ -40,6 +40,8 @@ def create_Car():
     if (not isinstance(request.json.get('vehicule_id'),int) or request.json.get('vehicule_id') == None):
         db.session.rollback()
         return "Must enter an ID that is composed of integers", 400
+    elif (request.json.get("availability") != 1 and request.json.get("availability") != 0):
+        return "The vehicle availability can't be anything other than 1 or 0", 400
     else:
         #increment the id, if such an id already exists
         cars = Car.query.all()
@@ -77,10 +79,12 @@ def update_Car(vehicule_id):
     while(check_id in car_ids):
         check_id += 1
     ################################
-    if not request.json:
-        abort(400)
     if car is None:
         abort(404)
+    if not request.json:
+        abort(400)
+    if (request.json.get("availability") != 1 and request.json.get("availability") != 0):
+        return "The vehicle availability can't be anything other than 1 or 0", 400
     car.vehicule_id=check_id
     car.model_name=request.json.get('model_name', car.model_name)
     car.seats=request.json.get('seats', car.seats)

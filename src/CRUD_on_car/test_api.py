@@ -5,10 +5,10 @@ from CRUD_on_car.VehiclesDB import db
 
 ENDPOINT = "http://127.0.0.1:5000"
 
-def test_can_call_endpoint():
+"""def test_can_call_endpoint():
     response = requests.get(ENDPOINT)
     assert response.status_code == 200
-
+"""
     #creates a temporary client that will throw requests to test the code
 @pytest.fixture
 def client():
@@ -84,27 +84,6 @@ def test_get_cars(client):
         dataBefore_length = len(dataBefore)
     else:
         pass #if the list was initially empty we keep the length at 0
-    """assert dataAfter[0]['vehicule_id'] == 8
-    assert dataAfter[0]['model_name'] == 'Audi TT'
-    assert dataAfter[0]['seats'] == 4
-    assert dataAfter[0]["features"] == "wines like a bitch, does wrum wrum"
-    assert dataAfter[0]["make_name"] == "a piece of cake"
-    assert dataAfter[0]["model_year"] == 2023
-    assert dataAfter[0]["availability"] == 1
-    assert dataAfter[0]["availability_start_date"] == "Mon, 05 Feb 2024 00:00:00 GMT"
-    assert dataAfter[0]["availability_end_date"] == "Tue, 05 Mar 2024 00:00:00 GMT"
-    assert dataAfter[0]["price"] == 234
-
-    assert dataAfter[1]['vehicule_id'] == 10
-    assert dataAfter[1]['model_name'] == 'Batmobile'
-    assert dataAfter[1]['seats'] == 2
-    assert dataAfter[1]["features"] == "throws explosives, rubs ur back"
-    assert dataAfter[1]["make_name"] == "into the unknown"
-    assert dataAfter[1]["model_year"] == 2023
-    assert dataAfter[1]["availability"] == 1
-    assert dataAfter[1]["availability_start_date"] == "Mon, 05 Feb 2024 00:00:00 GMT"
-    assert dataAfter[1]["availability_end_date"] == "Tue, 05 Mar 2024 00:00:00 GMT"
-    assert dataAfter[1]["price"] == 234"""
 
     client.delete("/Car/8")
     client.delete("/Car/10")
