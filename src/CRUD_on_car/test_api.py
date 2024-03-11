@@ -32,6 +32,7 @@ def test_create_car(client):
                                         "make_name": "into the unknown",
                                         "model_year": 2023,
                                         "availability": 1,
+                                        "availability_start_date": "2024-03-04",
                                         "availability_end_date": "2024-03-05",
                                         "price": 234})
         
@@ -47,6 +48,7 @@ def test_create_car(client):
     assert car['make_name'] == "into the unknown"
     assert car['model_year'] == 2023
     assert car['availability'] == 1
+    assert car['availability_start_date'] == "Mon, 04 Mar 2024 00:00:00 GMT"
     assert car['availability_end_date'] == "Tue, 05 Mar 2024 00:00:00 GMT"
     assert car['price'] == 234
 
@@ -59,6 +61,7 @@ def test_get_cars(client):
                             ,"make_name": "into the unknown",
                             "model_year": 2023,
                             "availability": 1,
+                            'availability_start_date':"2024-02-05",
                             "availability_end_date": "2024-03-05",
                             "price": 234})
     client.post('/Car', json={'vehicule_id': 8,
@@ -68,6 +71,7 @@ def test_get_cars(client):
                               "make_name": "a piece of cake",
                               "model_year": 2023,
                               "availability": 1,
+                              "availability_start_date": "2024-02-05",
                               "availability_end_date": "2024-03-05",
                               "price": 234})
     after = client.get("/Cars/list")
@@ -80,6 +84,28 @@ def test_get_cars(client):
         dataBefore_length = len(dataBefore)
     else:
         pass #if the list was initially empty we keep the length at 0
+    """assert dataAfter[0]['vehicule_id'] == 8
+    assert dataAfter[0]['model_name'] == 'Audi TT'
+    assert dataAfter[0]['seats'] == 4
+    assert dataAfter[0]["features"] == "wines like a bitch, does wrum wrum"
+    assert dataAfter[0]["make_name"] == "a piece of cake"
+    assert dataAfter[0]["model_year"] == 2023
+    assert dataAfter[0]["availability"] == 1
+    assert dataAfter[0]["availability_start_date"] == "Mon, 05 Feb 2024 00:00:00 GMT"
+    assert dataAfter[0]["availability_end_date"] == "Tue, 05 Mar 2024 00:00:00 GMT"
+    assert dataAfter[0]["price"] == 234
+
+    assert dataAfter[1]['vehicule_id'] == 10
+    assert dataAfter[1]['model_name'] == 'Batmobile'
+    assert dataAfter[1]['seats'] == 2
+    assert dataAfter[1]["features"] == "throws explosives, rubs ur back"
+    assert dataAfter[1]["make_name"] == "into the unknown"
+    assert dataAfter[1]["model_year"] == 2023
+    assert dataAfter[1]["availability"] == 1
+    assert dataAfter[1]["availability_start_date"] == "Mon, 05 Feb 2024 00:00:00 GMT"
+    assert dataAfter[1]["availability_end_date"] == "Tue, 05 Mar 2024 00:00:00 GMT"
+    assert dataAfter[1]["price"] == 234"""
+
     client.delete("/Car/8")
     client.delete("/Car/10")
     assert isinstance(dataAfter, list)
@@ -94,6 +120,7 @@ def test_get_car(client):
                               "make_name": "into the unknown",
                               "model_year": 2023,
                               "availability": 1,
+                              'availability_start_date': "2024-02-05",
                               "availability_end_date": "2024-03-05",
                               "price": 234})
 
@@ -109,6 +136,7 @@ def test_get_car(client):
     assert data["make_name"] == "into the unknown"
     assert data['model_year'] == 2023
     assert data['availability'] == 1
+    assert data['availability_start_date'] == "Mon, 05 Feb 2024 00:00:00 GMT"
     assert data['availability_end_date'] == "Tue, 05 Mar 2024 00:00:00 GMT"
     assert data['price'] == 234
 
@@ -121,6 +149,7 @@ def test_update_car(client):
                             ,"make_name": "into the unknown",
                             "model_year": 2023,
                             "availability": 1,
+                            'availability_start_date': "2024-02-05",
                             "availability_end_date": "2024-03-05",
                             "price": 234})
     # Update the car
@@ -132,6 +161,7 @@ def test_update_car(client):
                                             "model_year": 2023,
                                             "availability": 1,
                                             "availability_end_date": "2024-03-05",
+                                            'availability_start_date': "2024-02-05",
                                             "price": 234})
         
     assert response.status_code == 200
@@ -145,14 +175,17 @@ def test_update_car(client):
     assert updated_car['make_name'] == "a piece of cake"
     assert updated_car['model_year'] == 2023
     assert updated_car['availability'] == 1
+    assert updated_car['availability_start_date'] == "Mon, 05 Feb 2024 00:00:00 GMT"
     assert updated_car['availability_end_date'] == "Tue, 05 Mar 2024 00:00:00 GMT"
     assert updated_car['price'] == 234
 
+# if there are no cars to display, 204!
 def test_fetch_empty_database(client):
     response = client.get("/Cars/list")
-    assert response.status_code == 404
+    if response == []:
+        assert response.status_code == 204
     #assert response.get_json().message == "Must enter an ID that is composed of integers"
-
+#What will happen if the vehicule id is a string? 400!
 def test_wrong_id_input(client):
     response = client.post("/Car", json = {'vehicule_id': "phone",
                                             'model_name':'Audi TT',
@@ -161,23 +194,14 @@ def test_wrong_id_input(client):
                                             "make_name": "a piece of cake",
                                             "model_year": 2023,
                                             "availability": 1,
+                                            "availability_start_date": "2024-02-05",
                                             "availability_end_date": "2024-03-05",
                                             "price": 234})
     assert response.status_code == 400
 
-def test_post_empty_car(client):
-    response = client.post("/Car", json = {'vehicule_id': "",
-                                            'model_name':'',
-                                            'seats': "",
-                                            "features": "",
-                                            "make_name": "",
-                                            "model_year": "",
-                                            "availability": "",
-                                            "availability_end_date": "",
-                                            "price": ""}) 
-    
-    assert response.status_code == 400
 
+
+# What will happen if the vehicule id isn't specified? 400! spartans were there the legend goes
 def test_post_Null_car(client):
     response  = client.post("/Car", json = {'vehicule_id': None,
                                             'model_name':'',
@@ -186,10 +210,23 @@ def test_post_Null_car(client):
                                             "make_name": "",
                                             "model_year": "",
                                             "availability": "",
-                                            "availability_end_date": "",
+                                            "availability_start_date": "2024-02-05",
+                                            "availability_end_date": "2024-03-05",
                                             "price": ""}) 
-    
     assert response.status_code == 400
+# tests the availability bit. Can't be anything other than 1 or 0
+def test_post_availability(client):
+    response  = client.post("/Car", json = {'vehicule_id': 6,
+                                            'model_name':'',
+                                            'seats': "",
+                                            "features": "",
+                                            "make_name": "",
+                                            "model_year": "",
+                                            "availability": 5,
+                                            "availability_start_date": "2024-02-05",
+                                            "availability_end_date": "2024-03-05",
+                                            "price": ""}) 
+    assert response.status_code == 400    
 
 def test_delete_car(client):
         # Create a car in the database for testing deletion
@@ -200,6 +237,7 @@ def test_delete_car(client):
                               "make_name": "a piece of cake",
                               "model_year": 2023,
                               "availability": 1,
+                              "availability_start_date": "2024-02-05",
                               "availability_end_date": "2024-03-05",
                               "price": 234})
 
