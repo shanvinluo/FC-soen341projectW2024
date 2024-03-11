@@ -35,6 +35,9 @@ jobs:
         
       - name: Install Flask-MySQLdb
         run: pip3 install Flask-MySQLdb
+
+      - name: Install pymysql
+        run: pip3 install pymysql
       
       - name: Run tests
         run: pytest
