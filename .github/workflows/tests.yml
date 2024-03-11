@@ -30,14 +30,5 @@ jobs:
       - name: Install Flask-SQLAlchemy
         run: pip3 install Flask-SQLAlchemy
 
-      - name: Install Flask-SQLAlchemy
-        run: pip3 install sqlalchemy.exc
-        
-      - name: Install Flask-SQLAlchemy
-        run: pip3 install flask_mysqldb flask_cors
-
-      - name: Install Flask-SQLAlchemy
-        run: pip3 install werkzeug.security
-
       - name: Run tests
         run: pytest
