@@ -3,63 +3,52 @@ import "../styles/Reservation.css";
 import CarCardReservation from "../components/CarCardReservation";
 
 const Reservation = () => {
-
-//if user is not logged in then it will redirect to login
-  useEffect(()=>{
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
-    //console.log(isLoggedIn);
-
-    if(isLoggedIn!==true && isLoggedIn!=="true"){
-     window.location.href = "/login"
-
-    }
-  })
-
-  
-
-
-
-
   const [reservations, setReservations] = useState([]);
 
+  // Check if the user is logged in, and if not, redirect to the login page
   useEffect(() => {
-    // const username = localStorage.getItem('username');
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
     
-    // // Make sure username is not null or undefined
-    // if (!username) {
-    //   console.error("Username is not set");
-    //   return;
-    // }    
+    if (isLoggedIn !== 'true') {
+      window.location.href = "/login";
+    }
+
+    const username = localStorage.getItem('username');
+    // Make sure username is not null or undefined
+    if (!username) {
+      console.error("Username is not set");
+      // Redirect to login or handle the error as needed
+      window.location.href = "/login";
+      return;
+    }
+
     const fetchReservations = async () => {
       try {
-        // Use a hardcoded 'new_username' or retrieve from storage/environment
-        const url = 'http://127.0.0.1:5001/reservation/new_username';
-        // const url = `http://localhost:5002/reservation/${username}`;
-
+        // Adjust the URL to either use a hardcoded username or the one from storage
+        // const url = `http://127.0.0.1:5001/reservation/${username}`; // Uncomment and use this if backend is ready
+        const url = 'http://127.0.0.1:5001/reservation/new_username'; // Temp: hardcoded for demonstration
         const response = await fetch(url);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         const allReservations = await response.json();
-        setReservations(allReservations.reservations); // Make sure to adjust according to the actual response structure
+        setReservations(allReservations.reservations); // Adjust according to your actual data structure
       } catch (error) {
         console.error("Failed to fetch reservations:", error);
       }
     };
 
     fetchReservations();
-  }, []); // Empty dependency array means this effect runs once after the initial render
+  }, []); // Dependency array is empty, so this effect runs once after the initial render
 
-  // Implement cancelReservation functionality
   const cancelReservation = (reservationId) => {
     console.log(`Cancel reservation ${reservationId}`);
-    // Implementation for canceling a reservation
+    // Implementation for canceling a reservation goes here
   };
 
-  // Implement handleDateUpdate functionality
   const handleDateUpdate = (reservationId, newStart, newEnd) => {
     console.log(`Update reservation ${reservationId} to start: ${newStart}, end: ${newEnd}`);
-    // Implementation for updating a reservation's date
+    // Implementation for updating a reservation's date goes here
   };
 
   return (
@@ -86,4 +75,3 @@ const Reservation = () => {
 };
 
 export default Reservation;
-
