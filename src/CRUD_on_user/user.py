@@ -4,8 +4,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS #modification
 app = Flask(__name__)
 CORS(app) #modification
-CORS(app) #modification
 # Configure MySQL
+
+
 app.config['MYSQL_HOST'] = 'sql5.freemysqlhosting.net'
 app.config['MYSQL_USER'] = 'sql5686988'
 app.config['MYSQL_PASSWORD'] = 'jSrGqLGIWE'
@@ -36,14 +37,12 @@ def add_user():
     cur = mysql.connection.cursor()
     hashed_password = generate_password_hash(password)
     cur.execute("INSERT INTO user_account (username, email, password) VALUES (%s, %s, %s)", (username, email, hashed_password))
-    hashed_password = generate_password_hash(password)
-    cur.execute("INSERT INTO user_account (username, email, password) VALUES (%s, %s, %s)", (username, email, hashed_password))
-
+    
     mysql.connection.commit()
 
     cur.close()
 
-    return jsonify({'message': 'account created successfully!!'}), 201
+    return jsonify({'message': 'account created successfully!!','code': 'OK'}), 201
 
     
 @app.route('/user/<string:user>', methods=['DELETE'])
@@ -67,7 +66,7 @@ def update_user(user):
     new_username = data['username']
     new_email = data['email']
     new_password = generate_password_hash(data['password'])
-    new_password = generate_password_hash(data['password'])
+    #new_password = generate_password_hash(data['password'])
 
     cur = mysql.connection.cursor()
     
@@ -83,7 +82,58 @@ def update_user(user):
 
     return jsonify({'message': 'account updated successfully'}), 200
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#do not touch this fucntion plz
+#its for the login
+
+
+@app.route('/api/login', methods=['POST'])
+def authenticate():
+    data = request.json
+    if 'email' not in data or 'password' not in data:
+        return jsonify({'error': 'Missing field!!'}), 400
+
+    new_email = data['email']
+    new_password = data['password']
+    print(new_password)
+    #new_password = generate_password_hash(data['password'])
+
+    cur = mysql.connection.cursor()
+    
+    cur.execute("SELECT * FROM user_account WHERE email = %s",  (new_email,))
+    user = cur.fetchone()
+    
+    if user and check_password_hash(user[2], new_password):
+        cur.close()
+        return jsonify({'code':'OK'}), 200
+    else: 
+        cur.close()
+        return jsonify({'code':'ERROR'}), 200
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5002)
 
 

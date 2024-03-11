@@ -1,5 +1,5 @@
 import pytest, requests 
-from .user import app, mysql
+from user import app, mysql
 from flask import json, request
 ENDPOINT = "http://127.0.0.1:5000"
 from werkzeug.security import generate_password_hash
@@ -51,9 +51,9 @@ def test_add_user(client):
     client.delete("/user/test2")
 
 def test_delete_user(client):
-    response = client.post('/user', json={'username': 'test', 'email': 'test@test.com', 'password': 'test'})
+    response = client.post('/user', json={'username': 'test1', 'email': 'test@test.com', 'password': 'test'})
     assert response.status_code == 201
-    response = client.delete('/user/test')
+    response = client.delete('/user/test1')
     assert response.status_code == 200
     data = response.get_json()
     assert 'message' in data

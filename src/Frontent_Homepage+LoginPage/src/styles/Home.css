@@ -1,43 +1,44 @@
-
-.containerHome{
+.containerHome {
   display: flex;
   width: 90%;
   flex-direction: column;
   margin: auto;
   margin-top: 100px;
-  background:#fff;
+  background: #fff;
   border-radius: 10px;
 }
 
-.inputss{
+.inputss {
   margin-top: 55px;
   display: flex;
-  gap:25px;
-
+  gap: 25px;
 }
-.inputa,p{
+.inputa,
+p {
   display: flex;
   align-items: center;
   margin: auto;
-  width: 480px;
+  width: 380px;
   height: 80px;
   background: #eaeaea;
   border-radius: 6px;
 }
 
-.inputa input,select,p{
+.inputa input,
+select,
+p {
   width: 400px;
   height: 50px;
   border: none;
   background: transparent;
   outline: none;
-  color:#797979;
+  color: #797979;
   border-radius: 10px;
   font-size: 19px;
 }
 
-h1{
-  color:#3c009d;
+h1 {
+  color: #3c009d;
   font-size: 48px;
   font-weight: 700;
   justify-content: center;
@@ -48,19 +49,19 @@ h1{
   width: 100%;
   margin-top: 30px;
 }
-.submit-containerr{
+.submit-containerr {
   display: flex;
-  gap:30px;
+  gap: 30px;
   margin: 60px auto;
 }
 
-.submitButton{
+.submitButton {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 220px;
   height: 59px;
-  color:#fff;
+  color: #fff;
   background: #4c00b4;
   border-radius: 50px;
   font-size: 19px;
@@ -68,7 +69,7 @@ h1{
   cursor: pointer;
 }
 
-.gray{
-  background: #EAEAEA;
-  color:#676767;
+.gray {
+  background: #eaeaea;
+  color: #676767;
 }

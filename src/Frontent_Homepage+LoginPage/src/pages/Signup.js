@@ -22,7 +22,7 @@ const Signup = () => {
     //hash from js file, atai hashed in flask
     //const hashedPassword = await bcrypt.hash(password, 10);
     try {
-      const response = await axios.post("user", {
+      const response = await axios.post("http://127.0.0.1:5002/user", {
         username: username,
         email: email,
         password: password,
@@ -57,6 +57,7 @@ const Signup = () => {
               setUsername(e.target.value);
             }}
           />
+          <input type="text" />
         </div>
 
         <div className="input">
@@ -68,6 +69,7 @@ const Signup = () => {
               setEmail(e.target.value);
             }}
           />
+          <input type="email" />
         </div>
         <div className="input">
           <img src={password_icon} alt="" />
@@ -78,6 +80,7 @@ const Signup = () => {
               setPassword(e.target.value);
             }}
           />
+          <input type="password" />
         </div>
         <div className="submit-container">
           <div
