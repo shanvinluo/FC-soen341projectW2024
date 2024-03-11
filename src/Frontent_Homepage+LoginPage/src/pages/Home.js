@@ -10,7 +10,24 @@ function Home() {
   const [endDesiredDate, setDesiredEndDate] = useState("");
   const [results, setResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
+  /*useEffect(()=>{
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    console.log(isLoggedIn);
 
+  
+    if(isLoggedIn==true){
+      window.location.href = "/home"
+    }
+
+    else{
+
+      window.location.href = "/login"
+
+    }
+  })*/
+
+
+  
   // const fetchResults = () => {
   //   // Simulated fetching of data
   //   const allCars = [
@@ -42,6 +59,8 @@ function Home() {
     // Construct the URL with query parameters for price range, start date, and end date if needed
     const url = new URL("http://localhost:5000/Cars/list");
 
+   
+
     try {
       const response = await fetch(url);
       if (!response.ok) {
@@ -54,23 +73,19 @@ function Home() {
         const carAvailableFrom = new Date(car.availability_start_date);
         const carAvailableUntil = new Date(car.availability_end_date);
         // Example: Filter by price range, you can add more conditions as needed
-        const priceLimits = priceRange.split("-").map(Number);
-        const startDateObj = startDesiredDate
-          ? new Date(startDesiredDate)
-          : null;
-        const endDateObj = endDesiredDate ? new Date(endDesiredDate) : null;
+        const priceLimits = priceRange.split('-').map(Number);
+    const startDateObj = startDesiredDate ? new Date(startDesiredDate) : null;
+    const endDateObj = endDesiredDate ? new Date(endDesiredDate) : null;
 
-        const isAvailable =
-          !startDateObj || !endDateObj
-            ? true
-            : startDateObj >= carAvailableFrom &&
-              endDateObj <= carAvailableUntil;
+    const isAvailable = (!startDateObj || !endDateObj) ? true : (startDateObj >= carAvailableFrom && endDateObj <= carAvailableUntil);
 
-        const isWithinPriceRange =
-          (!priceLimits[0] || car.price >= priceLimits[0]) &&
-          (!priceLimits[1] || car.price <= priceLimits[1]);
+ 
 
-        return isWithinPriceRange && isAvailable;
+  
+    const isWithinPriceRange = (!priceLimits[0] || car.price >= priceLimits[0]) && (!priceLimits[1] || car.price <= priceLimits[1]);
+
+    return isWithinPriceRange && isAvailable;
+
       });
 
       return filteredCars;
@@ -92,7 +107,7 @@ function Home() {
     const fetchedResults = await fetchResults(); // Use await here
     setResults(fetchedResults);
     setShowResults(true);
-  };
+  }
 
   useEffect(() => {
     // Optionally, fetch results immediately on component mount or when certain states change
@@ -122,16 +137,16 @@ function Home() {
             <input
               type="date"
               value={formatDate(startDesiredDate)}
-              onChange={(e) => setDestiredStartDate(new Date(e.target.value))}
-            />
+  onChange={(e) => setDestiredStartDate(new Date(e.target.value))}
+/>
           </div>
           <div className="inputa">
             <p> End Date</p>
             <input
               type="date"
               value={formatDate(endDesiredDate)}
-              onChange={(e) => setDesiredEndDate(new Date(e.target.value))}
-            />
+  onChange={(e) => setDesiredEndDate(new Date(e.target.value))}
+/>
           </div>
         </div>
         <div className="submit-container">
@@ -145,12 +160,8 @@ function Home() {
           <h1>Results</h1>
           <ul>
             {results.map((car) => (
-              <CarCard
-                key={car.id}
-                car={car}
-                startDesiredDate={formatDate(startDesiredDate)}
-                endDesiredDate={formatDate(endDesiredDate)}
-              />
+              <CarCard key={car.id} car={car} startDesiredDate={formatDate(startDesiredDate)}
+              endDesiredDate={formatDate(endDesiredDate)}/>
             ))}
           </ul>
         </div>
@@ -160,3 +171,4 @@ function Home() {
 }
 
 export default Home;
+

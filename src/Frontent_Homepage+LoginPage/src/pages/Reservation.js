@@ -3,6 +3,23 @@ import "../styles/Reservation.css";
 import CarCardReservation from "../components/CarCardReservation";
 
 const Reservation = () => {
+
+//if user is not logged in then it will redirect to login
+  useEffect(()=>{
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    //console.log(isLoggedIn);
+
+    if(isLoggedIn!==true && isLoggedIn!=="true"){
+     window.location.href = "/login"
+
+    }
+  })
+
+  
+
+
+
+
   const [reservations, setReservations] = useState([]);
 
   useEffect(() => {
@@ -69,3 +86,4 @@ const Reservation = () => {
 };
 
 export default Reservation;
+
