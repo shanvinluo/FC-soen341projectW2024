@@ -13,7 +13,7 @@ def test_get_reservation(client):
     client.post("/reservation/create", json = { "reservation_id": 1, 
                                                          "date_start": "2024-02-23", 
                                                          "date_end":"2024-05-30",
-                                                         "username": "poop",
+                                                         "username": "lina",
                                                          "vehicule_id": "101"
     })
     get_reservation = client.get("/reservation/1")
@@ -22,7 +22,7 @@ def test_get_reservation(client):
     assert data["reservation_id"] == 1
     assert data['date_start'] == "Fri, 23 Feb 2024 00:00:00 GMT"
     assert data['date_end']  == "Thu, 30 May 2024 00:00:00 GMT"
-    assert data['username'] == "poop"
+    assert data['username'] == "lina"
     assert data['vehicule_id'] == 101
     client.delete("/reservation/1")
 
@@ -31,7 +31,7 @@ def test_create_reservation(client):
         "reservation_id" : 4,
         'date_start': '2024-03-01',
         'date_end': '2024-03-05',
-        'username': 'new_username',  # Make sure this username exists in the database
+        'username': 'nahla',  # Make sure this username exists in the database
         'vehicule_id': 101  # Make sure this vehicule_id exists in the database
     }
     response = client.post('/reservation/create', json=data)
@@ -48,7 +48,7 @@ def test_modify_reservation(client):
         "reservation_id": 1,
         'date_start': '2024-03-01',
         'date_end': '2024-03-07',
-        'username':'new_username',
+        'username':'test',
         'vehicule_id': 101
     }
     client.post("/reservation/create", json = data_post)
@@ -56,7 +56,7 @@ def test_modify_reservation(client):
         "reservation_id": 1,
         'date_start': '2024-03-01',
         'date_end': '2024-03-07',
-        'username':'poop',
+        'username':'lina',
         'vehicule_id': 100
     } 
     response = client.put('/reservation/1', json=data_put)
@@ -70,7 +70,7 @@ def test_delete_reservation(client):
     client.post("/reservation/create", json = { "reservation_id": 2, 
                                                          "date_start": "2024-02-23", 
                                                          "date_end":"2024-05-30",
-                                                         "username": "poop",
+                                                         "username": "test",
                                                          "vehicule_id": "101"
     })
     response = client.delete('/reservation/2')
