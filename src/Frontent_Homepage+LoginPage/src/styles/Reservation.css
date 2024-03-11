@@ -1,74 +1,56 @@
-.bodyReserv {
-  height: 80vh;
-}
-.containerReserv {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-  margin: 0;
-  background: #fff;
-  flex-direction: row;
-}
-
-.header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 9px;
-  width: 100%;
-  margin-top: 30px;
-}
-
-.text {
-  color: #3c009d;
-  font-size: 48px;
-  font-weight: 700;
-}
-.sideContent {
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  flex-direction: column;
-  min-height: 100%;
-  background-color: #e3d6f8;
-  width: 20%;
-}
-.mainContent {
-  display: flex;
-  flex-direction: row;
-  min-height: 100%;
-  width: 90%;
-  background-color: #3c009d;
-}
-
-button {
-  margin: 15px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 80%;
-  height: 10%;
-  color: #fff;
-  background: #4c00b4;
-  border-radius: 50px;
-  font-size: 19px;
-  font-weight: 700;
-  cursor: pointer;
-}
-.locationHistory {
-  color: black;
-  text-align: center;
-  width: 100%;
-  height: 100%;
-}
-
-.sideButtons {
-  width: 40%;
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  justify-content: center;
-  padding-bottom: 5%;
-}
+.sidebar {
+    width: 250px; 
+    background-color: #e3d6f8; 
+    padding: 1rem;
+    box-sizing: border-box; 
+  }
+  
+  .reservationLayout {
+    display: flex;
+    min-height: 100vh; 
+  }
+  
+  .sidebarButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; 
+    height: 59px;
+    color: #fff;
+    background: #4c00b4;
+    border-radius: 30px; 
+    font-size: 19px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 20px; 
+    text-decoration: none; 
+    border: none; 
+  }
+  
+  .sidebarButton:hover {
+    background: #5a00d1; /* Slightly lighter purple on hover */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+  }
+  
+  .containerHome{
+    display: flex;
+    width: 80%;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 100px;
+    background:#fff;
+    border-radius: 10px;
+  }
+  
+  h1{
+    color:#3c009d;
+    font-size: 48px;
+    font-weight: 700;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    margin-top: 30px;
+  }
