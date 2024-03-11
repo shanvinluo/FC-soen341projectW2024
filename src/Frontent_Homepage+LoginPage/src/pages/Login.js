@@ -6,7 +6,7 @@ import user_icon from "../Assets/person.png";
 import email_icon from "../Assets/email.png";
 import password_icon from "../Assets/password.png";
 
-const Login = () => {
+const Login = (username) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -24,8 +24,6 @@ const Login = () => {
         const usernameResponse = await axios.get("http://127.0.0.1:5002/user", {
           params: { email: email },
         });
-
-        const username = usernameResponse.data.username;
 
         localStorage.setItem("isLoggedIn", true);
         localStorage.setItem("user_session_name", email);

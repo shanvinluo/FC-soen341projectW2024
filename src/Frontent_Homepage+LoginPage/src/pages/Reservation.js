@@ -13,7 +13,7 @@ const Reservation = () => {
       window.location.href = "/login";
     }
 
-    const username = localStorage.getItem("username");
+    const username = localStorage.getItem("user_session_name");
     // Make sure username is not null or undefined
     if (!username) {
       console.error("Username is not set");
