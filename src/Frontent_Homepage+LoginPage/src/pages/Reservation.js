@@ -7,13 +7,13 @@ const Reservation = () => {
 
   // Check if the user is logged in, and if not, redirect to the login page
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
-    
-    if (isLoggedIn !== 'true') {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+    if (isLoggedIn !== "true") {
       window.location.href = "/login";
     }
 
-    const username = localStorage.getItem('username');
+    const username = localStorage.getItem("username");
     // Make sure username is not null or undefined
     if (!username) {
       console.error("Username is not set");
@@ -26,7 +26,7 @@ const Reservation = () => {
       try {
         // Adjust the URL to either use a hardcoded username or the one from storage
         // const url = `http://127.0.0.1:5001/reservation/${username}`; // Uncomment and use this if backend is ready
-        const url = 'http://127.0.0.1:5001/reservation/new_username'; // Temp: hardcoded for demonstration
+        const url = "http://127.0.0.1:5001/reservation/new_username"; // Temp: hardcoded for demonstration
         const response = await fetch(url);
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -47,7 +47,9 @@ const Reservation = () => {
   };
 
   const handleDateUpdate = (reservationId, newStart, newEnd) => {
-    console.log(`Update reservation ${reservationId} to start: ${newStart}, end: ${newEnd}`);
+    console.log(
+      `Update reservation ${reservationId} to start: ${newStart}, end: ${newEnd}`
+    );
     // Implementation for updating a reservation's date goes here
   };
 

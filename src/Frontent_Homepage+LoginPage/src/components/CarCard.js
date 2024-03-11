@@ -14,6 +14,10 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
   }
 
   const handleAddCar = async () => {
+    if (!localStorage.getItem("isLoggedIn")) {
+      alert("Please log in first!");
+      return;
+    }
     if (!startDesiredDate || !endDesiredDate) {
       alert("Please select start and end dates before adding a car.");
       return;
