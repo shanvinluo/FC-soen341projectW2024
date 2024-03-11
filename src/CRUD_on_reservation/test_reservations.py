@@ -1,7 +1,7 @@
-import pytest, requests
-from CRUD_on_reservation.reservation import app, mysql
-from flask import request, json
-from unittest.mock import MagicMock
+import pytest
+from CRUD_on_reservation.reservation import app
+from flask import json
+
 @pytest.fixture
 def client():
     app.config['TESTING'] = True
@@ -10,22 +10,29 @@ def client():
 
 
 def test_get_reservation(client):
-    response = client.get('/reservation/30')
-    assert response.status_code == 200
-    data = json.loads(response.get_data(as_text=True))
-    print(data)
-    
-    assert data['date_start'] == "Sat, 27 Jul 2024 00:00:00 GMT"
-    assert data['date_end']  == "Fri, 27 Sep 2024 00:00:00 GMT"
-    assert data['username'] == "nacho"
-    assert data['vehicule_id'] == 100
+    client.post("/reservation/create", json = { "reservation_id": 1, 
+                                                         "date_start": "2024-02-23", 
+                                                         "date_end":"2024-05-30",
+                                                         "username": "poop",
+                                                         "vehicule_id": "101"
+    })
+    get_reservation = client.get("/reservation/1")
+    assert get_reservation.status_code == 200
+    data = json.loads(get_reservation.get_data(as_text=True))
+    assert data["reservation_id"] == 1
+    assert data['date_start'] == "Fri, 23 Feb 2024 00:00:00 GMT"
+    assert data['date_end']  == "Thu, 30 May 2024 00:00:00 GMT"
+    assert data['username'] == "poop"
+    assert data['vehicule_id'] == 101
+    client.delete("/reservation/1")
 
 def test_create_reservation(client):
     data = {
+        "reservation_id" : 4,
         'date_start': '2024-03-01',
         'date_end': '2024-03-05',
         'username': 'new_username',  # Make sure this username exists in the database
-        'vehicule_id': 33  # Make sure this vehicule_id exists in the database
+        'vehicule_id': 101  # Make sure this vehicule_id exists in the database
     }
     response = client.post('/reservation/create', json=data)
     assert response.status_code == 201
@@ -33,24 +40,40 @@ def test_create_reservation(client):
     print(data)
     assert 'message' in data
     assert data['message'] == 'Reservation succeed!!'
+    client.delete("/reservation/4")
     
 
-
 def test_modify_reservation(client):
-    data = {
+    data_post = {
+        "reservation_id": 1,
         'date_start': '2024-03-01',
         'date_end': '2024-03-07',
         'username':'new_username',
         'vehicule_id': 101
     }
-    response = client.put('/reservation/30', json=data)
+    client.post("/reservation/create", json = data_post)
+    data_put = {
+        "reservation_id": 1,
+        'date_start': '2024-03-01',
+        'date_end': '2024-03-07',
+        'username':'poop',
+        'vehicule_id': 100
+    } 
+    response = client.put('/reservation/1', json=data_put)
     assert response.status_code == 200
     data = json.loads(response.get_data(as_text=True))
     assert 'message' in data
     assert data['message'] == 'Reservation modified successfully'
+    client.delete("/reservation/1")
 
 def test_delete_reservation(client):
-    response = client.delete('/reservation/30')
+    client.post("/reservation/create", json = { "reservation_id": 2, 
+                                                         "date_start": "2024-02-23", 
+                                                         "date_end":"2024-05-30",
+                                                         "username": "poop",
+                                                         "vehicule_id": "101"
+    })
+    response = client.delete('/reservation/2')
     assert response.status_code == 200
     data = json.loads(response.get_data(as_text=True))
     assert 'message' in data
