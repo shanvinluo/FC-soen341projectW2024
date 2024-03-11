@@ -18,11 +18,11 @@ const Login = () => {
                 password: password
             });
 
-            if (response && response.data && response.data.success) {
-                // Login successful, redirect the user or do something else
+            if (response && response.data && response.data.code === 'OK') {
                 console.log("Login successful!");
+                window.location.href = "/home"
             } else {
-                // Login failed, display error message
+
                 setErrorMessage("Invalid email or password.");
             }
         } catch (error) {
