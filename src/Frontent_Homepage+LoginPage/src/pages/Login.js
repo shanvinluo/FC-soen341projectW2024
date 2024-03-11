@@ -13,16 +13,16 @@ const Login = () => {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post("http://localhost:3000/login", {
+            const response = await axios.post("/api/login", {
                 email: email,
                 password: password
             });
 
-            if (response && response.data && response.data.success) {
-                // Login successful, redirect the user or do something else
+            if (response && response.data && response.data.code === 'OK') {
                 console.log("Login successful!");
+                window.location.href = "/home"
             } else {
-                // Login failed, display error message
+
                 setErrorMessage("Invalid email or password.");
             }
         } catch (error) {
@@ -41,11 +41,15 @@ const Login = () => {
 
                 <div className="input">
                     <img src={email_icon} alt=""/>
-                    <input type="text" placeholder="Email"/>
+                    <input type="text" placeholder="Email" onChange={(e) => {
+              setEmail(e.target.value);
+            }}/>
                 </div>
                 <div className="input">
                     <img src={password_icon} alt=""/>
-                    <input type="password" placeholder="Password"/>
+                    <input type="password" placeholder="Password" onChange={(e) => {
+              setPassword(e.target.value);
+            }}/>
                 </div>
                 <div className="forgot-password">Forgot Password?</div>
                 <div className="submit-container">

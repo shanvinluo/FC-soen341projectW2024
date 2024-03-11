@@ -50,6 +50,11 @@ jobs:
       - name: Start application 3 
         run: |
          python3 -u src/CRUD_on_user/user.py --port 5002 &
+      - name: Clean Python Cache
+        run: |
+          find . -name "*.pyc" -exec rm -f {} +
+          find . -name "__pycache__" -exec rm -rf {} +
+
           
       - name: Run tests
         run: pytest

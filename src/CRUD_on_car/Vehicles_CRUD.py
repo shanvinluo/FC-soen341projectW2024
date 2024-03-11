@@ -3,7 +3,7 @@ from CRUD_on_car.Vehicles_model import Car
 from flask import jsonify, abort, request, make_response
 from sqlalchemy.exc import IntegrityError
 from flask_cors import CORS
-from datetime import datetime
+
 
 app1 = create_app('default')
 CORS(app1)

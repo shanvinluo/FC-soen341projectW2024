@@ -1,6 +1,6 @@
 import pytest, requests
-from Vehicles_CRUD import app1
-from VehiclesDB import db
+from CRUD_on_car.Vehicles_CRUD import app1
+from CRUD_on_car.VehiclesDB import db
 
 
 ENDPOINT = "http://127.0.0.1:5000"
