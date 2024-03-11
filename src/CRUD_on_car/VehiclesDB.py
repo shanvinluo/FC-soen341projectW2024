@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from CRUD_on_car.Config import config
+from Config import config
 from flask import Flask
 
 db = SQLAlchemy()

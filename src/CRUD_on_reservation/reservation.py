@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify
 from flask_mysqldb import MySQL
-from datetime import datetime
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -14,7 +13,7 @@ app.config['MYSQL_PORT'] = 3306
 
 mysql = MySQL(app)
 
-current_date = datetime.now().strftime("%a, %d %b %Y %H:%M:%S GMT")
+
 
 @app.route('/reservation/<int:id>', methods=['GET'])
 def get_reservation(id):
@@ -42,6 +41,7 @@ def create_reservation():
     cur = mysql.connection.cursor()
 
     data = request.json 
+    reservation_id = data["reservation_id"]
     date_start = data['date_start']
     date_end = data['date_end']
     username = data['username']
@@ -63,12 +63,12 @@ def create_reservation():
         #not the good id for the vehicle
         return jsonify({'error': 'the vehicle does not exist'}), 400
     
-    # if vehicule_availability == 0:
-    #     #if the vehicle isn't available, no reservation for you, sweetheart
-    #     return jsonify({'error': 'the vehicle is not available for rent'}), 400
+    if vehicule_availability == 0:
+         #if the vehicle isn't available, no reservation for you, sweetheart
+         return jsonify({'error': 'the vehicle is not available for rent'}), 400
     
     
-    cur.execute("INSERT INTO reservation (date_start, date_end, username, vehicule_id) VALUES (%s, %s, %s, %s)", (date_start, date_end, username, vehicule_id))
+    cur.execute("INSERT INTO reservation (reservation_id, date_start, date_end, username, vehicule_id) VALUES (%s, %s, %s, %s, %s)", (reservation_id, date_start, date_end, username, vehicule_id))
     mysql.connection.commit()
     cur.close()
     #succeed message
@@ -90,7 +90,7 @@ def delete_reservation(id):
     
     vehicule_id = user[4] #get the id of the reserved car
     cur.execute("DELETE FROM reservation WHERE reservation_id = %s", (id,)) #delete reservation if it's there
-    cur.execute("UPDATE vehicule SET availability = %s WHERE reservation_id = %s",(1, vehicule_id)) #once the reservation has been updated, the car has become available
+    cur.execute("UPDATE vehicule SET availability = %s WHERE vehicule_id = %s",(1, vehicule_id)) #once the reservation has been updated, the car has become available
     mysql.connection.commit()
     cur.close()
     #deletion succeded message
@@ -111,7 +111,7 @@ def modify_reservation(id):
 
     # get update
     data = request.json 
-
+    reservation_id = data["reservation_id"]
     date_start_new = data['date_start']
     date_end_new = data['date_end']
     vehicule_id_new = data['vehicule_id'] #get the new reservation's car id
@@ -123,11 +123,11 @@ def modify_reservation(id):
                 (date_start_new, date_end_new, vehicule_id_new, id))
     else:
         #if the cars are different, assign appropriate availability to each car
-        cur.execute("UPDATE vehicule SET availability = %s WHERE reservation_id = %s",(0, vehicule_id_new)) 
-        cur.execute("UPDATE vehicule SET availability = %s WHERE reservation_id = %s",(1, vehicule_id_old)) 
+        cur.execute("UPDATE vehicule SET availability = %s WHERE vehicule_id = %s",(0, vehicule_id_new)) 
+        cur.execute("UPDATE vehicule SET availability = %s WHERE vehicule_id = %s",(1, vehicule_id_old)) 
         #update everything
-        cur.execute("UPDATE reservation SET date_start = %s, date_end = %s, vehicule_id = %s WHERE reservation_id = %s",
-                (date_start_new, date_end_new, vehicule_id_new, id))
+        cur.execute("UPDATE reservation SET reservation_id = %s, date_start = %s, date_end = %s, vehicule_id = %s WHERE reservation_id = %s",
+                (reservation_id, date_start_new, date_end_new, vehicule_id_new, id))
     mysql.connection.commit()
     cur.close()
 
