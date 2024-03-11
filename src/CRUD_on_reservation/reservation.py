@@ -64,9 +64,11 @@ def create_reservation():
         #not the good id for the vehicle
         return jsonify({'error': 'the vehicle does not exist'}), 400
     
+
     if vehicule_availability == 0:
          #if the vehicle isn't available, no reservation for you, sweetheart
          return jsonify({'error': 'the vehicle is not available for rent'}), 400
+
     
     
     cur.execute("INSERT INTO reservation (reservation_id, date_start, date_end, username, vehicule_id) VALUES (%s, %s, %s, %s, %s)", (reservation_id, date_start, date_end, username, vehicule_id))
