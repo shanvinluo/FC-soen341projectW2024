@@ -1,5 +1,5 @@
-from CRUD_on_car.VehiclesDB import create_app, db
-from CRUD_on_car.Vehicles_model import Car
+from src.CRUD_on_car.VehiclesDB import create_app, db
+from src.CRUD_on_car.Vehicles_model import Car
 from flask import jsonify, abort, request, make_response
 from sqlalchemy.exc import IntegrityError
 from flask_cors import CORS
