@@ -3,7 +3,7 @@ name: Run Tests
 on:
   push:
     branches:
-      - main  # Adjust the branch name as needed
+      - main  
 
 jobs:
   test:
@@ -16,10 +16,10 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'  # Specify the Python version
+          python-version: '3.12'  # Specify the Python version
 
       - name: Install dependencies
-        run: pip install -r requirements.txt  # Install required Python packages
+        run: pip install -r pytest
 
       - name: Run tests
-        run: pytest  # Run the pytest command to execute the tests
+        run: pytest
