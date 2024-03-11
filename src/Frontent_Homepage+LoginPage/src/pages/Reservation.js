@@ -9,11 +9,11 @@ const Reservation = () => {
   useEffect(() => {
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     
-    if (isLoggedIn !== 'true') {
-      window.location.href = "/login";
-    }
+    if(isLoggedIn!==true && isLoggedIn!=="true"){
+      window.location.href = "/login"
+     }
 
-    const username = localStorage.getItem('username');
+    const username = localStorage.getItem('user_session_name');
     // Make sure username is not null or undefined
     if (!username) {
       console.error("Username is not set");
