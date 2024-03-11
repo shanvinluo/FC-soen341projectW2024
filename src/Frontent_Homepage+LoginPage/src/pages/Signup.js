@@ -57,18 +57,15 @@ const Signup=()=>{
            <div className="input">
                 <img src={user_icon} alt=""/>
                 <input type="text" placeholder="Name" onChange={(e)=>{setUsername(e.target.value)}} />
-                <input type="text"/> 
                 </div>
             
                 <div className="input">
                 <img src={email_icon} alt=""/>
-                <input type="text" placeholder="Email" onChange={(e)=>{setEmail(e.target.value)}}/>
-                <input type="email"/> 
+                <input type="text" placeholder="Email" onChange={(e)=>{setEmail(e.target.value)}}/> 
                 </div>
                 <div className="input">
                 <img src={password_icon} alt=""/>
                 <input type="password" placeholder="Password" onChange={(e)=>{setPassword(e.target.value)}}/>
-                <input type="password"/> 
                 </div>
                 <div className="submit-container">
                     <div className={"submit"} onClick={()=>{signUpUser()}}>Sign up</div>
