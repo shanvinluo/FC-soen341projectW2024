@@ -41,7 +41,7 @@ The core features are:
 <strong>** Note </strong>: Ensure that no other application is running on port 5000 on your local machine. 
 
 ### Repository Structure
-The repository will be split into 4 sprint folders. All of those folders will include the code done during and before the sprint, the meeting minutes, the documentation needed as well as a detailed log of each member's activity. User stories and plans for the next sprint can be found in the wiki. 
+The repository will be split into 4 sprint folders. All of those folders will include the meeting minutes, the documentation needed as well as a detailed log of each member's activity. User stories and plans for the next sprint can be found in the wiki. The code can be found in the src folder.
 
 ### [Wiki](https://github.com/shanvinluo/FC-soen341projectW2024/wiki) Contents Table
 * [Git Rules for the Project](https://github.com/shanvinluo/FC-soen341projectW2024/wiki/Git-rules-for-the-project.)

@@ -3,3 +3,4 @@ Flask-MySQLdb
 Flask-SQLAlchemy
 requests
 pytest
+pymysql
