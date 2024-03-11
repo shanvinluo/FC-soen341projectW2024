@@ -9,7 +9,7 @@ def test_new_Vehicle():
         """
         car = Car(1234, 'Batmobile', 2, "throws explosives", "whatmakesmakes", 2012, 1,"2024-02-05","2024-03-05", 505  )
         assert car.vehicule_id == 1234
-        assert car.model_name != 'Batmobile'
+        assert car.model_name == 'Batmobile'
         assert car.seats == 2
         assert car.features == 'throws explosives'
         assert car.make_name == 'whatmakesmakes'
