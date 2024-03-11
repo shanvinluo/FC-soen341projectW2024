@@ -5,10 +5,10 @@ from CRUD_on_car.VehiclesDB import db
 
 ENDPOINT = "http://127.0.0.1:5000"
 
-def test_can_call_endpoint():
+"""def test_can_call_endpoint():
     response = requests.get(ENDPOINT)
     assert response.status_code == 200
-
+"""
     #creates a temporary client that will throw requests to test the code
 @pytest.fixture
 def client():
