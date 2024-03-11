@@ -1,5 +1,5 @@
 import pytest, requests 
-from CRUD_on_user.user import app, mysql
+from user import app, mysql
 from flask import json, request
 ENDPOINT = "http://127.0.0.1:5000"
 from werkzeug.security import generate_password_hash
