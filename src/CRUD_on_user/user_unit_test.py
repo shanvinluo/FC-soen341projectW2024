@@ -1,8 +1,8 @@
-import pytest, requests 
-from user import app, mysql
-from flask import json, request
+import pytest 
+from CRUD_on_user.user import app
+
 ENDPOINT = "http://127.0.0.1:5000"
-from werkzeug.security import generate_password_hash
+
 
 @pytest.fixture
 def client():
