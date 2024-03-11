@@ -10,9 +10,10 @@
     "react-dom": "^18.2.0",
     "react-native-linear-gradient": "^2.8.3",
     "react-router-dom": "^6.22.1",
-    "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
+
+  "proxy": "http://127.0.0.1:5000",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -36,5 +37,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "react-scripts": "^5.0.1"
   }
+
+  
 }

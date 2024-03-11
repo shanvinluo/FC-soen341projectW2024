@@ -1,0 +1,83 @@
+.car-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #5058cb60; /* Light green background */
+    margin-bottom: 30px; /* Space between cards */
+    margin-right: 40px;
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners for card */
+  }
+  
+  .car-image {
+    width: 220px; /* Set image width */
+    height: 220px; /* Set image height */
+    background-color: #000; /* Placeholder for image */
+    margin-right: 20px; /* Space between image and details */
+  }
+  
+  .car-details {
+    flex: 1; /* Take up remaining space */
+    display: flex;
+    flex-direction: column; /* Stack details vertically */
+    justify-content: center;
+    
+    
+  }
+  
+  .car-feature {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    width: 400px;
+    height: 50px;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 19px; 
+ }
+  
+  .icon {
+    margin-right: 10px; /* Space between icon and text */
+  }
+  
+  .CancelReservation{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 59px;
+    color:#fff;
+    background: #4c00b4;
+    border-radius: 50px;
+    font-size: 19px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-right: 30px;
+}
+.ModifyReservation{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 220px;
+  height: 59px;
+  color:#fff;
+  background: #4c00b4;
+  border-radius: 50px;
+  font-size: 19px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-right: 30px;
+}
+.addCarbtn.car-added {
+    background-color: grey !important; /* Override color when car is added */
+    pointer-events: none;}
+
+  /* Add responsive design adjustments if necessary */
+  @media (max-width: 768px) {
+    .car-card {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+  }
