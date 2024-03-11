@@ -13,7 +13,7 @@ const Login = () => {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post("http://localhost:3000/login", {
+            const response = await axios.post("/api/login", {
                 email: email,
                 password: password
             });
@@ -41,11 +41,15 @@ const Login = () => {
 
                 <div className="input">
                     <img src={email_icon} alt=""/>
-                    <input type="text" placeholder="Email"/>
+                    <input type="text" placeholder="Email" onChange={(e) => {
+              setEmail(e.target.value);
+            }}/>
                 </div>
                 <div className="input">
                     <img src={password_icon} alt=""/>
-                    <input type="password" placeholder="Password"/>
+                    <input type="password" placeholder="Password" onChange={(e) => {
+              setPassword(e.target.value);
+            }}/>
                 </div>
                 <div className="forgot-password">Forgot Password?</div>
                 <div className="submit-container">
