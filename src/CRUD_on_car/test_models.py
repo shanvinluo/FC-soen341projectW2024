@@ -1,5 +1,5 @@
 import os
-from Vehicles_model import Car
+from CRUD_on_car.Vehicles_model import Car
 
 def test_new_Vehicle():
     """
