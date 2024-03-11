@@ -7,7 +7,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest  # Use the latest version of Ubuntu as the runner
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -18,8 +18,26 @@ jobs:
         with:
           python-version: '3.12'  # Specify the Python version
 
-      - name: Install dependencies
+      - name: Install pytest
         run: pip3 install pytest
+
+      - name: Install requests
+        run: pip3 install requests
+
+      - name: Install Flask
+        run: pip3 install Flask
+
+      - name: Install Flask-SQLAlchemy
+        run: pip3 install Flask-SQLAlchemy
+
+      - name: Install Flask-SQLAlchemy
+        run: pip3 install sqlalchemy.exc
+        
+      - name: Install Flask-SQLAlchemy
+        run: pip3 install flask_mysqldb flask_cors
+
+      - name: Install Flask-SQLAlchemy
+        run: pip3 install werkzeug.security
 
       - name: Run tests
         run: pytest
