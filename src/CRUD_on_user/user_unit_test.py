@@ -51,9 +51,9 @@ def test_add_user(client):
     client.delete("/user/test2")
 
 def test_delete_user(client):
-    response = client.post('/user', json={'username': 'test', 'email': 'test@test.com', 'password': 'test'})
+    response = client.post('/user', json={'username': 'test1', 'email': 'test@test.com', 'password': 'test'})
     assert response.status_code == 201
-    response = client.delete('/user/test')
+    response = client.delete('/user/test1')
     assert response.status_code == 200
     data = response.get_json()
     assert 'message' in data
