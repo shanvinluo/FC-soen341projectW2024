@@ -1,4 +1,4 @@
-from VehiclesDB import db
+from CRUD_on_car.VehiclesDB import db
 
 class Car(db.Model):
 

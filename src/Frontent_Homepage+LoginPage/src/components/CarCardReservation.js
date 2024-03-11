@@ -13,8 +13,25 @@ function CarCardReservation({ car  ,onCancel,onUpdate}) {
       setEditMode(!editMode);
     };
   
-    const handleSaveDates = () => {
+    const handleSaveDates = async () => {
       // Call the onUpdate function passed from the parent component
+      try {
+        const response = await fetch("http://127.0.0.1:5001/reservation/${reservationData.reservation_id}"
+        method: "PUT",
+        headers:{
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          reservation_id: reservationData.reservation_id,
+          reservation_id: newStart,
+          reservation_id: newEnd,
+          reservation_id: car.vehicle_id,
+          
+        })
+        )
+      } catch () {
+        
+      }
       onUpdate(car.id, newStart, newEnd);
       setEditMode(false); // Hide the inputs again
     };  

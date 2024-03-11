@@ -5,7 +5,6 @@ import { useState } from "react";
 
 function CarCard({ car, startDesiredDate, endDesiredDate }) {
   const [carAdded, setCarAdded] = useState(false); // State to track if car is successfully added
-
   const handleAddCar = async () => {
     if (!startDesiredDate || !endDesiredDate) {
       alert("Please select start and end dates before adding a car.");
@@ -13,6 +12,7 @@ function CarCard({ car, startDesiredDate, endDesiredDate }) {
     }
 
     const reservationData = {
+      reservation_id: "2",
       date_start: startDesiredDate,
       date_end: endDesiredDate,
       username: "new_username", // Placeholder: Replace with actual user logic.
