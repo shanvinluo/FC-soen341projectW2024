@@ -19,7 +19,7 @@ jobs:
           python-version: '3.12'  # Specify the Python version
 
       - name: Install dependencies
-        run: pip install -r pytest
+        run: pip3 install pytest
 
       - name: Run tests
         run: pytest
