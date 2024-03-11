@@ -29,6 +29,12 @@ jobs:
 
       - name: Install Flask-SQLAlchemy
         run: pip3 install Flask-SQLAlchemy
-
+        
+      - name: Install Flask-Cors
+        run: pip3 install Flask-Cors
+        
+      - name: Install Flask-MySQLdb
+        run: pip3 install Flask-MySQLdb
+      
       - name: Run tests
         run: pytest
