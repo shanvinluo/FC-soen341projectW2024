@@ -77,10 +77,12 @@ def update_Car(vehicule_id):
     while(check_id in car_ids):
         check_id += 1
     ################################
-    if not request.json:
-        abort(400)
     if car is None:
         abort(404)
+    if not request.json:
+        abort(400)
+    if (request.json.get("availability_end_date") != 0 or request.json.get("availability_end_date") != 0):
+        return "The vehicle availability can't be anything other than 1 or 0", 400
     car.vehicule_id=check_id
     car.model_name=request.json.get('model_name', car.model_name)
     car.seats=request.json.get('seats', car.seats)
