@@ -38,6 +38,11 @@ jobs:
 
       - name: Install pymysql
         run: pip3 install pymysql
-      
+        
+      - name: Start application
+        run: |
+         python3 -u src/CRUD_on_car/Vehicles_CRUD.py --port $PORT &
+        env:
+          PORT: 5000
       - name: Run tests
         run: pytest
