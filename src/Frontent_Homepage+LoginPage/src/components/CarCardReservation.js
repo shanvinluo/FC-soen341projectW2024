@@ -67,7 +67,7 @@ function CarCardReservation({ car, onCancel, onUpdate }) {
               onChange={(e) => setNewEnd(e.target.value)}
             />
           </div>
-          <button onClick={onUpdate} className="save-dates-button">
+          <button onClick={handleSaveDates} className="save-dates-button">
             Save Dates
           </button>
         </div>
@@ -82,5 +82,4 @@ function CarCardReservation({ car, onCancel, onUpdate }) {
     </div>
   );
 }
-
 export default CarCardReservation;

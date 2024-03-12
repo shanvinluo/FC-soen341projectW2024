@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import "../styles/Reservation.css";
 import CarCardReservation from "../components/CarCardReservation";
 
-const Reservation = () => {
+const Reservation = (newStart) => {
+  console.log(newStart);
   const [reservations, setReservations] = useState([]);
 
   // Check if the user is logged in, and if not, redirect to the login page
@@ -44,15 +45,10 @@ const Reservation = () => {
   const cancelReservation = async (reservationId) => {
     console.log(`Cancel reservation ${reservationId}`);
     // Implementation for canceling a reservation goes here
-    if (reservationId) {
-      console.error("Car or reservation ID is undefined");
-      return;
-    }
 
     try {
-      const username = localStorage.getItem("user_session_name");
       const response = await fetch(
-        `http://127.0.0.1:5001/reservation/${username}`,
+        `http://127.0.0.1:5001/reservation/${reservationId}`,
         {
           method: "DELETE",
         }
@@ -80,18 +76,21 @@ const Reservation = () => {
       const username = localStorage.getItem("user_session_name");
 
       const response = await fetch(
-        `http://127.0.0.1:5001/reservation/${username}`,
+        `http://127.0.0.1:5001/reservation/2147483647`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            reservation_id: reservationId,
-            date_start: newStart,
-            date_end: newEnd,
-            username: username,
-          }),
+          body: JSON.stringify(
+            {},
+            {
+              reservation_id: reservationId,
+              date_start: newStart,
+              date_end: newEnd,
+              username: username,
+            }
+          ),
         }
       );
       if (response.ok) {
