@@ -76,7 +76,7 @@ const Reservation = (newStart) => {
       const username = localStorage.getItem("user_session_name");
 
       const response = await fetch(
-        `http://127.0.0.1:5001/reservation/2147483647`,
+        `http://127.0.0.1:5001/reservation/${reservationId}`,
         {
           method: "PUT",
           headers: {

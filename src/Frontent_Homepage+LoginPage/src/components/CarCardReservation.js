@@ -72,7 +72,7 @@ function CarCardReservation({ car, onCancel, onUpdate }) {
           </button>
         </div>
       ) : (
-        <button onClick={handleUpdateClick} className="ModifyReservation">
+        <button onClick={onUpdate} className="ModifyReservation">
           Modify Dates
         </button>
       )}
