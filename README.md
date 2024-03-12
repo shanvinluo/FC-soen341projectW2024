@@ -27,7 +27,7 @@ The core features are:
 2. Install Dependencies:
 * Make sure you have Python installed on your system.
 * Navigate to the project directory: ```cd FC-soen341projectW2024```
-** Install dependencies: ```pip install -r requirements.txt```
+* Install dependencies: ```pip install -r requirements.txt```
 3. Run the Application:
 For the application to run properly, all of the following services need to be started. Each service runs on a different port, allowing them to operate simultaneously without interference.
 * Run the Frontend
