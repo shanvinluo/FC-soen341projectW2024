@@ -18,32 +18,6 @@ function CarCardReservation({ car, onCancel, onUpdate }) {
       console.error("Car is undefined");
       return;
     }
-
-    // Call the onUpdate function passed from the parent component
-    try {
-      const response = await fetch("http://127.0.0.1:5001/reservation/2", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          reservation_id: "1",
-          date_start: newStart,
-          date_end: newEnd,
-          username: "new_username",
-          vehicle_id: car.vehicle_id,
-        }),
-      });
-
-      if (response.ok) {
-        onUpdate(car.id, newStart, newEnd);
-        setEditMode(false);
-      } else {
-        console.error("Error updating reservation");
-      }
-    } catch (error) {
-      console.error("Error updating reservation", error);
-    }
   };
 
   return (
@@ -93,7 +67,7 @@ function CarCardReservation({ car, onCancel, onUpdate }) {
               onChange={(e) => setNewEnd(e.target.value)}
             />
           </div>
-          <button onClick={handleSaveDates} className="save-dates-button">
+          <button onClick={onUpdate} className="save-dates-button">
             Save Dates
           </button>
         </div>

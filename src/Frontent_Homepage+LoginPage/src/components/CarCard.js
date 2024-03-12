@@ -7,7 +7,7 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
   const [carAdded, setCarAdded] = useState(false); // State to track if car is successfully added
 
   function generateReservationId() {
-    const timestamp = new Date().getTime() / 100000000000;
+    const timestamp = new Date().getTime() / 100000000000000;
     const randomNum = Math.floor(Math.random() * 50) + 1;
 
     return `${timestamp}-${randomNum}`;
@@ -27,9 +27,8 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
       alert("Please select start and end dates before adding a car.");
       return;
     }
-    const user_name = localStorage.getItem("user_name");
-    console.log(user_name);
-    console.log(localStorage.getItem("user_session_name"));
+    const user_name = localStorage.getItem("user_session_name");
+
     const reservationData = {
       reservation_id: generateReservationId(),
       date_start: startDesiredDate,

@@ -27,7 +27,6 @@ const Signup = () => {
         email: email,
         password: password,
       });
-
       if (response && response.data && response.data.message) {
         console.log(response.data.message);
         if (response.data.code == "OK") {
