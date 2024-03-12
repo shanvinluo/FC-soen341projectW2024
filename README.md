@@ -33,11 +33,28 @@ The core features are:
 ** On macOS and Linux: ```source venv/bin/activate```
 ** Install dependencies: ```pip install -r requirements.txt```
 3. Run the Application:
-* Set the Flask app environment variable:
-* On Windows: ```set FLASK_APP=app.py```
-* On macOS and Linux: ```export FLASK_APP=app.py```
-* Start the Flask development server: ```flask run```
-4. Access the Application: Navigate to ```http://localhost:5000 in your web browser.``` <br>
+For the application to run properly, all of the following services need to be started. Each service runs on a different port, allowing them to operate simultaneously without interference.
+* Run the Frontend
+  * Open a Terminal in VSCode.
+  * Navigate to the frontend directory: ```cd src/Frontent_Homepage+LoginPage/src```
+  * Start the frontend application: ```npm start```
+  * This will launch the frontend on your default web browser on http://localhost:3000.
+* Run reservation.py
+  * Open a new Terminal in VSCode.
+  * Copy the path to reservation.py.
+  * Run the script by replacing <path> with the copied path: ```python3 -u "<path>"```
+* Run user.py
+  * Open a new Terminal in VSCode.
+  * Copy the path to user.py.
+  * Run the script by replacing <path> with the copied path: ```python3 -u "<path>"```
+* Run Vehicles_CRUD.py
+  * Open a Terminal from your computer (not from VSCode).
+  * Copy the path to the CRUD_on_car directory of the GitHub repo.
+  * Navigate to the directory by replacing <path> with the copied path: ```cd "<path>"```
+  * Set the Flask app environment variable:
+    * On Windows: ```set FLASK_APP=app.py```
+    * On macOS and Linux: ```export FLASK_APP=app.py```
+  * Start the Flask development server: ```flask run```
 <strong>** Note </strong>: Ensure that no other application is running on port 5000 on your local machine. 
 
 ### Repository Structure

@@ -3,55 +3,54 @@ import "../styles/Reservation.css";
 import CarCardReservation from "../components/CarCardReservation";
 
 const Reservation = () => {
-  const [results, setResults] = useState([]);
+  const [reservations, setReservations] = useState([]);
 
-  const fetchResults = () => {
-    const allCars = [
-      {
-        id: 1,
-        name: "Car A",
-        seats: "4 Seats",
-        price: 100,
-        availableFrom: "2024-01-01",
-        availableUntil: "2024-01-10",
-      },
-      {
-        id: 2,
-        name: "Car B",
-        seats: "2 Seats",
-        price: 150,
-        availableFrom: "2024-01-05",
-        availableUntil: "2024-02-15",
-      },
-      {
-        id: 3,
-        name: "Car C",
-        seats: "6 Seats",
-        price: 300,
-        availableFrom: "2024-02-01",
-        availableUntil: "2024-02-20",
-      },
-      // more cars...
-    ];
-    return allCars;
-  };
-
+  // Check if the user is logged in, and if not, redirect to the login page
   useEffect(() => {
-    const reservedCars = fetchResults();
-    setResults(reservedCars);
-  }, []);
-  const cancelReservation = (carId) => {
-    setResults(results.filter((car) => car.id !== carId));
-  };
-  const handleDateUpdate = (carId, newStart, newEnd) => {
-    setResults(
-      results.map((car) => {
-        if (car.id === carId) {
-          return { ...car, availableFrom: newStart, availableUntil: newEnd };
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+    if (isLoggedIn !== true && isLoggedIn !== "true") {
+      window.location.href = "/login";
+    }
+
+    const username = localStorage.getItem("user_session_name");
+    // Make sure username is not null or undefined
+    if (!username) {
+      console.error("Username is not set");
+      // Redirect to login or handle the error as needed
+      window.location.href = "/login";
+      return;
+    }
+
+    const fetchReservations = async () => {
+      try {
+        // Adjust the URL to either use a hardcoded username or the one from storage
+        // const url = `http://127.0.0.1:5001/reservation/${username}`; // Uncomment and use this if backend is ready
+        const url = "http://127.0.0.1:5001/reservation/new_username"; // Temp: hardcoded for demonstration
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
         }
-        return car;
-      })
+        const allReservations = await response.json();
+        setReservations(allReservations.reservations); // Adjust according to your actual data structure
+      } catch (error) {
+        console.error("Failed to fetch reservations:", error);
+      }
+    };
+
+    fetchReservations();
+  }, []); // Dependency array is empty, so this effect runs once after the initial render
+
+  const cancelReservation = (reservationId) => {
+    console.log(`Cancel reservation ${reservationId}`);
+    // Implementation for canceling a reservation goes here
+  };
+
+  const handleDateUpdate = (reservationId, newStart, newEnd) => {
+    console.log(
+      `Update reservation ${reservationId} to start: ${newStart}, end: ${newEnd}`
     );
+    // Implementation for updating a reservation's date goes here
   };
 
   return (
@@ -63,11 +62,11 @@ const Reservation = () => {
       <div className="containerHome">
         <h1>Manage Rentals</h1>
         <ul>
-          {results.map((car) => (
+          {reservations.map((reservation) => (
             <CarCardReservation
-              key={car.id}
-              car={car}
-              onCancel={() => cancelReservation(car.id)}
+              key={reservation.reservation_id}
+              reservation={reservation}
+              onCancel={() => cancelReservation(reservation.reservation_id)}
               onUpdate={handleDateUpdate}
             />
           ))}

@@ -14,6 +14,10 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
   }
 
   const handleAddCar = async () => {
+    if (!localStorage.getItem("isLoggedIn")) {
+      alert("Please log in first!");
+      return;
+    }
     if (!startDesiredDate || !endDesiredDate) {
       alert("Please select start and end dates before adding a car.");
       return;
@@ -23,12 +27,14 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
       alert("Please select start and end dates before adding a car.");
       return;
     }
-
+    const user_name = localStorage.getItem("user_name");
+    console.log(user_name);
+    console.log(localStorage.getItem("user_session_name"));
     const reservationData = {
-      reservation_id: "2",
+      reservation_id: generateReservationId(),
       date_start: startDesiredDate,
       date_end: endDesiredDate,
-      username: "new_username", // Placeholder: Replace with actual user logic.
+      username: user_name, // Placeholder: Replace with actual user logic.
       vehicule_id: car.vehicule_id,
     };
 

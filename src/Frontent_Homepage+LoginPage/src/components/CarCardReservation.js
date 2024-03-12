@@ -14,7 +14,6 @@ function CarCardReservation({ car, onCancel, onUpdate }) {
 
   const handleSaveDates = async () => {
     // Check if car is defined before updating
-
     if (!car) {
       console.error("Car is undefined");
       return;
