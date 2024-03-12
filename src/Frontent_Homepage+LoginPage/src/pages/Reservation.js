@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import "../styles/Reservation.css";
 import CarCardReservation from "../components/CarCardReservation";
 
-const Reservation = () => {
+const Reservation = (newStart) => {
+  console.log(newStart);
   const [reservations, setReservations] = useState([]);
 
   // Check if the user is logged in, and if not, redirect to the login page
@@ -26,7 +27,7 @@ const Reservation = () => {
       try {
         // Adjust the URL to either use a hardcoded username or the one from storage
         // const url = `http://127.0.0.1:5001/reservation/${username}`; // Uncomment and use this if backend is ready
-        const url = "http://127.0.0.1:5001/reservation/new_username"; // Temp: hardcoded for demonstration
+        const url = `http://127.0.0.1:5001/reservation/${username}`; // Temp: hardcoded for demonstration
         const response = await fetch(url);
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -41,16 +42,65 @@ const Reservation = () => {
     fetchReservations();
   }, []); // Dependency array is empty, so this effect runs once after the initial render
 
-  const cancelReservation = (reservationId) => {
+  const cancelReservation = async (reservationId) => {
     console.log(`Cancel reservation ${reservationId}`);
     // Implementation for canceling a reservation goes here
+
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:5001/reservation/${reservationId}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (response.ok) {
+        console.log("Reservation cancelled successfully");
+      } else {
+        console.error(
+          "Error cancelling reservation. Server responded with status:",
+          response.status
+        );
+      }
+    } catch (error) {
+      console.error("Error cancelling reservation:", error);
+    }
   };
 
-  const handleDateUpdate = (reservationId, newStart, newEnd) => {
+  const handleDateUpdate = async (reservationId, newStart, newEnd) => {
     console.log(
       `Update reservation ${reservationId} to start: ${newStart}, end: ${newEnd}`
     );
     // Implementation for updating a reservation's date goes here
+    try {
+      const username = localStorage.getItem("user_session_name");
+
+      const response = await fetch(
+        `http://127.0.0.1:5001/reservation/${reservationId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(
+            {},
+            {
+              reservation_id: reservationId,
+              date_start: newStart,
+              date_end: newEnd,
+              username: username,
+            }
+          ),
+        }
+      );
+      if (response.ok) {
+        console.log("modification was succesfull");
+      } else {
+        console.error("error updating reservation.");
+      }
+    } catch (error) {
+      console.log("error updating reservation.", error);
+    }
   };
 
   return (
