@@ -69,6 +69,10 @@ The repository will be split into 4 sprint folders. All of those folders will in
 * DBMS: MySQL
 * Architecture: Microservices architectural pattern
 
+### Deployment and feature video
+
+Below, there is the link to a video demonstrating the features and how to deploy the project
+[Video](https://www.youtube.com/watch?v=IiXKNtkSfwk)
 
 ### Contributors and roles
 * <strong> Shanvin Luo (40248485) (github.com/shanvinluo) </strong>: Product Manager, Full-Stack Developer: <br>
@@ -84,10 +88,6 @@ As the Documentation Coordinator, I oversee the review and organization of our d
 * <strong> Michael Shokralla (40209659) (github.com/Mike67911) </strong>: QA Backend, Mainly Backend Developer, Secretary: <br>
 As QA Frontend, I will be the main person reviewing, commenting, and approving the backend-related codes. Whilst I will be involved in all coding processes, I will mainly be working on the back-end aspect. As secretary, I am also one of the people in charge of the meeting notes. 
 
-### Deployment and feature video
-
-Below, there is the link to a video demonstrating the features and how to deploy the project
-[Video](https://www.youtube.com/watch?v=IiXKNtkSfwk)
 
 ### Contributing
 Contributions are welcome! Please follow these guidelines:
