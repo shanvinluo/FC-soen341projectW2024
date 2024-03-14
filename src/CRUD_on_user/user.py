@@ -3,7 +3,11 @@ from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS #modification
 app = Flask(__name__)
+
+
 CORS(app) #modification
+
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 # Configure MySQL
 
 
@@ -135,5 +139,6 @@ def authenticate():
 
 if __name__ == '__main__':
     app.run(debug=True, port=5002)
+    # port=5002
 
 

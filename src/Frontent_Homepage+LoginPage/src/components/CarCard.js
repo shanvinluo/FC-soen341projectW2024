@@ -1,7 +1,8 @@
 import React from "react";
 import "../styles/CarCard.css";
 import user_icon from "../Assets/person.png";
-import { useState } from "react";
+//import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
   const [carAdded, setCarAdded] = useState(false); // State to track if car is successfully added
@@ -45,10 +46,13 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
         },
         body: JSON.stringify(reservationData),
       });
-
+      
+      
       if (response.ok) {
         setCarAdded(true);
-        alert("Car added to reservations!");
+        const username = localStorage.getItem("user_session_name");
+        console.log(username)
+        alert("Car added to reservations for the user: " + username);
       } else {
         const errorData = await response.json();
         alert(`Failed to add car: ${errorData.error}`);

@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Home.css";
 import CarCard from "../components/CarCard";
+
+
+
 const formatDate = (dateString) => {
   return dateString ? new Date(dateString).toISOString().slice(0, 10) : "";
 };
@@ -10,6 +13,8 @@ function Home() {
   const [endDesiredDate, setDesiredEndDate] = useState("");
   const [results, setResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
+
+
   /*useEffect(()=>{
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     console.log(isLoggedIn);
@@ -57,7 +62,7 @@ function Home() {
   // };
   const fetchResults = async () => {
     // Construct the URL with query parameters for price range, start date, and end date if needed
-    const url = new URL("http://localhost:5000/Cars/list");
+    const url = new URL("http://127.0.0.1:5000/Cars/list");
 
    
 

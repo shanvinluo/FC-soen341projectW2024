@@ -5,8 +5,25 @@ from sqlalchemy.exc import IntegrityError
 from flask_cors import CORS
 
 
+
+
 app1 = create_app('default')
+
+#allowed_methods = ["GET", "POST", "PUT", "DELETE"]
+#allowed_headers = ["Content-Type", "Authorization"]
+
+# Apply CORS with additional headers
+#CORS(app1, origins='http://localhost:3000')
+
 CORS(app1)
+cors = CORS(app1, resources={r"/*": {"origins": "*"}})
+
+
+
+
+
+
+#CORS(app1)
 @app1.route("/")
 def home():
     return "welcome"

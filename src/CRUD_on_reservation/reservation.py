@@ -4,6 +4,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 # Configure MySQL
 app.config['MYSQL_HOST'] = 'sql5.freemysqlhosting.net'
 app.config['MYSQL_USER'] = 'sql5686988'
@@ -158,5 +159,6 @@ def modify_reservation(id):
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
+    #, port=5001
 
 

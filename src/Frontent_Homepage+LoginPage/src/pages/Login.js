@@ -24,7 +24,8 @@ const Login = () => {
         localStorage.setItem("isLoggedIn", true);
         localStorage.setItem("user_session_name", username);
         const storedUsername = localStorage.getItem("user_session_name");
-        console.log("user_session_name:", storedUsername);
+        console.log("user_session_name:", storedUsername, "aussi type:", typeof storedUsername);
+        
         window.location.href = "/home";
       } else {
         console.log("Login pas successful womp womp!");
