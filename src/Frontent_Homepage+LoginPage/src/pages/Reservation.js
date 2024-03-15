@@ -116,6 +116,7 @@ const Reservation = (newStart) => {
         <ul>
           {reservations.map((reservation) => (
             <CarCardReservation
+              //car={{car: "info"}}
               key={reservation.reservation_id}
               reservation={reservation}
               onCancel={() => cancelReservation(reservation.reservation_id)}

@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import "../styles/CarCardReservation.css";
 import user_icon from "../Assets/person.png";
+//import { reservationData } from '../components/CarCard';
+function CarCardReservation({ car, onCancel, onUpdate, reservation }) {
 
-function CarCardReservation({ car, onCancel, onUpdate }) {
+  console.log(reservation)
+  //console.log(reservationData); // Logging reservationData
   const [editMode, setEditMode] = useState(false);
   const [newStart, setNewStart] = useState(car?.availableFrom || "");
   const [newEnd, setNewEnd] = useState(car?.availableUntil || "");
@@ -24,25 +27,19 @@ function CarCardReservation({ car, onCancel, onUpdate }) {
     <div className="car-card">
       <div className="car-image" />
       <div className="car-details">
-        <div className="car-feature">
-          <span className="icon">🚗</span>
-          <span>{car?.name || "N/A"}</span>
-        </div>
+        
         <div className="car-feature">
           <span className="icon">
             {" "}
             <img src={user_icon} alt="" />
           </span>
-          <span>{car?.seats || "N/A"}</span>
+          <span>{"Reserved in the name:  "+ reservation.username || "N/A"}</span>
         </div>
-        <div className="car-feature">
-          <span className="icon">💰</span>
-          <span>{car?.price || "N/A"}</span>
-        </div>
+        
         <div className="car-feature">
           <span className="icon">🗓️</span>
           <span>
-            {car?.availableFrom} to {car?.availableUntil}
+            {reservation.date_start} to {reservation.date_end}
           </span>
         </div>
       </div>

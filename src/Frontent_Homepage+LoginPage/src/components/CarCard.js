@@ -3,6 +3,7 @@ import "../styles/CarCard.css";
 import user_icon from "../Assets/person.png";
 //import { useState } from "react";
 import { useState, useEffect } from "react";
+//import { createReservationData } from '../components/reservationData';
 
 function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
   const [carAdded, setCarAdded] = useState(false); // State to track if car is successfully added
@@ -30,6 +31,7 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
     }
     const user_name = localStorage.getItem("user_session_name");
 
+  
     const reservationData = {
       reservation_id: generateReservationId(),
       date_start: startDesiredDate,
