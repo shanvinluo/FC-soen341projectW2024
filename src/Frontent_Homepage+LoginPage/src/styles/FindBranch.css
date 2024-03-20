@@ -105,3 +105,19 @@
     background: #3d008e; /* Same hover color as submit button */
   }
   
+
+  .inputss {
+    margin-top: 55px;
+    display: flex;
+    gap: 25px;
+  }
+  .inputa,
+  p {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 380px;
+    height: 80px;
+    background: #eaeaea;
+    border-radius: 6px;
+  }
