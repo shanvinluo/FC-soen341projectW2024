@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../../styles/ConfirmPayment.css";
 
-const ConfirmPayment = () => {
+const ConfirmPaymentIN = () => {
   const [nameOnCard, setNameOnCard] = useState("");
   const [creditCardNumber, setCreditCardNumber] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
@@ -14,7 +14,8 @@ const ConfirmPayment = () => {
     if (nameOnCard && creditCardNumber.length === 16 && validateExpiryDate(expiryDate) && cvv.length === 3) {
       // All fields are filled correctly
       setSuccessMessage("Payment successful!");
-      setErrorMessage(""); // Clear any previous error message
+      setErrorMessage("");
+      alert("500$ has been successfully deposited!") // Clear any previous error message
     } else {
       setSuccessMessage(""); // Clear any previous success message
       setErrorMessage("Please fill all fields correctly.");
@@ -84,4 +85,4 @@ const ConfirmPayment = () => {
   );
 };
 
-export default ConfirmPayment;
+export default ConfirmPaymentIN;

@@ -7,6 +7,9 @@ import Login from "./pages/Login";
 import Reservation from "./pages/Reservation";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ConfirmPayment from "./pages/Payment_pages/ConfirmPayment";
+import ConfirmPaymentOUT from "./pages/Payment_pages/Checkoutpayment";
+import ConfirmPaymentIN from "./pages/Payment_pages/Checkinpayment";
+
 import FindBranch from "./pages/FindBranch"
 
 function App() {
@@ -20,6 +23,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/Home" element={<Home />} />
           <Route path="/ConfirmPayment" element={<ConfirmPayment />} />
+          <Route path="/ConfirmPaymentOUT" element={<ConfirmPaymentOUT />} />
+          <Route path="/ConfirmPaymentIN" element={<ConfirmPaymentIN />} />
           <Route path="/reservation" element={<Reservation />} />{" "}
           <Route path="/FindBranch" element={<FindBranch />} />
           {/* Add more Route components as needed */}
