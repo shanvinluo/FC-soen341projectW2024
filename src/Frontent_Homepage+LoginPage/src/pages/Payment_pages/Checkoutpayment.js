@@ -13,7 +13,7 @@ const ConfirmPayment = () => {
     event.preventDefault();
     if (nameOnCard && creditCardNumber.length === 16 && validateExpiryDate(expiryDate) && cvv.length === 3) {
       // All fields are filled correctly
-      setSuccessMessage("Payment successful!");
+      setSuccessMessage("500$ deposit returned successfully!");
       setErrorMessage(""); // Clear any previous error message
     } else {
       setSuccessMessage(""); // Clear any previous success message
