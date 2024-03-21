@@ -9,12 +9,35 @@ function FindBranch() {
   const submitPress = () => {
     window.location.href = "/home";
   };
+  const update_location = async (postalCode) => {
+    try {
+      const user_name = localStorage.getItem("user_session_name");
+      const response = await fetch(
+        `http://127.0.0.1:5002/user-location/${user_name}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            postal_code: postalCode,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to update postal code.");
+      }
+    } catch (error) {
+      throw new Error("Error updating postal code: " + error.message);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (postalCode.trim() !== "") {
       // If postal code is entered, display the message
-      setShowMessage(true);
+      update_location();
     }
   };
 
@@ -33,7 +56,10 @@ function FindBranch() {
           </div>
         </div>
         <div className="submit-container">
-          <button type="submit" className="submitButton" onClick={submitPress}>
+          <button
+            type="submit"
+            className="submitButton" /*onClick={submitPress}*/
+          >
             Find a car near me
           </button>
         </div>
