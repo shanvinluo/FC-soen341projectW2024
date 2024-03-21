@@ -9,21 +9,19 @@ function FindBranch() {
   const submitPress = () => {
     window.location.href = "/home";
   };
+
   const update_location = async (postalCode) => {
     try {
       const user_name = localStorage.getItem("user_session_name");
-      const response = await fetch(
-        `http://127.0.0.1:5002/user-location/${user_name}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            postal_code: postalCode,
-          }),
-        }
-      );
+      const response = await fetch(`http://127.0.0.1:5002/user/${user_name}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          postal_code: postalCode,
+        }),
+      });
 
       if (!response.ok) {
         throw new Error("Failed to update postal code.");

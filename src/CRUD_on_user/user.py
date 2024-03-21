@@ -64,19 +64,19 @@ def delete_user(user):
 @app.route('/user/<string:user>', methods=['PUT'])
 def update_user(user):
     data = request.json
-    if 'username' not in data or 'email' not in data or 'password' not in data:
+    if 'username' not in data or 'email' not in data or 'password' or 'postal_code' not in data:
         return jsonify({'error': 'Missing field!!'}), 400
 
     new_username = data['username']
     new_email = data['email']
     new_password = generate_password_hash(data['password'])
-    #new_password = generate_password_hash(data['password'])
-
+    new_postal_code = data['postal_code']
+    
     cur = mysql.connection.cursor()
     
     
-    cur.execute("UPDATE user_account SET username = %s, email = %s, password = %s WHERE username = %s OR email = %s",
-                (new_username, new_email, new_password, user, user))
+    cur.execute("UPDATE user_account SET username = %s, email = %s, password = %s, postal_code = %s WHERE username = %s OR email = %s",
+        (new_username, new_email, new_password, new_postal_code, user, user))
     
     if cur.rowcount == 0:
         return jsonify({'error': f'No user with username or email "{user}" exists'}), 404
@@ -85,28 +85,6 @@ def update_user(user):
     cur.close()
 
     return jsonify({'message': 'account updated successfully'}), 200
-
-@app.route('/user-location/<string:username>', methods=['PUT'])
-def update_location(username):
-    data = request.json
-    if 'postal_code' not in data:
-        return jsonify({'error': 'Missing postal_code field'}), 400
-
-    postal_code = data['postal_code']
-
-    cur = mysql.connection.cursor()
-
-    cur.execute("SELECT * FROM user_account WHERE username = %s", (username))
-    user = cur.fetchone()
-    if not user:
-        return jsonify({'error': f'User "{username}" not found'}), 404
-
-    cur.execute("UPDATE user_account SET postal_code = %s WHERE username = %s", (postal_code, username))
-    mysql.connection.commit()
-    cur.close()
-
-    return jsonify({'message': f'Postal code updated for user "{username}"'}), 200
-
 
 
 
