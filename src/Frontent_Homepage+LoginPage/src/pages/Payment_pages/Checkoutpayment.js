@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../../styles/ConfirmPayment.css";
 
-const ConfirmPayment = () => {
+const ConfirmPaymentOUT = () => {
   const [nameOnCard, setNameOnCard] = useState("");
   const [creditCardNumber, setCreditCardNumber] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
@@ -84,4 +84,4 @@ const ConfirmPayment = () => {
   );
 };
 
-export default ConfirmPayment;
+export default ConfirmPaymentOUT;
