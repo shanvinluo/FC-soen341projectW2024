@@ -63,6 +63,8 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
       console.error("Failed to add car to reservations:", error);
       alert("Network error when trying to add car.");
     }
+
+    window.location.href = "/CheckOut";
   };
   return (
     <div className="car-card">
