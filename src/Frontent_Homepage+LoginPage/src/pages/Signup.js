@@ -81,6 +81,19 @@ const Signup = () => {
           />
           <input type="password" />
         </div>
+        <div className="inputss">
+
+        <div className="inputa">
+
+        <p>Status</p>
+                <select>
+                  <option value="employee">employee</option>
+                  <option value="customer">customer</option>
+                </select>
+              </div>
+
+        </div>
+        
         <div className="submit-container">
           <div
             className={"submit"}

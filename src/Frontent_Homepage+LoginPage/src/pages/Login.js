@@ -26,7 +26,7 @@ const Login = () => {
         const storedUsername = localStorage.getItem("user_session_name");
         console.log("user_session_name:", storedUsername, "aussi type:", typeof storedUsername);
         
-        window.location.href = "/home";
+        window.location.href = "/FindBranch";
       } else {
         console.log("Login pas successful womp womp!");
         alert("username or password not correct try again");

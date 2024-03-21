@@ -71,27 +71,42 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
         <div className="car-feature">
           <span className="icon">🚗</span>
           <span>
-            {car.year}
-            {car.model_name}
-            {car.make_name}
+            {car.model_year} {car.model_name} {car.make_name}
           </span>
         </div>
-        <div className="car-feature">
-          <span className="icon">
-            {" "}
-            <img src={user_icon} alt="" />
-          </span>
-          <span>{car.seats}</span>
+        <div className="features-container">
+          <div className="car-feature">
+            <span className="icon">
+              {" "}
+              <img src={user_icon} alt="" />
+            </span>
+            <span>{car.seats}</span>
+          </div>
+          <div className="car-feature">
+            <span className="icon">💰</span>
+            <span>{car.price}</span>
+          </div>
+          <div className="car-feature">
+            <span className="icon"></span>
+            <span>Mileage: {car.mileage} km</span>
+          </div>
         </div>
+        <div className="features-container">
         <div className="car-feature">
-          <span className="icon">💰</span>
-          <span>{car.price}</span>
-        </div>
-        <div className="car-feature">
-          <span className="icon"></span>
-          <span>{car.features}</span>
-        </div>
+            <span className="icon"></span>
+            <span>Color: {car.color}</span>
+          </div>
+          <div className="car-feature">
+            <span className="icon"></span>
+            <span>Transmission Type: {car.transmission} </span>
+          </div>
+          <div className="car-feature">
+            <span className="icon"></span>
+            <span>Fuel Type:{car.fuelType}</span>
+          </div>
       </div>
+      </div>
+
       <button
         onClick={handleAddCar}
         className={`addCarbtn ${carAdded ? "car-added" : ""}`} // This allows you to use CSS for styling as well
