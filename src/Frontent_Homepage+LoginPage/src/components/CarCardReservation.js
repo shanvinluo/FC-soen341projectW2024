@@ -3,8 +3,7 @@ import "../styles/CarCardReservation.css";
 import user_icon from "../Assets/person.png";
 //import { reservationData } from '../components/CarCard';
 function CarCardReservation({ car, onCancel, onUpdate, reservation }) {
-
-  console.log(reservation)
+  console.log(reservation);
   //console.log(reservationData); // Logging reservationData
   const [editMode, setEditMode] = useState(false);
   const [newStart, setNewStart] = useState(car?.availableFrom || "");
@@ -27,15 +26,16 @@ function CarCardReservation({ car, onCancel, onUpdate, reservation }) {
     <div className="car-card">
       <div className="car-image" />
       <div className="car-details">
-        
         <div className="car-feature">
           <span className="icon">
             {" "}
             <img src={user_icon} alt="" />
           </span>
-          <span>{"Reserved in the name:  "+ reservation.username || "N/A"}</span>
+          <span>
+            {"Reserved in the name:  " + reservation.username || "N/A"}
+          </span>
         </div>
-        
+
         <div className="car-feature">
           <span className="icon">🗓️</span>
           <span>
