@@ -6,11 +6,9 @@ function FindBranch() {
   const [postalCode, setPostalCode] = useState(""); // State for the postal code
   const [showMessage, setShowMessage] = useState(false); // State to control message visibility
 
-  const submitPress =() => {
-
+  const submitPress = () => {
     window.location.href = "/home";
-        
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,12 +16,7 @@ function FindBranch() {
       // If postal code is entered, display the message
       setShowMessage(true);
     }
-
-    
-    
-  }
-  
-  ;
+  };
 
   return (
     <div>
@@ -44,7 +37,6 @@ function FindBranch() {
             Find a car near me
           </button>
         </div>
-        
       </form>
     </div>
   );
