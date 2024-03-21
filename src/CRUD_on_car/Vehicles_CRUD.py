@@ -3,7 +3,8 @@ from CRUD_on_car.Vehicles_model import Car
 from flask import jsonify, abort, request, make_response
 from sqlalchemy.exc import IntegrityError
 from flask_cors import CORS
-from datetime import datetime
+from datetime import datetime,date
+
 
 
 
@@ -47,12 +48,14 @@ def list_cars():
     if price_range:
         low, high = map(int, price_range.split('-'))
         query = query.filter(Car.price.between(low, high))
-
+        
     if start_desired_date:
-        query = query.filter(Car.availability_start_date >= datetime.strptime(start_desired_date, '%Y-%m-%d').date())
+        start_desired_date_object=datetime.strptime(start_desired_date, '%Y-%m-%d').date()
+        query = query.filter(Car.availability_start_date <= (start_desired_date_object))
 
     if end_desired_date:
-        query = query.filter(Car.availability_end_date <= datetime.strptime(end_desired_date, '%Y-%m-%d').date())
+        end_desired_date_object=datetime.strptime(end_desired_date, '%Y-%m-%d').date()
+        query = query.filter(Car.availability_end_date >= (end_desired_date_object))
 
     if fuel_type:
         query = query.filter(Car.fuel_type==fuel_type)
@@ -80,6 +83,10 @@ def list_cars():
         'fuel_type': car.fuel_type,
         'transmission': car.transmission,
         'color': car.color,
+        'seats':car.seats,
+        'availability_start_date':car.availability_start_date,
+        'availability_end_date':car.availability_end_date,
+ 
         # Include other fields as necessary
     } for car in cars])
 

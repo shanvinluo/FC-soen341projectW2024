@@ -104,7 +104,7 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
           </div>
           <div className="car-feature">
             <span className="icon"></span>
-            <span>Fuel Type:{car.fuelType}</span>
+            <span>Fuel Type:{car.fuel_type}</span>
           </div>
       </div>
       </div>
