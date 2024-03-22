@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../styles/CarCardReservation.css";
 import user_icon from "../Assets/person.png";
+import { useHref } from "react-router-dom";
 
 function CarCardReservation({ car, onCancel, onUpdate, reservation }) {
   console.log(reservation);
@@ -13,6 +14,11 @@ function CarCardReservation({ car, onCancel, onUpdate, reservation }) {
   const handleUpdateClick = () => {
     // Toggle the edit mode to show/hide the date inputs
     setEditMode(!editMode);
+  };
+
+  const onCheckOut = () => {
+    // Toggle the edit mode to show/hide the date inputs
+    window.location.href="/CheckOut"
   };
 
   const handleSaveDates = async () => {
@@ -132,7 +138,7 @@ function CarCardReservation({ car, onCancel, onUpdate, reservation }) {
       <button className={"CancelReservation"} onClick={onCancel}>
         Cancel Reservation
       </button>
-      <button className={"CancelReservation"} onClick={onCancel}>
+      <button className={"CancelReservation"} onClick={onCheckOut}>
         Check Out
       </button>
       {error && <div className="error-message">{error}</div>}
