@@ -13,6 +13,7 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [action, setAction] = useState("Sign up");
+  const [status, setStatus] = useState("0");
 
   const signUpUser = async () => {
     const result = await handleSignup();
@@ -26,6 +27,7 @@ const Signup = () => {
         username: username,
         email: email,
         password: password,
+        status: status, // Include status in the request
       });
       if (response && response.data && response.data.message) {
         console.log(response.data.message);
@@ -82,17 +84,21 @@ const Signup = () => {
           <input type="password" />
         </div>
         <div className="inputss">
+  <div className="inputa">
+    <p>Status</p>
+    <select
+  onChange={(e) => {
+    console.log("Selected value:", e.target.value);
+    setStatus(e.target.value);
+  }}
+>
+  <option value="0">customer</option>
+  <option value="1">employee</option>
+</select>
 
-        <div className="inputa">
+  </div>
+</div>
 
-        <p>Status</p>
-                <select>
-                  <option value="employee">employee</option>
-                  <option value="customer">customer</option>
-                </select>
-              </div>
-
-        </div>
         
         <div className="submit-container">
           <div
