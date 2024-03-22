@@ -86,7 +86,27 @@ def update_user(user):
 
     return jsonify({'message': 'account updated successfully'}), 200
 
+@app.route('/user-location/<string:username>', methods=['PUT'])
+def update_location(username):
 
+    data = request.json
+    if 'postal_code' not in data:
+        return jsonify({'error': 'Missing postal_code field'}), 400
+
+    postal_code = data['postal_code']
+
+    cur = mysql.connection.cursor()
+
+    cur.execute("SELECT * FROM user_account WHERE username = %s", (username,))
+    user = cur.fetchone()
+    if not user:
+        return jsonify({'error': f'User "{username}" not found'}), 404
+
+    cur.execute("UPDATE user_account SET postal_code = %s WHERE username = %s", (postal_code, username))
+    mysql.connection.commit()
+    cur.close()
+
+    return jsonify({'message': f'Postal code updated for user "{username}"'}), 200
 
 
 
