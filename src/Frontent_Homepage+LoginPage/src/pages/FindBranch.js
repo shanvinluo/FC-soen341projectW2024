@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import "../styles/FindBranch.css";
 import CarCard from "../components/CarCard";
@@ -10,24 +11,29 @@ function FindBranch() {
     window.location.href = "/home";
   };
 
-  const update_location = async (postalCode) => {
+  const update_location = async () => {
     try {
       const user_name = localStorage.getItem("user_session_name");
-      const response = await fetch(`http://127.0.0.1:5002/user/${user_name}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          postal_code: postalCode,
-        }),
-      });
 
-      if (!response.ok) {
-        throw new Error("Failed to update postal code.");
+      const response = await axios.put(
+        `http://127.0.0.1:5002/user-location/${user_name}`,
+        {
+          postal_code: postalCode,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response && response.data && response.data.message) {
+        console.log(response.data.message);
+      } else {
+        console.error("Response data is missing or invalid:", response);
       }
     } catch (error) {
-      throw new Error("Error updating postal code: " + error.message);
+      console.error("Error:", error.response?.data?.error);
     }
   };
 

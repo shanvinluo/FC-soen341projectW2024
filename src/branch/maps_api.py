@@ -37,7 +37,7 @@ def postal_code_geocode(postalCode):
 def  nearest_branch(user):
     cur=mysql.connection.cursor()
     
-    cur.execute("SELECT postal_code FROM users WHERE username = %s", (user,))
+    cur.execute("SELECT postal_code FROM user_account WHERE username = %s", (user,))
     data = cur.fetchone()
     if not data:
         return jsonify({'error': f'User "{user}" not found'}), 404
