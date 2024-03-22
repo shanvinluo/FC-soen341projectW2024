@@ -1,9 +1,12 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from geopy.distance import geodesic
 import requests
 from flask_mysqldb import MySQL
 
 app = Flask(__name__)
+
+CORS(app)
 
 app.config['MYSQL_HOST'] = 'sql5.freemysqlhosting.net'
 app.config['MYSQL_USER'] = 'sql5686988'
@@ -32,19 +35,22 @@ def postal_code_geocode(postalCode):
     else:
         return None, None
 
-
 @app.route('/nearest-branch/<string:user>', methods=['GET'])
 def  nearest_branch(user):
     cur=mysql.connection.cursor()
     
     cur.execute("SELECT postal_code FROM user_account WHERE username = %s", (user,))
     data = cur.fetchone()
+    cur.close()
+    
     if not data:
         return jsonify({'error': f'User "{user}" not found'}), 404
     
-    postalCode = data["postal_code"]
+    postalCode = data[0]
     
     userLat, userLong = postal_code_geocode(postalCode)
+    
+    print(userLat, userLong)
     
     if userLat is None or userLong is None:
         return jsonify({'error': 'unable to obtain coordinates'}), 400
@@ -53,8 +59,7 @@ def  nearest_branch(user):
     minimumDistance = float('inf')
     
     for branch, (lat, lon) in branch_location.items():
-        branch_location = (lat,lon)
-        distance = geodesic((userLat,userLong), branch_location).kilometers
+        distance = geodesic((userLat,userLong), (lat,lon)).kilometers
         if distance < minimumDistance:
             minimumDistance = distance
             nearest_branch = branch

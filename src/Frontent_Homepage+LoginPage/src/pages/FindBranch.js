@@ -37,11 +37,29 @@ function FindBranch() {
     }
   };
 
+  const find_nearest_branch = async () => {
+    try {
+      const user_name = localStorage.getItem("user_session_name");
+      const response = await axios.get(
+        `http://127.0.0.1:5003/nearest-branch/${user_name}`
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        throw new Error(response.data.error);
+      }
+    } catch (error) {
+      console.error("Error:", error.message);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (postalCode.trim() !== "") {
       // If postal code is entered, display the message
       update_location();
+      find_nearest_branch();
     }
   };
 
