@@ -7,6 +7,7 @@ import "../styles/Navbar.css"
 const logout = () => {
   localStorage.removeItem('isLoggedIn');
   const isLoggedIn = localStorage.getItem('isLoggedIn');
+  localStorage.removeItem('user_session_name');
   console.log(isLoggedIn); 
 
 };

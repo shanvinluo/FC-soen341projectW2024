@@ -87,3 +87,27 @@
     background: #EAEAEA;
     color:#676767;
 }
+
+
+.info-box {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .info-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+  }
+  
+  .info-list {
+    list-style-type: disc;
+    padding-left: 20px;
+  }
+  
+  .info-list li {
+    margin-bottom: 10px;
+  }
+  

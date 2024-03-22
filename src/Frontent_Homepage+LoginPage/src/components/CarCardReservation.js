@@ -132,6 +132,9 @@ function CarCardReservation({ car, onCancel, onUpdate, reservation }) {
       <button className={"CancelReservation"} onClick={onCancel}>
         Cancel Reservation
       </button>
+      <button className={"CancelReservation"} onClick={onCancel}>
+        Check Out
+      </button>
       {error && <div className="error-message">{error}</div>}
     </div>
   );
