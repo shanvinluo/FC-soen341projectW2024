@@ -31,22 +31,24 @@ def get_user():
 @app.route('/user', methods=['POST'])
 def add_user():
     data = request.json
-    if 'username' not in data or 'email' not in data or 'password' not in data:
+    if 'username' not in data or 'email' not in data or 'password' not in data or 'status' not in data:
         return jsonify({'error': 'Missing field!!'}), 400
 
-    # Extraire les données de la requête
+
     username = data['username']
     email = data['email']
     password = data['password']
+    status = int(data['status'])  #status c un int donc si employee 1 sinn ca mets 0
     cur = mysql.connection.cursor()
     hashed_password = generate_password_hash(password)
-    cur.execute("INSERT INTO user_account (username, email, password) VALUES (%s, %s, %s)", (username, email, hashed_password))
+    cur.execute("INSERT INTO user_account (username, email, password, employee) VALUES (%s, %s, %s, %s)", (username, email, hashed_password, status))
     
     mysql.connection.commit()
 
     cur.close()
 
     return jsonify({'message': 'account created successfully!!','code': 'OK'}), 201
+
 
     
 @app.route('/user/<string:user>', methods=['DELETE'])
