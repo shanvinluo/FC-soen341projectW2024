@@ -13,6 +13,7 @@ import Price from "./pages/Payment_pages/Price";
 
 
 import FindBranch from "./pages/FindBranch"
+import CheckOut from "./pages/CheckOut"
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/ConfirmPaymentIN" element={<ConfirmPaymentIN />} />
           <Route path="/reservation" element={<Reservation />} />{" "}
           <Route path="/FindBranch" element={<FindBranch />} />
+          <Route path="/CheckOut" element={<CheckOut />} />
           <Route path="/Price" element={<Price />} />
 
           {/* Add more Route components as needed */}

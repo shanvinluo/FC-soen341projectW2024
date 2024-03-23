@@ -17,6 +17,8 @@ function Home() {
   const [fuelType, setFuelType] = useState("");
   const [color, setColor] = useState('');
 const [mileage, setMileage] = useState('');
+//const [mileage, setMileage] = useState({ min: '', max: '' });
+
 const [transmissionType, setTransmissionType] = useState('');
 const [year, setYear] = useState('');
 
@@ -124,10 +126,14 @@ const [year, setYear] = useState('');
     if (transmissionType) queryParams.append('transmissionType', transmissionType);
     if (year) queryParams.append('year', year);
   
+    //const url = 'http://127.0.0.1:5000/Cars/list?${queryParams.toString()}';
     const url = `http://127.0.0.1:5000/Cars/list?${queryParams.toString()}`;
+    //const url = new URL("http://127.0.0.1:5000/Cars/list");
+   
   
     try {
       const response = await fetch(url);
+      
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }

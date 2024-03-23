@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../styles/CarCardReservation.css";
 import user_icon from "../Assets/person.png";
+import { useHref } from "react-router-dom";
 
 function CarCardReservation({ car, onCancel, onUpdate, reservation }) {
   console.log(reservation);
@@ -13,6 +14,11 @@ function CarCardReservation({ car, onCancel, onUpdate, reservation }) {
   const handleUpdateClick = () => {
     // Toggle the edit mode to show/hide the date inputs
     setEditMode(!editMode);
+  };
+
+  const onCheckOut = () => {
+    // Toggle the edit mode to show/hide the date inputs
+    window.location.href="/CheckOut"
   };
 
   const handleSaveDates = async () => {
@@ -29,11 +35,17 @@ function CarCardReservation({ car, onCancel, onUpdate, reservation }) {
       const availabilityEndDate = new Date(car.availability_end_date);
 
       if (startDate < availabilityStartDate || endDate > availabilityEndDate) {
-        throw new Error("Selected dates are not within the availability range of the car.");
+        throw new Error(
+          "Selected dates are not within the availability range of the car."
+        );
       }
 
       // Perform the update action by calling the API
-      await updateReservationDates(reservation.reservation_id, newStart, newEnd);
+      await updateReservationDates(
+        reservation.reservation_id,
+        newStart,
+        newEnd
+      );
 
       // Exit edit mode after successful update
       setEditMode(false);
@@ -42,18 +54,25 @@ function CarCardReservation({ car, onCancel, onUpdate, reservation }) {
     }
   };
 
-  const updateReservationDates = async (reservationId, newStartDate, newEndDate) => {
+  const updateReservationDates = async (
+    reservationId,
+    newStartDate,
+    newEndDate
+  ) => {
     try {
-      const response = await fetch(`http://127.0.0.1:5001/reservation/${reservationId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          date_start: newStartDate,
-          date_end: newEndDate,
-        }),
-      });
+      const response = await fetch(
+        `http://127.0.0.1:5001/reservation/${reservationId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            date_start: newStartDate,
+            date_end: newEndDate,
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to update reservation dates.");
@@ -75,7 +94,9 @@ function CarCardReservation({ car, onCancel, onUpdate, reservation }) {
             {" "}
             <img src={user_icon} alt="" />
           </span>
-          <span>{"Reserved in the name:  " + reservation.username || "N/A"}</span>
+          <span>
+            {"Reserved in the name:  " + reservation.username || "N/A"}
+          </span>
         </div>
         <div className="car-feature">
           <span className="icon">🗓️</span>
@@ -116,6 +137,9 @@ function CarCardReservation({ car, onCancel, onUpdate, reservation }) {
       )}
       <button className={"CancelReservation"} onClick={onCancel}>
         Cancel Reservation
+      </button>
+      <button className={"CancelReservation"} onClick={onCheckOut}>
+        Check Out
       </button>
       {error && <div className="error-message">{error}</div>}
     </div>

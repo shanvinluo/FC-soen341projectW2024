@@ -63,6 +63,8 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
       console.error("Failed to add car to reservations:", error);
       alert("Network error when trying to add car.");
     }
+
+    window.location.href = "/CheckOut";
   };
   return (
     <div className="car-card">
@@ -102,7 +104,7 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
           </div>
           <div className="car-feature">
             <span className="icon"></span>
-            <span>Fuel Type:{car.fuelType}</span>
+            <span>Fuel Type:{car.fuel_type}</span>
           </div>
       </div>
       </div>
