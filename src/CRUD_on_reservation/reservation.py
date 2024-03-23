@@ -121,6 +121,30 @@ def get_reservations_by_username(username):
 
     return jsonify({'reservations': reservations_list}), 200
 
+@app.route('/reservation/AllReservations', methods=['GET'])
+def get_reservations_Allreservations():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM reservation")
+    reservations = cur.fetchall()
+    cur.close()
+
+    if not reservations:
+        return jsonify({'error': 'No reservations found for this car'}), 404
+    
+    # Convert to a list of dictionaries to make it JSON serializable
+    reservations_list = []
+    for reservation in reservations:
+        reservations_list.append({
+            'reservation_id': reservation[0],
+            'date_start': str(reservation[1]),  # Assuming these are datetime objects
+            'date_end': str(reservation[2]),
+            'username': reservation[3],
+            'vehicle_id': reservation[4]
+        })
+
+    return jsonify({'reservations': reservations_list}), 200
+
+
 @app.route('/reservation/<int:id>', methods=['PUT'])
 def modify_reservation(id):
     cur = mysql.connection.cursor()
