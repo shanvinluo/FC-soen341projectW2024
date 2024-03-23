@@ -6,7 +6,7 @@ import Signup from "./pages/Signup"; // Ensure you have a Signup component
 import Login from "./pages/Login";
 import Reservation from "./pages/Reservation";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ConfirmPayment from "./pages/Payment_pages/ConfirmPayment";
+import ConfirmPayment from "./pages/ConfirmPayment";
 import ConfirmPaymentOUT from "./pages/Payment_pages/Checkoutpayment";
 import ConfirmPaymentIN from "./pages/Payment_pages/Checkinpayment";
 import Price from "./pages/Payment_pages/Price";

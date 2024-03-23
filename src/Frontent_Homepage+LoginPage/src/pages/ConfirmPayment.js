@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../styles/ConfirmPayment.css";
+import "../styles/ConfirmPayment.css";
 
 const ConfirmPayment = () => {
   const [nameOnCard, setNameOnCard] = useState("");
