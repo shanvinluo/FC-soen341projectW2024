@@ -1,0 +1,50 @@
+/* styles/Checkin.css */
+
+.checkin-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .checkin-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .checkin-form label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .checkin-form input[type="text"],
+  .checkin-form input[type="checkbox"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .checkin-form input[type="checkbox"] {
+    width: auto;
+  }
+  
+  .checkin-form button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .checkin-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  .error-message {
+    color: red;
+    margin-top: 10px;
+  }
+  

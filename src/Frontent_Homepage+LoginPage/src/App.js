@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ConfirmPayment from "./pages/ConfirmPayment";
 import FindBranch from "./pages/FindBranch"
 import CheckOut from "./pages/CheckOut"
+import CheckInPage from "./pages/Check-In";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/reservation" element={<Reservation />} />{" "}
           <Route path="/FindBranch" element={<FindBranch />} />
           <Route path="/CheckOut" element={<CheckOut />} />
+          <Route path="/Check-In" element={<CheckInPage />} />
           {/* Add more Route components as needed */}
           {/* Add more Route components as needed */}
         </Routes>
