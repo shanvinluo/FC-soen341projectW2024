@@ -33,17 +33,26 @@ const CheckInPage = () => {
   });
 
   const handleCheckIn = () => {
-    // Validate input data
-    if (bookingConfirmation && license) {
-      // Inspect car for damages
-      // Report damages if any
-      if (damages) {
-        setShowDamagesMessage(true); // Set state to true to show damages message
-      } else {
-        setDepositRequested(true); // For demonstration, set deposit requested to true
-      }
+    const inputs = document.querySelectorAll('input[type="text"]');
+    let allFieldsFilled = true;
+
+    inputs.forEach(input => {
+        if (!input.value.trim()) {
+            allFieldsFilled = false;
+            return;
+        }
+    });
+
+    if (allFieldsFilled) {
+        // Inspect car for damages
+        // Report damages if any
+        if (damages) {
+            setShowDamagesMessage(true); // Set state to true to show damages message
+        } else {
+            setDepositRequested(true); // For demonstration, set deposit requested to true
+        }
     } else {
-      alert('Please fill in all required fields.');
+        alert('Please fill in all required fields.');
     }
   };
 
@@ -128,9 +137,6 @@ const CheckInPage = () => {
           ></textarea>
         </div>
 
-        <button onClick={handleCheckIn}>Check In</button>
-        {showDamagesMessage && <p>Contact the branch for further instructions</p>}
-        {depositRequested && <p>Deposit requested successfully.</p>}
       </div>
       <div>
         
@@ -258,10 +264,15 @@ The Renter acknowledges receiving and reviewing a copy of the vehicle's insuranc
             <li>Date:{today} </li>
           </ul>
         </div>
+        <div className="checkin-form">
+      <button onClick={handleCheckIn}>Check In</button>
+        {showDamagesMessage && <p>Contact the branch for further instructions</p>}
+        {depositRequested && <p>Deposit requested successfully.</p>}
+        </div>
         </div>
 
       </div>
-      
+
     </div>
   );
 };

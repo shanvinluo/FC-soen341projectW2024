@@ -64,13 +64,16 @@ const fetchPostalCode = async () => {
     return (
         <div className="checkin-container">
 
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Enter Postal Code:
-                    <input type="text" value={postalCode} onChange={handleChange} />
-                </label>
-                <button type="submit">Convert</button>
-            </form>
+<form onSubmit={handleSubmit}>
+    <label style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'white' }}>
+        Enter Postal Code:
+        <input type="text" value={postalCode} onChange={handleChange} />
+    </label>
+    <button type="submit">Convert</button>
+</form >
+<div style={{display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center'}}>
             {coordinates && (
                 <LoadScript googleMapsApiKey={key}>
                     <GoogleMap
@@ -86,6 +89,7 @@ const fetchPostalCode = async () => {
                     </GoogleMap>
                 </LoadScript>
 )}
+</div>
         </div>
     );
 }
