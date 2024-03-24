@@ -6,55 +6,77 @@ const CheckInPage = () => {
   const [bookingConfirmation, setBookingConfirmation] = useState(false);
   const [license, setLicense] = useState('');
   const [today, setToday] = useState(new Date().toLocaleDateString());
-  const [reservationData, setReservationData] = useState({
-    reservation_id: '123456',
-    postal_code: 'H1A 0A1',
-    date_start: new Date('2024-03-25'), // Example start date
-    date_end: new Date('2024-03-30')     // Example end date
-  });
+  const [reservationData, setReservationData] = useState("");
   const [damages, setDamages] = useState(false);
   const [depositRequested, setDepositRequested] = useState(false);
   const [carCondition, setCarCondition] = useState("");
   const [carDamaged, setCarDamaged] = useState(false); 
   const [showDamagesMessage, setShowDamagesMessage] = useState(false); // State to control the visibility of damages message
-  const [carData, setCarData] = useState({ // Mock car data for testing
-    make_name: 'Toyota',
-    model_name: 'Corolla',
-    model_year: '2021',
-    vehicule_id: '123456',
-    color: 'Black',
-    price: '$50',
-    postal_code: 'H4L 2L9'
-  });
-  const [userData, setUserData] = useState({ // Mock user data for testing
-    username:'JohnDoe',
-    email: 'john@doe.com',
-    postal_code: 'H1A 0A1'
-  });
+  const [carData, setCarData] = useState("");
+  const [userData, setUserData] = useState("");
+  const[usernamee, setUsernamee]= useState("");
+  
+  useEffect(() => {
 
-  const handleCheckIn = () => {
-    const inputs = document.querySelectorAll('input[type="text"]');
-    let allFieldsFilled = true;
+    fetchReservationData();
+  }, []);
 
-    inputs.forEach(input => {
-        if (!input.value.trim()) {
-            allFieldsFilled = false;
-            return;
-        }
-    });
+  const username = localStorage.getItem("user_session_name");
+  const reservationUrl = "http://127.0.0.1:5001/reservation/" + username;
 
-    if (allFieldsFilled) {
-        // Inspect car for damages
-        // Report damages if any
-        if (damages) {
-            setShowDamagesMessage(true); // Set state to true to show damages message
-        } else {
-            setDepositRequested(true); // For demonstration, set deposit requested to true
-        }
-    } else {
-        alert('Please fill in all required fields.');
+  const fetchReservationData = async () => {
+    try {
+      const response = await fetch(reservationUrl);
+      if (!response.ok) {
+        throw new Error("Failed to fetch reservation data");
+      }
+      const data = await response.json();
+      setReservationData(data.reservations[0]);
+      // Extract car ID from reservation data and fetch car details
+      const carId = data.reservations[0].vehicle_id; // Assuming "vehicle_id" is the key for car ID in reservation data
+      if (carId) {
+        fetchCarData(carId);
+      }
+    } catch (error) {
+      console.error("Error fetching reservation data:", error);
     }
   };
+
+  const fetchCarData = async (carId) => {
+    try {
+      const carUrl = `http://127.0.0.1:5000/Car/${carId}`;
+      const response = await fetch(carUrl);
+      if (!response.ok) {
+        throw new Error("Failed to fetch car data");
+      }
+      const data = await response.json();
+      setCarData(data);
+    } catch (error) {
+      console.error("Error fetching car data:", error);
+    }
+  };
+
+  const handleCheckIn = () => {
+    // Validate input data
+    if (bookingConfirmation && license) {
+      // Inspect car for damages
+      // Report damages if any
+      if (damages) {
+        setShowDamagesMessage(true); // Set state to true to show damages message
+      } else {
+        setDepositRequested(true); // For demonstration, set deposit requested to true
+      }
+    } else {
+      alert('Please fill in all required fields.');
+    }
+  };
+
+  const callUsername =()=>{
+
+    const username = localStorage.getItem("user_session_name");
+    setUsernamee(username)
+    
+  }
 
   function showBookingConfirmation() {
     setBookingConfirmation(true);
@@ -97,6 +119,8 @@ const CheckInPage = () => {
     <div className="checkin-container">
       <div className="container">
         <div className="header">
+
+          <div className="color-back">
           <div className="text">Check-In</div>
           <div className="underline"></div>
         </div>
@@ -104,41 +128,12 @@ const CheckInPage = () => {
       <div className="checkin-form">
         <PostalCodeToCoordinates/>
 
-        <div className="input">
-          <input
-            type="radio"
-            id="carDamaged"
-            name="carCondition"
-            checked={carDamaged}
-            onChange={() => setCarDamaged(true)}
-          />
-          <label htmlFor="carDamaged">Car is not in the same condition</label>
-        </div>
-
-        <div className="input">
-          <input
-            type="radio"
-            id="sameCondition"
-            name="carCondition"
-            checked={!carDamaged}
-            onChange={() => setCarDamaged(false)}
-          />
-          <label htmlFor="sameCondition">Car is in the same condition</label>
-        </div>
-
-        <div className="input">
-          <span className="icon">📝</span>
-          <span className="label">Explain damages:</span>
-          <textarea
-            rows="4"
-            cols="50"
-            value={carCondition}
-            onChange={(e) => setCarCondition(e.target.value)}
-          ></textarea>
-        </div>
-
+       
+        {showDamagesMessage && <p>Contact the branch for further instructions</p>}
+        {depositRequested && <p>Deposit requested successfully.</p>}
       </div>
       <div>
+      </div>
         
         <div className="container">
         <div className="text">Car Rental Agreement</div>
@@ -147,21 +142,24 @@ const CheckInPage = () => {
         </div>
         <div className='subtitle'>1. Renter's Information:</div>
         <div className="inputs">
-            <div className="input">
-              <span className="label">Name:</span>
-              <span>{userData.username}</span>
-            </div>
-            <div className="input">
-              <span className="label">email:</span>
-              <span>{userData.email}</span>
-            </div>
-            <div className="input">
-              <span className="label">Address:</span>
-              <span>{userData.postal_code}</span>
-            </div>
+        <div className="input">
+          <span className="label">Name:</span>
+          <span>{username}</span>
+        </div>
+        <div className="input">
+          <span className="label">Email:</span>
+          <span>{userData.email}</span>
+        </div>
+        <div className="input">
+          <span className="label">Postal Code:</span>
+          <span>{userData.postal_code}</span>
+        </div>
             <div className='subtitle'>2. Vehicle Information:</div>
             </div>
+
           <div className="inputs">
+          {carData && (
+          <>
             <div className="input">
               <span className="icon">🚗</span>
               <span className="label">Car Make:</span>
@@ -173,10 +171,24 @@ const CheckInPage = () => {
               <span>{carData.model_name}</span>
             </div>
             <div className="input">
-              <span className="icon">🚗</span>
-              <span className="label">Year:</span>
+              <span className="icon">🕐</span>
+              <span className="label">Year: </span>
               <span>{carData.model_year}</span>
             </div>
+
+            <div className="input">
+              <span className="icon">🚗</span>
+              <span className="label">Color:</span>
+              <span>{carData.color}</span>
+            </div>
+
+            <div className="input">
+              <span className="icon">🚗</span>
+              <span className="label">Mileage:</span>
+              <span>{carData.mileage}</span>
+            </div>
+          </>
+        )}
             <div className="input">
               <span className="icon">🚗</span>
               <span className="label">Licence Plate Number:</span>
@@ -185,49 +197,45 @@ const CheckInPage = () => {
             <div className="input">
               <span className="icon">🚗</span>
               <span className="label">Vehicle Identification Number (VIN):</span>
-              <span>{carData.vehicule_id}</span>
+
+              <text></text>
+              <span>{}</span>
             </div>
-            <div className="input">
-              <span className="icon">🚗</span>
-              <span className="label">Color:</span>
-              <span>{carData.color}</span>
-            </div>
+
             <div className='subtitle'>3. Rental Details:</div>
+            {reservationData && (
+          <>
             <div className="input">
-              <span className="icon">💰</span>
-              <span className="label">Rental Start Date:</span>
-              <span>{reservationData.date_start.toDateString()}</span>
+              <span className="icon">🗓️</span>
+              <span className="label">Rent start:</span>
+              <span>{reservationData.date_start}</span>
             </div>
             <div className="input">
-              <span className="icon">💰</span>
-              <span className="label">Rental End Date:</span>
-              <span>{reservationData.date_end.toDateString()}</span>
+              <span className="icon">🗓️</span>
+              <span className="label">Rent end:</span>
+              <span>{reservationData.date_end}</span>
             </div>
+
+            <div className="input">
+              <span className="icon">💰</span>
+              <span className="label">Rental Period: </span>
+              
+            </div>
+          </>
+        )}
             <div className="input">
               <span className="icon">💰</span>
               <span className="label">Pickup Location:</span>
-              <span>{carData.postal_code}</span>
+              <span>{}</span>
             </div>
             <div className="input">
               <span className="icon">💰</span>
               <span className="label">Drop-off Location:</span>
-              <span>{carData.postal_code}</span>
+              <span>{}</span>
             </div>
-            <div className="input">
-              <span className="icon">💰</span>
-              <span className="label">Rental Period:</span>
-              <span>{getDaysElapsed(reservationData.date_start, reservationData.date_end)} days</span>
-            </div>
-            <div className="input">
-              <span className="icon">💰</span>
-              <span className="label">Mileage limit:</span>
-              <span>{carData.mileage}</span>
-            </div>
-            <div className="input">
-              <span className="icon">💰</span>
-              <span className="label">Price per day:</span>
-              <span>{carData.price}</span>
-            </div>
+            
+            
+            
             <div className="input">
               <span className="icon">💰</span>
               <span className="label">Additional Services:</span>
@@ -254,7 +262,7 @@ The Renter acknowledges receiving and reviewing a copy of the vehicle's insuranc
           <span>Rental Company:</span>
           <ul>
             <li>Signature: Car Rental Montreal</li>
-            <li>Print Name: Ahmed Baboucar</li>
+            <li>Print Name: {username}</li>
             <li>Date:{today} </li>
           </ul>
           <span>Renter:</span>
@@ -263,18 +271,16 @@ The Renter acknowledges receiving and reviewing a copy of the vehicle's insuranc
             <li>Print Name:<input type="text" placeholder="Name"/> </li>
             <li>Date:{today} </li>
           </ul>
-        </div>
-        <div className="checkin-form">
-      <button onClick={handleCheckIn}>Check In</button>
-        {showDamagesMessage && <p>Contact the branch for further instructions</p>}
-        {depositRequested && <p>Deposit requested successfully.</p>}
+
+          <button onClick={handleCheckIn}>Check In</button>
         </div>
         </div>
 
       </div>
-
+      
     </div>
   );
 };
 
 export default CheckInPage;
+

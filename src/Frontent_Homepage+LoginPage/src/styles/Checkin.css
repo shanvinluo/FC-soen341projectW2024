@@ -80,3 +80,15 @@
     /* Add any other styles you want for the subtitle class */
   }
   
+
+  .white-square {
+    background-color: white;
+    width: 100px; /* Set width as desired */
+    height: 100px; /* Set height as desired */
+  }
+
+  .color-back{
+
+    background-color: white;
+    margin-bottom: 10px;
+  }
