@@ -20,6 +20,7 @@ function Home() {
   const [transmissionType, setTransmissionType] = useState('');
   const [year, setYear] = useState('');
   const [allReservations, setAllReservations] = useState([]);
+  const [branch, setBranch] = useState("G0Y 6B3");
 
 
 
@@ -37,7 +38,7 @@ function Home() {
     if (mileage) queryParams.append('mileage', mileage);
     if (transmissionType) queryParams.append('transmissionType', transmissionType);
     if (year) queryParams.append('year', year);
-  
+    queryParams.append('postal_code',branch)
     //const url = 'http://127.0.0.1:5000/Cars/list?${queryParams.toString()}';
     const url = `http://127.0.0.1:5000/Cars/list?${queryParams.toString()}`;
     //const url = new URL("http://127.0.0.1:5000/Cars/list");

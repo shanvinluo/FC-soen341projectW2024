@@ -17,11 +17,11 @@ class Car(db.Model):
     fuel_type=db.Column(db.String(50))
     transmission=db.Column(db.String(50))
     color=db.Column(db.String(50))
-
+    postal_code=db.Column(db.String(50))
 
 
  
-    def __init__(self,vehicule_id, model_name, seats, features, make_name, model_year, availability,availability_start_date, availability_end_date,price,mileage,fuel_type,transmission,color):
+    def __init__(self,vehicule_id, model_name, seats, features, make_name, model_year, availability,availability_start_date, availability_end_date,price,mileage,fuel_type,transmission,color,postal_code):
         self.vehicule_id= vehicule_id
         self.model_name= model_name
         self.seats = seats
@@ -36,6 +36,8 @@ class Car(db.Model):
         self.fuel_type=fuel_type
         self.color=color
         self.transmission=transmission
+        self.postal_code=postal_code
+
         
     def to_json(self):
         return {
@@ -53,5 +55,5 @@ class Car(db.Model):
             "fuel_type":self.fuel_type,
             "color":self.color,
             "transmission":self.transmission,
-
+            "postal_code":self.postal_code,
         }
