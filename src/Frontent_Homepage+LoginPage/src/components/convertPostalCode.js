@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import "../styles/Checkin.css"; 
 const containerStyle = {
   width: '400px',
   height: '400px'
@@ -61,7 +62,7 @@ const fetchPostalCode = async () => {
     };
 
     return (
-        <div>
+        <div className="checkin-container">
 
             <form onSubmit={handleSubmit}>
                 <label>

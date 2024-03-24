@@ -33,7 +33,7 @@ function App() {
           <Route path="/FindBranch" element={<FindBranch />} />
           <Route path="/CheckOut" element={<CheckOut />} />
           <Route path="/Price" element={<Price />} />
-          <Route path="/Check-In" element={<CheckInPage />} />
+          <Route path="/CheckIn" element={<CheckInPage />} />
 
           {/* Add more Route components as needed */}
           {/* Add more Route components as needed */}

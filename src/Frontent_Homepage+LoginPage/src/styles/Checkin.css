@@ -48,3 +48,35 @@
     margin-top: 10px;
   }
   
+  .info-box {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .info-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+  }
+  
+  .info-list {
+    padding-left: 20px;
+    list-style-type: decimal;
+  }
+  
+  .info-list li {
+    margin-bottom: 10px;
+    list-style-type: decimal;
+  }
+  ol {
+    list-style-type: decimal;
+  }
+  .subtitle {
+    font-size: 1.5rem; /* Adjust font size as needed */
+    font-weight: bold; /* Adjust font weight as needed */
+    color: purple; /* Adjust text color as needed */
+    /* Add any other styles you want for the subtitle class */
+  }
+  
