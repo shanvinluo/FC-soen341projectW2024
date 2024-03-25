@@ -177,6 +177,8 @@ const fetchUserData = async () => {
   
     return licensePlate;
   }
+
+  //Inutile
   function getDaysElapsed(startDate, endDate) {
     // Convert both dates to milliseconds
     const startMillis = startDate.getTime();
@@ -191,6 +193,14 @@ const fetchUserData = async () => {
   
     return daysElapsed;
   }
+
+  const getDaysBetweenDates = (startDate, endDate) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const diffTime = Math.abs(end - start);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+};
   return (
     <div className="checkin-container">
       <div className="container">
@@ -338,6 +348,7 @@ const fetchUserData = async () => {
             <div className="input">
               <span className="icon">🗓️</span>
               <span className="label">Rental Period: </span>
+              <span>{getDaysBetweenDates(reservationData.date_start,reservationData.date_end)} days</span>
               <span>{}</span>
               
             </div>
