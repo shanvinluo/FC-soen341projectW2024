@@ -158,6 +158,8 @@ const fetchUserData = async () => {
   function showBookingConfirmation() {
     setBookingConfirmation(true);
   }
+
+  //Inutile
   function generateLicensePlate() {
     const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const numbers = '0123456789';
@@ -291,11 +293,11 @@ const fetchUserData = async () => {
             <div className="input">
               <span className="icon">🚗</span>
               <span className="label">Licence Plate Number:</span>
-              <span>{generateLicensePlate()}</span>
+              <span>{"QWE 123"}</span>
             </div>
             <div className="input">
               <span className="icon">🚗</span>
-              <span className="label">Vehicle Identification Number (VIN):</span>
+              <span className="label">Vehicle Identification Number (VIN): XXXXXXXXXXXXX</span>
 
               <text></text>
               <span>{}</span>
@@ -372,7 +374,7 @@ const fetchUserData = async () => {
             
             <div className="input">
               <span className="icon">⚠️</span>
-              <span className="label">Additional Services:</span>
+              <span className="label">Additional Services: Any additional service made by car rental montreal</span>
               <span>{}</span>
             </div>
           </div>
