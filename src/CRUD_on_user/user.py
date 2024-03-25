@@ -2,6 +2,11 @@ from flask import Flask, request, jsonify
 from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS #modification
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email import encoders
+
 app = Flask(__name__)
 
 
@@ -91,12 +96,12 @@ def update_user(user):
 @app.route('/user-location/<string:username>', methods=['PUT'])
 def update_location(username):
 
+
     data = request.json
     if 'postal_code' not in data:
         return jsonify({'error': 'Missing postal_code field'}), 400
 
     postal_code = data['postal_code']
-
     cur = mysql.connection.cursor()
 
     cur.execute("SELECT * FROM user_account WHERE username = %s", (username,))
@@ -111,6 +116,30 @@ def update_location(username):
     return jsonify({'message': f'Postal code updated for user "{username}"'}), 200
 
 
+@app.route('/user/verification', methods=['POST'])
+def receive_pdf_and_email():
+    
+    if request.method == 'POST':
+        # Check if request contains a PDF file
+        if 'application/pdf' in request.content_type:
+            pdf_data = request.data
+            # Process the received PDF data here
+            # For example, save it to a file
+            with open('received_pdf.pdf', 'wb') as f:
+                f.write(pdf_data)
+
+            # Check if the request contains email data
+            if 'email' in request.form:
+                email = request.form['email']
+                # Process the received email here
+                print('Email received:', email)
+                # You can perform further actions with the email data here
+
+            return 'PDF and email received successfully', 200
+        else:
+            return 'Unsupported Media Type', 415
+    else:
+        return 'Method Not Allowed', 405
 
 
 @app.route('/user/<string:username>', methods=['GET'])
