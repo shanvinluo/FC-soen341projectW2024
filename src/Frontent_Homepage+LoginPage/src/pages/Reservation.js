@@ -2,12 +2,10 @@ import React, { useState, useEffect } from "react";
 import "../styles/Reservation.css";
 import CarCardReservation from "../components/CarCardReservation";
 import ConfirmPaymentOUT from "./Payment_pages/Checkoutpayment";
-import { useLocation } from "react-router-dom";
 
 const Reservation = (newStart) => {
   console.log(newStart);
   const [reservations, setReservations] = useState([]);
-  const location = useLocation();
   // Check if the user is logged in, and if not, redirect to the login page
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
