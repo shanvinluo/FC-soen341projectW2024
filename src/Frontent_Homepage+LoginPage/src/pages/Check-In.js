@@ -90,7 +90,7 @@ const fetchUserData = async () => {
     const driverLicenseInput = document.querySelector('input[name="driverLicense"]');
     const printNameInput = document.querySelector('input[name="printName"]');
     const licenseInput = document.querySelector('input[name="license"]');
-    
+    const email = userData.email;
     if (driverLicenseInput.value && printNameInput.value && licenseInput.value) {
     } else {
       alert('Please fill in all required fields.');
@@ -98,12 +98,14 @@ const fetchUserData = async () => {
     const pdfBlob = await generatePDF(); // You need to implement this function
 
     try {
-        const response = await fetch('http://127.0.0.1:5002/user/verification', {
+      
+      const queryParams = new URLSearchParams();
+        const response = await fetch(`http://127.0.0.1:5002/user/verification?${queryParams.toString()}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/pdf', // Set the content type to application/pdf
             },
-            body: pdfBlob,
+            body: pdfBlob, email, 
         });
 
         if (!response.ok) {
