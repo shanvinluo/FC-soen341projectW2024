@@ -18,8 +18,9 @@ mysql = MySQL(app)
 
 # test branch locations
 branch_location = {
-    "branch1": (45.460126, -73.879895),
-    "branch2": (45.527175, -73.626089),
+    "branch1": (45.652197717402174, -73.50176354885129),
+    "branch2": (45.563839332490026, -73.59569335680084),
+    "branch3": (45.507820531633634, -73.73640446474886),
     }
 
 geocoding_api_key = "AIzaSyBIOP_0qMxQkVV2bvb2_0WjfjS95of3tkI"
