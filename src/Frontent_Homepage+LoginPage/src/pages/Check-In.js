@@ -15,14 +15,41 @@ const CheckInPage = () => {
   const [carData, setCarData] = useState("");
   const [userData, setUserData] = useState("");
   const[usernamee, setUsernamee]= useState("");
+  const[email,setEmail]=useState("");
+  const[postal_code,setPostalCode]=useState("");
   
   useEffect(() => {
 
+    fetchUserData();
+
+
     fetchReservationData();
+
+    
   }, []);
+
+
 
   const username = localStorage.getItem("user_session_name");
   const reservationUrl = "http://127.0.0.1:5001/reservation/" + username;
+  const userNom = localStorage.getItem("user_session_name");
+  const userUrl = "http://127.0.0.1:5002/user/"+ userNom;
+
+  // Inside your component function
+const fetchUserData = async () => {
+  try {
+    const response = await fetch(userUrl);
+    if (!response.ok) {
+      throw new Error('Failed to fetch user data');
+    }
+    const data = await response.json();
+    console.log('User data:', data);
+    setUserData(data.user); // Assuming the user data is nested under 'user' key
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+  }
+};
+  
 
   const fetchReservationData = async () => {
     try {
@@ -59,8 +86,7 @@ const CheckInPage = () => {
   const handleCheckIn = () => {
     // Validate input data
     if (bookingConfirmation && license) {
-      // Inspect car for damages
-      // Report damages if any
+      
       if (damages) {
         setShowDamagesMessage(true); // Set state to true to show damages message
       } else {
@@ -69,6 +95,10 @@ const CheckInPage = () => {
     } else {
       alert('Please fill in all required fields.');
     }
+
+    window.location.href = "/ConfirmPayment";
+
+    
   };
 
   const callUsername =()=>{
@@ -146,14 +176,24 @@ const CheckInPage = () => {
           <span className="label">Name:</span>
           <span>{username}</span>
         </div>
+
         <div className="input">
-          <span className="label">Email:</span>
-          <span>{userData.email}</span>
+        <span className="label">Email:</span>
+         <span>{userData.email}</span>
         </div>
         <div className="input">
-          <span className="label">Postal Code:</span>
-          <span>{userData.postal_code}</span>
+        <span className="label">Postal Code:</span>
+        <span>{userData ? userData.postal_code : 'Loading...'}</span>
         </div>
+
+        <div className="input">
+        <span className="label">Drivers license:</span>
+        <input type="text" placeholder="Enter valid driver's license"/>
+        </div>
+
+        
+
+        
             <div className='subtitle'>2. Vehicle Information:</div>
             </div>
 
@@ -177,7 +217,7 @@ const CheckInPage = () => {
             </div>
 
             <div className="input">
-              <span className="icon">🚗</span>
+              <span className="icon">🌈</span>
               <span className="label">Color:</span>
               <span>{carData.color}</span>
             </div>
@@ -202,6 +242,39 @@ const CheckInPage = () => {
               <span>{}</span>
             </div>
 
+            <div className="input">
+  <input
+    type="radio"
+    id="carDamaged"
+    name="carCondition"
+    checked={carDamaged}
+    onChange={() => setCarDamaged(true)}
+  />
+  <label htmlFor="carDamaged">Car is not in  same condition</label>
+</div>
+
+<div className="input">
+  <input
+    type="radio"
+    id="sameCondition"
+    name="carCondition"
+    checked={!carDamaged}
+    onChange={() => setCarDamaged(false)}
+  />
+  <label htmlFor="sameCondition">Car is in the same condition</label>
+</div>
+
+<div className="input">
+          <span className="icon">📝</span>
+          <span className="label">Explain damages:</span>
+          <textarea
+            rows="4"
+            cols="50"
+            value={carCondition}
+            onChange={(e) => setCarCondition(e.target.value)}
+          ></textarea>
+        </div>
+
             <div className='subtitle'>3. Rental Details:</div>
             {reservationData && (
           <>
@@ -217,27 +290,28 @@ const CheckInPage = () => {
             </div>
 
             <div className="input">
-              <span className="icon">💰</span>
+              <span className="icon">🗓️</span>
               <span className="label">Rental Period: </span>
+              <span>{}</span>
               
             </div>
           </>
         )}
             <div className="input">
-              <span className="icon">💰</span>
+              <span className="icon">⚠️</span>
               <span className="label">Pickup Location:</span>
-              <span>{}</span>
+              <span>{carData.postal_code}</span>
             </div>
             <div className="input">
-              <span className="icon">💰</span>
+              <span className="icon">⚠️</span>
               <span className="label">Drop-off Location:</span>
-              <span>{}</span>
+              <span>{carData.postal_code}</span>
             </div>
             
             
             
             <div className="input">
-              <span className="icon">💰</span>
+              <span className="icon">⚠️</span>
               <span className="label">Additional Services:</span>
               <span>{}</span>
             </div>
