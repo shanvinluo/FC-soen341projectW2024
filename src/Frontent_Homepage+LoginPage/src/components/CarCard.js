@@ -31,7 +31,6 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
     }
     const user_name = localStorage.getItem("user_session_name");
 
-  
     const reservationData = {
       reservation_id: generateReservationId(),
       date_start: startDesiredDate,
@@ -48,12 +47,11 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
         },
         body: JSON.stringify(reservationData),
       });
-      
-      
+
       if (response.ok) {
         setCarAdded(true);
         const username = localStorage.getItem("user_session_name");
-        console.log(username)
+        console.log(username);
         // alert("Car added to reservations for the user: " + username);
       } else {
         const errorData = await response.json();
@@ -94,7 +92,7 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
           </div>
         </div>
         <div className="features-container">
-        <div className="car-feature">
+          <div className="car-feature">
             <span className="icon"></span>
             <span>Color: {car.color}</span>
           </div>
@@ -106,7 +104,7 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
             <span className="icon"></span>
             <span>Fuel Type:{car.fuel_type}</span>
           </div>
-      </div>
+        </div>
       </div>
 
       <button

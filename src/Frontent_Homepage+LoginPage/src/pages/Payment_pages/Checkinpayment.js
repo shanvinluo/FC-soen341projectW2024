@@ -11,11 +11,17 @@ const ConfirmPaymentIN = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (nameOnCard && creditCardNumber.length === 16 && validateExpiryDate(expiryDate) && cvv.length === 3) {
+    if (
+      nameOnCard &&
+      creditCardNumber.length === 16 &&
+      validateExpiryDate(expiryDate) &&
+      cvv.length === 3
+    ) {
       // All fields are filled correctly
       setSuccessMessage("Payment successful!");
       setErrorMessage("");
-      alert("500$ has been successfully deposited!") // Clear any previous error message
+      alert("500$ has been successfully deposited!");
+      window.location.href = "/reservation"; // Clear any previous error message
     } else {
       setSuccessMessage(""); // Clear any previous success message
       setErrorMessage("Please fill all fields correctly.");
