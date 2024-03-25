@@ -17,7 +17,7 @@ const Reservation = (newStart) => {
     const username = localStorage.getItem("user_session_name");
     // Make sure username is not null or undefined
 
-    console.log(username)
+    console.log(username);
     if (!username) {
       console.error("Username is not set");
       // Redirect to login or handle the error as needed
