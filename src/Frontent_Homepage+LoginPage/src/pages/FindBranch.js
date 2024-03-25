@@ -1,11 +1,13 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/Login.css";
-import CarCard from "../components/CarCard";
 
 function FindBranch() {
   const [postalCode, setPostalCode] = useState("");
   const [showMessage, setShowMessage] = useState(false);
+  const [nearestBranch, setNearestBranch] = useState("");
+  const [distance, setDistance] = useState("");
+  const [hideMessage, setHideMessage] = useState(true);
 
   const submitPress = () => {
     window.location.href = "/home";
@@ -45,6 +47,11 @@ function FindBranch() {
       );
 
       if (response.status === 200) {
+        setNearestBranch(response.data["nearest_branch"]);
+        setDistance(response.data["distance (km)"]);
+
+        localStorage.setItem("nearest_branch", nearestBranch);
+
         return response.data;
       } else {
         throw new Error(response.data.error);
@@ -60,30 +67,50 @@ function FindBranch() {
       // If postal code is entered, display the message
       update_location();
       find_nearest_branch();
+      setShowMessage(true);
+      setHideMessage(false);
     }
   };
 
   return (
     <div className="container">
-      <form onSubmit={handleSubmit} className="inputs">
-        <div className="header">
-          <div className="text">Find a branch</div>
-          <div className="underline"></div>
+      {hideMessage && (
+        <form onSubmit={handleSubmit} className="inputs">
+          <div className="header">
+            <div className="text">Find a branch</div>
+            <div className="underline"></div>
+          </div>
+          <div className="input">
+            <input
+              type="text"
+              placeholder="Enter postal code"
+              value={postalCode}
+              onChange={(e) => setPostalCode(e.target.value)}
+            />
+          </div>
+          <div className="submit-container">
+            <button
+              type="submit"
+              className="submitButton" /*onClick={submitPress}*/
+            >
+              Find a car near me
+            </button>
+          </div>
+        </form>
+      )}
+
+      {showMessage && (
+        <div>
+          <div className="header">
+            <div className="text">Nearest Branch</div>
+            <div className="underline"></div>
+          </div>
+          <p>
+            The nearest branch is: {nearestBranch}. <br />
+            {nearestBranch} is {distance} km away.
+          </p>
         </div>
-        <div className="input">
-          <input
-            type="text"
-            placeholder="Enter postal code"
-            value={postalCode}
-            onChange={(e) => setPostalCode(e.target.value)}
-          />
-        </div>
-        <div className="submit-container">
-          <button type="submit" className="submitButton" onClick={submitPress}>
-            Find a car near me
-          </button>
-        </div>
-      </form>
+      )}
     </div>
   );
 }
