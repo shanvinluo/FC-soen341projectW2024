@@ -49,6 +49,9 @@ function FindBranch() {
       if (response.status === 200) {
         setNearestBranch(response.data["nearest_branch"]);
         setDistance(response.data["distance (km)"]);
+
+        localStorage.setItem("nearest_branch", nearestBranch);
+
         return response.data;
       } else {
         throw new Error(response.data.error);
