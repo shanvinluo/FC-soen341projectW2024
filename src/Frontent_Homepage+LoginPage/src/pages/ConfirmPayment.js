@@ -11,7 +11,12 @@ const ConfirmPayment = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (nameOnCard && creditCardNumber.length === 16 && validateExpiryDate(expiryDate) && cvv.length === 3) {
+    if (
+      nameOnCard &&
+      creditCardNumber.length === 16 &&
+      validateExpiryDate(expiryDate) &&
+      cvv.length === 3
+    ) {
       // All fields are filled correctly
       setSuccessMessage("Payment successful!");
       setErrorMessage(""); // Clear any previous error message
