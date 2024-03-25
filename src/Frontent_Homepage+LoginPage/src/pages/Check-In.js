@@ -83,27 +83,47 @@ const fetchUserData = async () => {
     }
   };
 
-  const handleCheckIn = () => {
+  const handleCheckIn = async () => {
     // Validate input data
-    if (bookingConfirmation && license && carDamaged) {
-        if (damages && !carCondition.trim()) {
-            alert('Please explain damages.');
-            return; // Stop execution if damages are reported but explanation is not provided
+    const driverLicenseInput = document.querySelector('input[name="driverLicense"]');
+    const printNameInput = document.querySelector('input[name="printName"]');
+    const licenseInput = document.querySelector('input[name="license"]');
+    
+    if (driverLicenseInput.value && printNameInput.value && licenseInput.value) {
+      try {
+        // Construct the data object to be sent
+        const requestData = {
+          driverLicense: driverLicenseInput.value,
+          printName: printNameInput.value,
+          license: licenseInput.value
+        };
+  
+        const response = await fetch(`/${usernamee}/verification`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestData),
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to send verification data');
         }
-        if (!bookingConfirmation || !license || !carDamaged) {
-            alert('Please fill in all required fields.');
-            return; // Stop execution if any required field is missing
-        }
-        if (damages) {
-            setShowDamagesMessage(true); // Set state to true to show damages message
-        } else {
-            setDepositRequested(true); // For demonstration, set deposit requested to true
-        }
-        window.location.href = "/ConfirmPayment";
+  
+        // Redirect to ConfirmPaymentIN after successful verification
+        window.location.href = '/ConfirmPaymentIN';
+      } catch (error) {
+        console.error('Error sending verification data:', error);
+        alert('An error occurred while sending verification data.');
+      }
     } else {
-        alert('Please fill in all required fields.');
+      alert('Please fill in all required fields.');
     }
-};
+  };
+  
+  
+
+
 
 
   const callUsername =()=>{
@@ -193,7 +213,7 @@ const fetchUserData = async () => {
 
         <div className="input">
         <span className="label">Drivers license:</span>
-        <input type="text" placeholder="Enter valid driver's license"/>
+        <input name="license" type="text" placeholder="Enter valid driver's license"/>
         </div>
 
         
@@ -346,8 +366,8 @@ The Renter acknowledges receiving and reviewing a copy of the vehicle's insuranc
           </ul>
           <span>Renter:</span>
           <ul>
-            <li>Signature:<input type="text" placeholder="Signature"/></li>
-            <li>Print Name:<input type="text" placeholder="Name"/> </li>
+            <li>Signature:<input name="driverLicense" type="text" placeholder="Signature"/></li>
+            <li>Print Name:<input name="printName" type="text" placeholder="Name"/> </li>
             <li>Date:{today} </li>
           </ul>
 
