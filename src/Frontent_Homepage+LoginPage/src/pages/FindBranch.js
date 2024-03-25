@@ -9,6 +9,25 @@ function FindBranch() {
   const [distance, setDistance] = useState("");
   const [hideMessage, setHideMessage] = useState(true);
 
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+    if (isLoggedIn !== true && isLoggedIn !== "true") {
+      window.location.href = "/login";
+    }
+
+    const username = localStorage.getItem("user_session_name");
+    // Make sure username is not null or undefined
+
+    console.log(username);
+    if (!username) {
+      console.error("Username is not set");
+      // Redirect to login or handle the error as needed
+      window.location.href = "/login";
+      return;
+    }
+  }, []);
+
   const branch_postal_code = {
     branch1: "H1A 0A1",
     branch2: "H2A 2N9",
