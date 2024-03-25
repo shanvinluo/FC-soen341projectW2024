@@ -92,46 +92,18 @@ const fetchUserData = async () => {
     const licenseInput = document.querySelector('input[name="license"]');
     
     if (driverLicenseInput.value && printNameInput.value && licenseInput.value) {
-      try {
-        // Construct the data object to be sent
-        const requestData = {
-          driverLicense: driverLicenseInput.value,
-          printName: printNameInput.value,
-          license: licenseInput.value
-        };
-  
-        const response = await fetch(`/${usernamee}/verification`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(requestData),
-        });
-  
-        if (!response.ok) {
-          throw new Error('Failed to send verification data');
-        }
-  
-        // Redirect to ConfirmPaymentIN after successful verification
-        window.location.href = '/ConfirmPaymentIN';
-      } catch (error) {
-        console.error('Error sending verification data:', error);
-        alert('An error occurred while sending verification data.');
-      }
     } else {
       alert('Please fill in all required fields.');
     }
     const pdfBlob = await generatePDF(); // You need to implement this function
 
-    // Create form data object to send the PDF and email
-    const formData = new FormData();
-    formData.append('pdf', pdfBlob, 'pdf.pdf');
-    formData.append('email', userData.email); // Replace with recipient's email
-
     try {
         const response = await fetch('http://127.0.0.1:5002/user/verification', {
             method: 'POST',
-            body: formData,
+            headers: {
+                'Content-Type': 'application/pdf', // Set the content type to application/pdf
+            },
+            body: pdfBlob,
         });
 
         if (!response.ok) {
