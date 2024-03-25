@@ -49,6 +49,25 @@ const Checkout = () => {
     }
   };
 
+  const getDaysBetweenDates = (startDate, endDate) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const diffTime = Math.abs(end - start);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+};
+
+
+  const calculateTotalPrice = () => {
+    if (!reservationData || !carData || !reservationData.date_start || !reservationData.date_end) {
+        return 0; // Not enough data to calculate
+    }
+    const days = getDaysBetweenDates(reservationData.date_start, reservationData.date_end);
+    return days * carData.price;
+};
+
+const totalPrice = calculateTotalPrice();
+
   const handleSubmit = () => {
     if (!agreementAccepted) {
         alert("You must accept the terms and conditions to proceed to payment.");
@@ -83,6 +102,12 @@ const Checkout = () => {
               <span className="icon">💰</span>
               <span className="label">Price per day:</span>
               <span>{carData.price}</span>
+            </div>
+
+            <div className="input">
+              <span className="icon">💰</span>
+              <span className="label">Price per day:</span>
+              <span>{totalPrice}</span>
             </div>
           </>
         )}
