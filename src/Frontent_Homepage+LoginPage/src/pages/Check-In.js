@@ -19,6 +19,7 @@ const CheckInPage = () => {
   const[usernamee, setUsernamee]= useState("");
   const[email,setEmail]=useState("");
   const[postal_code,setPostalCode]=useState("");
+  const [agreementAccepted, setAgreementAccepted] = useState(false);
   
   useEffect(() => {
 
@@ -224,8 +225,10 @@ const fetchUserData = async () => {
         <div className="container">
         <div className="text">Car Rental Agreement</div>
         <div className='subtitle'>Rental Agreement Number: <span>{reservationData.reservation_id} </span></div>
-        <div className='subtitle'>This Rental Agreement ("Agreement") is entered into between Car Rental Montreal, located at {carData.postal_code}, hereinafter referred to as the "Rental Company," and the individual or entity identified below, hereinafter referred to as the "Renter":
+
+        <div className='subtitle-low'>This Rental Agreement ("Agreement") is entered into between Car Rental Montreal, located at {carData.postal_code}, hereinafter referred to as the "Rental Company," and the individual or entity identified below, hereinafter referred to as the "Renter":
         </div>
+  
         <div className='subtitle'>1. Renter's Information:</div>
         <div className="inputs">
         <div className="input">
@@ -393,7 +396,7 @@ The Renter acknowledges receiving and reviewing a copy of the vehicle's insuranc
           <span>Rental Company:</span>
           <ul>
             <li>Signature: Car Rental Montreal</li>
-            <li>Print Name: {username}</li>
+            <li>Print Name: Car Aboubacar</li>
             <li>Date:{today} </li>
           </ul>
           <span>Renter:</span>
@@ -402,6 +405,16 @@ The Renter acknowledges receiving and reviewing a copy of the vehicle's insuranc
             <li>Print Name:<input name="printName" type="text" placeholder="Name"/> </li>
             <li>Date:{today} </li>
           </ul>
+
+          <div className="agreement">
+          <input
+            type="radio"
+            id="acceptAgreement"
+            checked={agreementAccepted}
+            onChange={() => setAgreementAccepted(!agreementAccepted)}
+          />
+          <label htmlFor="acceptAgreement">I agree to the terms and condition</label>
+        </div>
 
           <button onClick={handleCheckIn}>Check In</button>
         </div>
