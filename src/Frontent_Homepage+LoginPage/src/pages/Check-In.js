@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PostalCodeToCoordinates from '../components/convertPostalCode';
 import "../styles/Checkin.css"; 
+import axios from "axios";
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
@@ -86,42 +87,67 @@ const fetchUserData = async () => {
     }
   };
 
+  let carLicencePlate = generateLicensePlate();
   const handleCheckIn = async () => {
     // Validate input data
     const driverLicenseInput = document.querySelector('input[name="driverLicense"]');
     const printNameInput = document.querySelector('input[name="printName"]');
     const licenseInput = document.querySelector('input[name="license"]');
     const email = userData.email;
+    console.log(email);
+    console.log(userData.postal_code)
     if (driverLicenseInput.value && printNameInput.value && licenseInput.value) {
-      const pdfBlob = await generatePDF(); // You need to implement this function
+      
+      //const pdfBlob = await generatePDF(); // You need to implement this function
 
       try {
-        
-        const queryParams = new URLSearchParams();
-          const response = await fetch(`http://127.0.0.1:5002/user/verification?${queryParams.toString()}`, {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/pdf', // Set the content type to application/pdf
-              },
-              body: pdfBlob, email, 
-          });
-  
-          if (!response.ok) {
-              throw new Error('Failed to send email');
+
+        const response = await axios.post("http://127.0.0.1:5002/user/verification", 
+
+        {
+          "RenterInformation": {
+            "Name": username,
+            "Email": userData.email,
+            "PostalCode": userData.postal_code,
+            "DriversLicense": "Enter valid driver's license"
+          },
+          "VehicleInformation": {
+            "CarMake": carData.make_name,
+            "CarModel": carData.model_name,
+            "Year": carData.model_year,
+            "Color": carData.color,
+            "Mileage": carData.mileage,
+            "LicencePlateNumber": carLicencePlate,
+            "VIN": "XXXXXXXXXXXXX",
+            "damages": ""
+          },
+          "RentalDetails": {
+            "RentStart": reservationData.date_start,
+            "RentEnd": reservationData.date_end,
+            "PickupLocation": carData.postal_code,
+            "DropoffLocation": carData.postal_code,
+            "AdditionalServices": ""
           }
+        }
+        
+        );
+
+          
+        if (response.status < 200 || response.status >= 300) {
+          throw new Error('Failed to send the reservation info');
+        }
   
-          console.log('Email sent successfully');
+          console.log('Info sent successfully:' + response.status);
       } catch (error) {
-          console.error('Error sending email:', error.message);
-          alert('An error occurred while sending the email.');
+          console.error('Error sending information:', error.message);
+          alert('An error occurred while sending the information.');
       }
       window.location.href = '/ConfirmPaymentIN';
     } else {
       alert('Please fill in all required fields.');
     }
-
-  };
-  
+};
+  /*
   const generatePDF = () => {
     // Get the target element to capture the screenshot
     const targetElement = document.body;
@@ -146,7 +172,7 @@ const fetchUserData = async () => {
   const handleCheckInAndGeneratePDF = () => {
     handleCheckIn();
     generatePDF();
-  };
+  };*/
 
   const callUsername =()=>{
 
@@ -293,7 +319,8 @@ const fetchUserData = async () => {
             <div className="input">
               <span className="icon">🚗</span>
               <span className="label">Licence Plate Number:</span>
-              <span>{"QWE 123"}</span>
+
+              <span>{carLicencePlate}</span>
             </div>
             <div className="input">
               <span className="icon">🚗</span>
