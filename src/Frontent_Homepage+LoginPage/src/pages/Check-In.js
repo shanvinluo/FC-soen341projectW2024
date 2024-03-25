@@ -85,21 +85,26 @@ const fetchUserData = async () => {
 
   const handleCheckIn = () => {
     // Validate input data
-    if (bookingConfirmation && license) {
-      
-      if (damages) {
-        setShowDamagesMessage(true); // Set state to true to show damages message
-      } else {
-        setDepositRequested(true); // For demonstration, set deposit requested to true
-      }
+    if (bookingConfirmation && license && carDamaged) {
+        if (damages && !carCondition.trim()) {
+            alert('Please explain damages.');
+            return; // Stop execution if damages are reported but explanation is not provided
+        }
+        if (!bookingConfirmation || !license || !carDamaged) {
+            alert('Please fill in all required fields.');
+            return; // Stop execution if any required field is missing
+        }
+        if (damages) {
+            setShowDamagesMessage(true); // Set state to true to show damages message
+        } else {
+            setDepositRequested(true); // For demonstration, set deposit requested to true
+        }
+        window.location.href = "/ConfirmPayment";
     } else {
-      alert('Please fill in all required fields.');
+        alert('Please fill in all required fields.');
     }
+};
 
-    window.location.href = "/ConfirmPayment";
-
-    
-  };
 
   const callUsername =()=>{
 
