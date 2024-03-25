@@ -9,9 +9,13 @@ function FindBranch() {
   const [distance, setDistance] = useState("");
   const [hideMessage, setHideMessage] = useState(true);
 
-  const submitPress = () => {
-    window.location.href = "/home";
+  const branch_postal_code = {
+    branch1: "H1A 0A1",
+    branch2: "H2A 2N9",
+    branch3: "H4S 2B2",
   };
+
+  const submitPress = () => {};
 
   const update_location = async () => {
     try {
@@ -39,6 +43,9 @@ function FindBranch() {
     }
   };
 
+  localStorage.setItem("nearest_branch", branch_postal_code[nearestBranch]);
+  console.log(localStorage.getItem("nearest_branch"));
+
   const find_nearest_branch = async () => {
     try {
       const user_name = localStorage.getItem("user_session_name");
@@ -49,8 +56,6 @@ function FindBranch() {
       if (response.status === 200) {
         setNearestBranch(response.data["nearest_branch"]);
         setDistance(response.data["distance (km)"]);
-
-        localStorage.setItem("nearest_branch", nearestBranch);
 
         return response.data;
       } else {
@@ -91,7 +96,8 @@ function FindBranch() {
           <div className="submit-container">
             <button
               type="submit"
-              className="submitButton" /*onClick={submitPress}*/
+              className="submitButton"
+              onClick={submitPress}
             >
               Find a car near me
             </button>
