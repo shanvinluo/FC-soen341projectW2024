@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../styles/ConfirmPayment.css";
 
-const ConfirmPayment = () => {
+const ConfirmPayment = (onCancel) => {
   const [nameOnCard, setNameOnCard] = useState("");
   const [creditCardNumber, setCreditCardNumber] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
@@ -20,6 +20,7 @@ const ConfirmPayment = () => {
       // All fields are filled correctly
       setSuccessMessage("Payment successful!");
       setErrorMessage(""); // Clear any previous error message
+      onCancel();
     } else {
       setSuccessMessage(""); // Clear any previous success message
       setErrorMessage("Please fill all fields correctly.");
