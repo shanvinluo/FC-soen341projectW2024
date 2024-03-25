@@ -96,12 +96,12 @@ def update_user(user):
 @app.route('/user-location/<string:username>', methods=['PUT'])
 def update_location(username):
 
+
     data = request.json
     if 'postal_code' not in data:
         return jsonify({'error': 'Missing postal_code field'}), 400
 
     postal_code = data['postal_code']
-
     cur = mysql.connection.cursor()
 
     cur.execute("SELECT * FROM user_account WHERE username = %s", (username,))
@@ -141,6 +141,26 @@ def receive_pdf_and_email():
     else:
         return 'Method Not Allowed', 405
 
+
+@app.route('/user/<string:username>', methods=['GET'])
+def get_user_by_username(username):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM user_account WHERE username = %s", (username,))
+    user = cur.fetchone()
+    cur.close()
+
+    if user:
+        user_data = {
+            'username': user[0],
+            'email': user[1],
+            'password': user[2],  # Note: You should not return the actual password in a real-world application
+            'employee': user[4],
+            'postal_code': user[3],  # Assuming postal code is in the database
+            # Add more fields as needed
+        }
+        return jsonify({'user': user_data}), 200
+    else:
+        return jsonify({'error': f'User with username "{username}" not found'}), 404
 
 
 

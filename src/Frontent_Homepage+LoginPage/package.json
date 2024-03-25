@@ -12,8 +12,7 @@
     "react-router-dom": "^6.22.1",
     "web-vitals": "^2.1.4"
   },
-
-  "proxy": "http://127.0.0.1:5002",
+  "proxy": "http://127.0.0.1:5000",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -41,6 +40,4 @@
   "devDependencies": {
     "react-scripts": "^5.0.1"
   }
-
-  
 }

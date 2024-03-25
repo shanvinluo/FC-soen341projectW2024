@@ -1,49 +1,87 @@
 import React, { useState } from "react";
 import "../styles/CarCardReservation.css";
 import user_icon from "../Assets/person.png";
+import { useHref } from "react-router-dom";
 
-function CarCardReservation({ car, onCancel, onUpdate }) {
+function CarCardReservation({ car, onCancel, onUpdate, reservation }) {
+  console.log(reservation);
+
   const [editMode, setEditMode] = useState(false);
   const [newStart, setNewStart] = useState(car?.availableFrom || "");
   const [newEnd, setNewEnd] = useState(car?.availableUntil || "");
+  const [error, setError] = useState(null);
 
   const handleUpdateClick = () => {
     // Toggle the edit mode to show/hide the date inputs
     setEditMode(!editMode);
   };
 
+  const onCheckOut = () => {
+    // Toggle the edit mode to show/hide the date inputs
+    window.location.href="/CheckOut"
+  };
+
   const handleSaveDates = async () => {
-    // Check if car is defined before updating
-
-    if (!car) {
-      console.error("Car is undefined");
-      return;
-    }
-
-    // Call the onUpdate function passed from the parent component
     try {
-      const response = await fetch("http://127.0.0.1:5001/reservation/2", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          reservation_id: "1",
-          date_start: newStart,
-          date_end: newEnd,
-          username: "new_username",
-          vehicle_id: car.vehicle_id,
-        }),
-      });
-
-      if (response.ok) {
-        onUpdate(car.id, newStart, newEnd);
-        setEditMode(false);
-      } else {
-        console.error("Error updating reservation");
+      // Check if car is defined before updating
+      if (!car) {
+        throw new Error("Car is undefined");
       }
+
+      // Validate if the new dates are within the availability range of the car
+      const startDate = new Date(newStart);
+      const endDate = new Date(newEnd);
+      const availabilityStartDate = new Date(car.availability_start_date);
+      const availabilityEndDate = new Date(car.availability_end_date);
+
+      if (startDate < availabilityStartDate || endDate > availabilityEndDate) {
+        throw new Error(
+          "Selected dates are not within the availability range of the car."
+        );
+      }
+
+      // Perform the update action by calling the API
+      await updateReservationDates(
+        reservation.reservation_id,
+        newStart,
+        newEnd
+      );
+
+      // Exit edit mode after successful update
+      setEditMode(false);
     } catch (error) {
-      console.error("Error updating reservation", error);
+      setError(error.message);
+    }
+  };
+
+  const updateReservationDates = async (
+    reservationId,
+    newStartDate,
+    newEndDate
+  ) => {
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:5001/reservation/${reservationId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            date_start: newStartDate,
+            date_end: newEndDate,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to update reservation dates.");
+      }
+
+      // If the update is successful, call the onUpdate callback to reflect the changes in the UI
+      onUpdate(reservationId, newStartDate, newEndDate);
+    } catch (error) {
+      throw new Error("Error updating reservation dates: " + error.message);
     }
   };
 
@@ -52,24 +90,18 @@ function CarCardReservation({ car, onCancel, onUpdate }) {
       <div className="car-image" />
       <div className="car-details">
         <div className="car-feature">
-          <span className="icon">🚗</span>
-          <span>{car?.name || "N/A"}</span>
-        </div>
-        <div className="car-feature">
           <span className="icon">
             {" "}
             <img src={user_icon} alt="" />
           </span>
-          <span>{car?.seats || "N/A"}</span>
-        </div>
-        <div className="car-feature">
-          <span className="icon">💰</span>
-          <span>{car?.price || "N/A"}</span>
+          <span>
+            {"Reserved in the name:  " + reservation.username || "N/A"}
+          </span>
         </div>
         <div className="car-feature">
           <span className="icon">🗓️</span>
           <span>
-            {car?.availableFrom} to {car?.availableUntil}
+            {reservation.date_start} to {reservation.date_end}
           </span>
         </div>
       </div>
@@ -106,6 +138,10 @@ function CarCardReservation({ car, onCancel, onUpdate }) {
       <button className={"CancelReservation"} onClick={onCancel}>
         Cancel Reservation
       </button>
+      <button className={"CancelReservation"} onClick={onCheckOut}>
+        Check Out
+      </button>
+      {error && <div className="error-message">{error}</div>}
     </div>
   );
 }

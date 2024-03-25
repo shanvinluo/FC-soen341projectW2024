@@ -1,0 +1,61 @@
+name: Run Tests
+
+on:
+  push:
+    branches:
+      - main  
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2  # Checkout the repository's code
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12'  # Specify the Python version
+
+      - name: Install pytest
+        run: pip3 install pytest
+
+      - name: Install requests
+        run: pip3 install requests
+
+      - name: Install Flask
+        run: pip3 install Flask
+
+      - name: Install Flask-SQLAlchemy
+        run: pip3 install Flask-SQLAlchemy
+        
+      - name: Install Flask-Cors
+        run: pip3 install Flask-Cors
+        
+      - name: Install Flask-MySQLdb
+        run: pip3 install Flask-MySQLdb
+
+      - name: Install pymysql
+        run: pip3 install pymysql
+        
+      - name: Start application 1
+        run: |
+         python3 -u src/CRUD_on_car/Vehicles_CRUD.py --port 5000 &
+          
+      - name: Start application 2 
+        run: |
+         python3 -u src/CRUD_on_reservation/reservation.py --port 5001 &
+
+          
+      - name: Start application 3 
+        run: |
+         python3 -u src/CRUD_on_user/user.py --port 5002 &
+      - name: Clean Python Cache
+        run: |
+          find . -name "*.pyc" -exec rm -f {} +
+          find . -name "__pycache__" -exec rm -rf {} +
+
+          
+      - name: Run tests
+        run: pytest

@@ -1,0 +1,123 @@
+/* Existing styles */
+.containerHomeee {
+    display: flex;
+    width: 25%;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 100px;
+    background: #fff;
+    border-radius: 2px;
+  }
+  
+  .findcartext {
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    color: black;
+    text-transform: uppercase;
+    letter-spacing: 0px;
+    font-family: 'Arial', sans-serif;
+    margin-top: 30px;
+  }
+  
+  .inputss {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .veryveryspecific {
+    position: relative;
+  }
+  
+  .veryveryspecific input {
+    width: 75%;
+    max-width: 500px;
+    height: 60px;
+    border: none;
+    background: #f2f2f2;
+    padding: 10px 30px;
+    border-radius: 30px;
+    font-size: 20px;
+    color: #333;
+    outline: none;
+  }
+  
+  .veryveryspecific input::placeholder {
+    color: #999;
+  }
+  
+  .veryveryspecific input:focus {
+    background: #e0e0e0;
+  }
+  
+  .submit-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .submitButton {
+    width: 200px;
+    height: 50px;
+    background: #4c00b4;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  .submitButton:hover {
+    background: #3d008e;
+  }
+  
+  /* Additional styles for the message and button */
+  .message-container {
+    text-align: center;
+  }
+  
+  .message-container p {
+    font-size: 41px; /* Adjusted font size */
+    color: black;
+    margin-bottom: 40px;
+
+    
+  }
+  
+  .browseButton {
+    width: 200px; /* Same width as submit button */
+    height: 50px; /* Same height as submit button */
+    background: #4c00b4; /* Same background color as submit button */
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px; /* Smaller font size */
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+    margin-bottom: 30px;
+  }
+  
+  .browseButton:hover {
+    background: #3d008e; /* Same hover color as submit button */
+  }
+  
+
+  .inputss {
+    margin-top: 55px;
+    display: flex;
+    gap: 25px;
+  }
+  .inputa,
+  p {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 380px;
+    height: 80px;
+    background: #eaeaea;
+    border-radius: 6px;
+  }

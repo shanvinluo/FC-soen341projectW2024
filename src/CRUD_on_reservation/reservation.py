@@ -4,6 +4,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 # Configure MySQL
 app.config['MYSQL_HOST'] = 'sql5.freemysqlhosting.net'
 app.config['MYSQL_USER'] = 'sql5686988'
@@ -97,6 +98,52 @@ def delete_reservation(id):
     return jsonify({'message': 'your reservation got canceled correctly!!'}), 200
 
 
+@app.route('/reservation/<string:username>', methods=['GET'])
+def get_reservations_by_username(username):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM reservation WHERE username = %s", (username,))
+    reservations = cur.fetchall()
+    cur.close()
+
+    if not reservations:
+        return jsonify({'error': 'No reservations found for this user'}), 404
+    
+    # Convert to a list of dictionaries to make it JSON serializable
+    reservations_list = []
+    for reservation in reservations:
+        reservations_list.append({
+            'reservation_id': reservation[0],
+            'date_start': str(reservation[1]),  # Assuming these are datetime objects
+            'date_end': str(reservation[2]),
+            'username': reservation[3],
+            'vehicle_id': reservation[4]
+        })
+
+    return jsonify({'reservations': reservations_list}), 200
+
+@app.route('/reservation/AllReservations', methods=['GET'])
+def get_reservations_Allreservations():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM reservation")
+    reservations = cur.fetchall()
+    cur.close()
+
+    if not reservations:
+        return jsonify({'error': 'No reservations found for this car'}), 404
+    
+    # Convert to a list of dictionaries to make it JSON serializable
+    reservations_list = []
+    for reservation in reservations:
+        reservations_list.append({
+            'reservation_id': reservation[0],
+            'date_start': str(reservation[1]),  # Assuming these are datetime objects
+            'date_end': str(reservation[2]),
+            'username': reservation[3],
+            'vehicle_id': reservation[4]
+        })
+
+    return jsonify({'reservations': reservations_list}), 200
+
 
 @app.route('/reservation/<int:id>', methods=['PUT'])
 def modify_reservation(id):
@@ -136,5 +183,6 @@ def modify_reservation(id):
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
+    #, port=5001
 
 

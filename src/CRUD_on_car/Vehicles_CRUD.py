@@ -3,24 +3,96 @@ from CRUD_on_car.Vehicles_model import Car
 from flask import jsonify, abort, request, make_response
 from sqlalchemy.exc import IntegrityError
 from flask_cors import CORS
+from datetime import datetime,date
+
+
+
+
 
 
 app1 = create_app('default')
+
+#allowed_methods = ["GET", "POST", "PUT", "DELETE"]
+#allowed_headers = ["Content-Type", "Authorization"]
+
+# Apply CORS with additional headers
+#CORS(app1, origins='http://localhost:3000')
+
 CORS(app1)
+cors = CORS(app1, resources={r"/*": {"origins": "*"}})
+
+
+
+
+
+
+#CORS(app1)
 @app1.route("/")
 def home():
     return "welcome"
 
 
 @app1.route("/Cars/list", methods=["GET"])
-def get_Cars():
-    Cars = Car.query.all()
-    cars_info = [car.to_json() for car in Cars]
-    print(cars_info)
-    if cars_info == []:
-        abort(404)
-    
-    return jsonify(cars_info)
+def list_cars():
+    query = Car.query
+    # Filters
+    price_range = request.args.get('priceRange')
+    start_desired_date = request.args.get('startDesiredDate')
+    end_desired_date = request.args.get('endDesiredDate')
+    fuel_type = request.args.get('fuel_type')
+    color = request.args.get('color')
+    mileage = request.args.get('mileage')
+    transmission_type = request.args.get('transmissionType')
+    year = request.args.get('year')
+    postal_code=request.args.get('postal_code')
+
+    if price_range:
+        low, high = map(int, price_range.split('-'))
+        query = query.filter(Car.price.between(low, high))
+        
+    if start_desired_date:
+        start_desired_date_object=datetime.strptime(start_desired_date, '%Y-%m-%d').date()
+        query = query.filter(Car.availability_start_date <= (start_desired_date_object))
+
+    if end_desired_date:
+        end_desired_date_object=datetime.strptime(end_desired_date, '%Y-%m-%d').date()
+        query = query.filter(Car.availability_end_date >= (end_desired_date_object))
+
+    if fuel_type:
+        query = query.filter(Car.fuel_type==fuel_type)
+
+    if color:
+        query = query.filter(Car.color==color)
+
+    if mileage:
+        query = query.filter(Car.mileage <= int(mileage))
+
+    if transmission_type:
+        query = query.filter_by(transmission=transmission_type)
+
+    if year:
+        query = query.filter(Car.model_year == int(year))
+    if postal_code:
+        query = query.filter(Car.postal_code==postal_code)
+
+    cars = query.all()
+    return jsonify([{
+        'vehicule_id': car.vehicule_id,
+        'make_name': car.make_name,
+        'model_name': car.model_name,
+        'model_year': car.model_year,
+        'price': car.price,
+        'mileage': car.mileage,
+        'fuel_type': car.fuel_type,
+        'transmission': car.transmission,
+        'color': car.color,
+        'seats':car.seats,
+        'availability_start_date':car.availability_start_date,
+        'availability_end_date':car.availability_end_date,
+        'postal_code':car.postal_code,
+        # Include other fields as necessary
+    } for car in cars])
+
 
 @app1.route("/Car/<int:vehicule_id>", methods=["GET"])
 def get_Car(vehicule_id):
@@ -63,7 +135,12 @@ def create_Car():
             availability = request.json.get("availability"),
             availability_start_date = request.json.get("availability_start_date"),
             availability_end_date = request.json.get("availability_end_date"),
-            price = request.json.get("price")
+            price = request.json.get("price"),
+            mileage=request.json.get("mileage") ,
+            fuel_type=request.json.get("fuel_type"),
+            transmission=request.json.get("transmission"),
+            color=request.json.get("color"),
+
         )
         db.session.add(car)
         db.session.commit()
@@ -99,6 +176,10 @@ def update_Car(vehicule_id):
     car.availability_start_date = request.json.get("availability_start_date", car.availability_start_date)
     car.availability_end_date = request.json.get("availability_end_date", car.availability_end_date)
     car.price = request.json.get("price", car.price)
+    car.mileage=request.json.get("mileage",car.mileage)
+    car.fuel_type=request.json.get("fuel_type",car.fuel_type)
+    car.transmission=request.json.get("transmission",car.transmission)
+    car.color=request.json.get("color",car.color)
     db.session.commit()
     return jsonify(car.to_json()),200
 
