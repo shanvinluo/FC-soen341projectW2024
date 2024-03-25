@@ -7,6 +7,7 @@ const Checkout = () => {
   const [agreementAccepted, setAgreementAccepted] = useState(false);
   const [carCondition, setCarCondition] = useState("");
   const [carDamaged, setCarDamaged] = useState(false); 
+  
 
   useEffect(() => {
     // Fetch reservation data when the component mounts

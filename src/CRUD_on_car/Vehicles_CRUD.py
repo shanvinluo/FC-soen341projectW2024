@@ -44,6 +44,7 @@ def list_cars():
     mileage = request.args.get('mileage')
     transmission_type = request.args.get('transmissionType')
     year = request.args.get('year')
+    postal_code=request.args.get('postal_code')
 
     if price_range:
         low, high = map(int, price_range.split('-'))
@@ -71,6 +72,8 @@ def list_cars():
 
     if year:
         query = query.filter(Car.model_year == int(year))
+    if postal_code:
+        query = query.filter(Car.postal_code==postal_code)
 
     cars = query.all()
     return jsonify([{
@@ -86,7 +89,7 @@ def list_cars():
         'seats':car.seats,
         'availability_start_date':car.availability_start_date,
         'availability_end_date':car.availability_end_date,
- 
+        'postal_code':car.postal_code,
         # Include other fields as necessary
     } for car in cars])
 
