@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PostalCodeToCoordinates from '../components/convertPostalCode';
 import "../styles/Checkin.css"; 
+import axios from "axios";
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
@@ -19,6 +20,7 @@ const CheckInPage = () => {
   const[usernamee, setUsernamee]= useState("");
   const[email,setEmail]=useState("");
   const[postal_code,setPostalCode]=useState("");
+  const [agreementAccepted, setAgreementAccepted] = useState(false);
   
   useEffect(() => {
 
@@ -85,40 +87,66 @@ const fetchUserData = async () => {
     }
   };
 
+  let carLicencePlate = generateLicensePlate();
   const handleCheckIn = async () => {
     // Validate input data
     const driverLicenseInput = document.querySelector('input[name="driverLicense"]');
     const printNameInput = document.querySelector('input[name="printName"]');
     const licenseInput = document.querySelector('input[name="license"]');
     const email = userData.email;
+    console.log(email);
+    console.log(userData.postal_code)
     if (driverLicenseInput.value && printNameInput.value && licenseInput.value) {
+      //const pdfBlob = await generatePDF(); // You need to implement this function
+
+      try {
+
+        const response = await axios.post("http://127.0.0.1:5002/user/verification", 
+
+        {
+          "RenterInformation": {
+            "Name": username,
+            "Email": userData.email,
+            "PostalCode": userData.postal_code,
+            "DriversLicense": "Enter valid driver's license"
+          },
+          "VehicleInformation": {
+            "CarMake": carData.make_name,
+            "CarModel": carData.model_name,
+            "Year": carData.model_year,
+            "Color": carData.color,
+            "Mileage": carData.mileage,
+            "LicencePlateNumber": carLicencePlate,
+            "VIN": "XXXXXXXXXXXXX",
+            "damages": ""
+          },
+          "RentalDetails": {
+            "RentStart": reservationData.date_start,
+            "RentEnd": reservationData.date_end,
+            "PickupLocation": carData.postal_code,
+            "DropoffLocation": carData.postal_code,
+            "AdditionalServices": ""
+          }
+        }
+        
+        );
+
+          
+        if (response.status < 200 || response.status >= 300) {
+          throw new Error('Failed to send the reservation info');
+        }
+  
+          console.log('Info sent successfully:' + response.status);
+      } catch (error) {
+          console.error('Error sending information:', error.message);
+          alert('An error occurred while sending the information.');
+      }
+      window.location.href = '/ConfirmPaymentIN';
     } else {
       alert('Please fill in all required fields.');
     }
-    const pdfBlob = await generatePDF(); // You need to implement this function
-
-    try {
-      
-      const queryParams = new URLSearchParams();
-        const response = await fetch(`http://127.0.0.1:5002/user/verification?${queryParams.toString()}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/pdf', // Set the content type to application/pdf
-            },
-            body: pdfBlob, email, 
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to send email');
-        }
-
-        console.log('Email sent successfully');
-    } catch (error) {
-        console.error('Error sending email:', error.message);
-        alert('An error occurred while sending the email.');
-    }
-  };
-  
+};
+  /*
   const generatePDF = () => {
     // Get the target element to capture the screenshot
     const targetElement = document.body;
@@ -143,7 +171,7 @@ const fetchUserData = async () => {
   const handleCheckInAndGeneratePDF = () => {
     handleCheckIn();
     generatePDF();
-  };
+  };*/
 
   const callUsername =()=>{
 
@@ -155,6 +183,8 @@ const fetchUserData = async () => {
   function showBookingConfirmation() {
     setBookingConfirmation(true);
   }
+
+  //Inutile
   function generateLicensePlate() {
     const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const numbers = '0123456789';
@@ -175,6 +205,8 @@ const fetchUserData = async () => {
   
     return licensePlate;
   }
+
+  //Inutile
   function getDaysElapsed(startDate, endDate) {
     // Convert both dates to milliseconds
     const startMillis = startDate.getTime();
@@ -189,6 +221,14 @@ const fetchUserData = async () => {
   
     return daysElapsed;
   }
+
+  const getDaysBetweenDates = (startDate, endDate) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const diffTime = Math.abs(end - start);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+};
   return (
     <div className="checkin-container">
       <div className="container">
@@ -212,8 +252,10 @@ const fetchUserData = async () => {
         <div className="container">
         <div className="text">Car Rental Agreement</div>
         <div className='subtitle'>Rental Agreement Number: <span>{reservationData.reservation_id} </span></div>
-        <div className='subtitle'>This Rental Agreement ("Agreement") is entered into between Car Rental Montreal, located at {carData.postal_code}, hereinafter referred to as the "Rental Company," and the individual or entity identified below, hereinafter referred to as the "Renter":
+
+        <div className='subtitle-low'>This Rental Agreement ("Agreement") is entered into between Car Rental Montreal, located at {carData.postal_code}, hereinafter referred to as the "Rental Company," and the individual or entity identified below, hereinafter referred to as the "Renter":
         </div>
+  
         <div className='subtitle'>1. Renter's Information:</div>
         <div className="inputs">
         <div className="input">
@@ -276,11 +318,11 @@ const fetchUserData = async () => {
             <div className="input">
               <span className="icon">🚗</span>
               <span className="label">Licence Plate Number:</span>
-              <span>{generateLicensePlate()}</span>
+              <span>{carLicencePlate}</span>
             </div>
             <div className="input">
               <span className="icon">🚗</span>
-              <span className="label">Vehicle Identification Number (VIN):</span>
+              <span className="label">Vehicle Identification Number (VIN): XXXXXXXXXXXXX</span>
 
               <text></text>
               <span>{}</span>
@@ -336,6 +378,7 @@ const fetchUserData = async () => {
             <div className="input">
               <span className="icon">🗓️</span>
               <span className="label">Rental Period: </span>
+              <span>{getDaysBetweenDates(reservationData.date_start,reservationData.date_end)} days</span>
               <span>{}</span>
               
             </div>
@@ -356,7 +399,7 @@ const fetchUserData = async () => {
             
             <div className="input">
               <span className="icon">⚠️</span>
-              <span className="label">Additional Services:</span>
+              <span className="label">Additional Services: Any additional service made by car rental montreal</span>
               <span>{}</span>
             </div>
           </div>
@@ -380,7 +423,7 @@ The Renter acknowledges receiving and reviewing a copy of the vehicle's insuranc
           <span>Rental Company:</span>
           <ul>
             <li>Signature: Car Rental Montreal</li>
-            <li>Print Name: {username}</li>
+            <li>Print Name: Car Aboubacar</li>
             <li>Date:{today} </li>
           </ul>
           <span>Renter:</span>
@@ -390,7 +433,17 @@ The Renter acknowledges receiving and reviewing a copy of the vehicle's insuranc
             <li>Date:{today} </li>
           </ul>
 
-          <button onClick={handleCheckInAndGeneratePDF}>Check In</button>
+          <div className="agreement">
+          <input
+            type="radio"
+            id="acceptAgreement"
+            checked={agreementAccepted}
+            onChange={() => setAgreementAccepted(!agreementAccepted)}
+          />
+          <label htmlFor="acceptAgreement">I agree to the terms and condition</label>
+        </div>
+
+          <button onClick={handleCheckIn}>Check In</button>
         </div>
         </div>
 
