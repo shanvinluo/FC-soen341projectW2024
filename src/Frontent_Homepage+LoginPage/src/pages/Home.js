@@ -15,92 +15,12 @@ function Home() {
   const [fuelType, setFuelType] = useState("");
   const [color, setColor] = useState("");
   const [mileage, setMileage] = useState("");
-  //const [mileage, setMileage] = useState({ min: '', max: '' });
-
+  const [postal_code,SetPostal_code]=useState("")
   const [transmissionType, setTransmissionType] = useState("");
   const [year, setYear] = useState("");
 
-  /*useEffect(()=>{
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
-    console.log(isLoggedIn);
-
-  
-    if(isLoggedIn==true){
-      window.location.href = "/home"
-    }
-
-    else{
-
-      window.location.href = "/login"
-
-    }
-  })*/
-
-  // const fetchResults = () => {
-  //   // Simulated fetching of data
-  //   const allCars = [
-  //     { id: 1, name: "Car A", seats: "4 Seats", price: 100, availableFrom: '2024-01-01', availableUntil: '2024-01-10' },
-  //     { id: 2, name: "Car B", seats: "2 Seats", price: 150,  availableFrom: '2024-01-05', availableUntil: '2024-02-15' },
-  //     { id: 3, name: "Car C", seats: "6 Seats", price: 300,  availableFrom: '2024-02-01', availableUntil: '2024-02-20' },
-  //     // ... more cars
-  //   ];
-
-  //   // Filter the dataset based on price range and date range
-  //   const priceLimits = priceRange.split('-').map(Number);
-  //   const startDateObj = startDesiredDate ? new Date(startDesiredDate) : null;
-  //   const endDateObj = endDesiredDate ? new Date(endDesiredDate) : null;
-
-  //   const filteredCars = allCars.filter(car => {
-  //     const carAvailableFrom = new Date(car.availableFrom);
-  //     const carAvailableUntil = new Date(car.availableUntil);
-  //     const isWithinPriceRange = (!priceLimits[0] || car.price >= priceLimits[0]) && (!priceLimits[1] || car.price <= priceLimits[1]);
-
-  //     // Check if dates are valid and if the selected date range falls within the car's availability range
-  //     const isAvailable = (!startDateObj || !endDateObj) ? true : (startDateObj >= carAvailableFrom && endDateObj <= carAvailableUntil);
-
-  //     return isWithinPriceRange && isAvailable;
-  //   });
-
-  //   return filteredCars;
-  // };
-
-  // no
-
-  // const fetchResults = async () => {
-  //   // Construct the URL with query parameters for price range, start date, and end date if needed
-  //   const url = new URL("http://127.0.0.1:5000/Cars/list");
-
-  //   try {
-  //     const response = await fetch(url);
-  //     if (!response.ok) {
-  //       throw new Error("Network response was not ok");
-  //     }
-  //     const allCars = await response.json();
-
-  //     // You can implement any additional filtering on the client side if necessary
-  //     const filteredCars = allCars.filter((car) => {
-  //       const carAvailableFrom = new Date(car.availability_start_date);
-  //       const carAvailableUntil = new Date(car.availability_end_date);
-  //       // Example: Filter by price range, you can add more conditions as needed
-  //       const priceLimits = priceRange.split('-').map(Number);
-  //   const startDateObj = startDesiredDate ? new Date(startDesiredDate) : null;
-  //   const endDateObj = endDesiredDate ? new Date(endDesiredDate) : null;
-
-  //   const isAvailable = (!startDateObj || !endDateObj) ? true : (startDateObj >= carAvailableFrom && endDateObj <= carAvailableUntil);
-
-  //   const isWithinPriceRange = (!priceLimits[0] || car.price >= priceLimits[0]) && (!priceLimits[1] || car.price <= priceLimits[1]);
-
-  //   return isWithinPriceRange && isAvailable;
-
-  //     });
-
-  //     return filteredCars;
-  //   } catch (error) {
-  //     console.error("Failed to fetch cars:", error);
-  //     return []; // Return an empty array in case of error
-  //   }
-  // };
-  const fetchResults = async () => {
+  const fetchCars = async () => {
+    SetPostal_code(localstorage.getitem("nearest_branch"))
     const queryParams = new URLSearchParams();
 
     // Add each filter to queryParams only if it has been selected (is not empty)
@@ -115,22 +35,35 @@ function Home() {
     if (transmissionType)
       queryParams.append("transmissionType", transmissionType);
     if (year) queryParams.append("year", year);
-
-    //const url = 'http://127.0.0.1:5000/Cars/list?${queryParams.toString()}';
+    queryParams.append('postal_code',postal_code)
     const url = `http://127.0.0.1:5000/Cars/list?${queryParams.toString()}`;
-    //const url = new URL("http://127.0.0.1:5000/Cars/list");
 
     try {
       const response = await fetch(url);
-
+      
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error('Network response was not ok');
       }
       const cars = await response.json();
       return cars; // Assuming the backend directly returns the filtered cars
     } catch (error) {
-      console.error("Failed to fetch cars:", error);
+      console.error('Failed to fetch cars:', error);
       return []; // Return an empty array in case of error
+    }
+  };
+  
+  const fetchAllReservations = async () => {
+    const url = `http://127.0.0.1:5001/reservation/AllReservations`;
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Failed to fetch reservations');
+      }
+      const data = await response.json();
+      setAllReservations(data.reservations);
+    } catch (error) {
+      console.error('Error fetching reservations:', error);
+      setAllReservations([]);
     }
   };
 
@@ -138,32 +71,35 @@ function Home() {
     setShowMoreFilters(!showMoreFilters);
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const fetchedResults = fetchResults();
-  //   setResults(fetchedResults);
-  //   setShowResults(true);
-  //   console.log({ priceRange, startDate, endDate }); // Logging form data to the console
-  // }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const fetchedResults = await fetchResults(); // Use await here
-    setResults(fetchedResults);
+    const fetchedCars = await fetchCars();
+    const availableCars = fetchedCars.filter(car => {
+      const hasOverlappingReservation = allReservations.some(reservation => {
+        if (reservation.vehicle_id !== car.vehicule_id) return false;
+  
+        const reservationStart = new Date(reservation.date_start);
+        const reservationEnd = new Date(reservation.date_end);
+        const desiredStart = new Date(startDesiredDate);
+        const desiredEnd = new Date(endDesiredDate);
+  
+        // overlaps conditions
+        const startsDuringDesired = desiredStart < reservationStart && reservationStart < desiredEnd;
+        const endsDuringDesired = desiredStart < reservationEnd && reservationEnd < desiredEnd;
+        const encompassesDesired = reservationStart <= desiredStart && desiredEnd <= reservationEnd;
+  
+        return startsDuringDesired || endsDuringDesired || encompassesDesired;
+      });
+  
+      return !hasOverlappingReservation;
+    });
+  
+    setResults(availableCars);
     setShowResults(true);
-  };
-
+  }
   useEffect(() => {
-    // Optionally, fetch results immediately on component mount or when certain states change
-  }, [
-    year,
-    color,
-    mileage,
-    transmissionType,
-    fuelType,
-    priceRange,
-    startDesiredDate,
-    endDesiredDate,
-  ]);
+    fetchAllReservations();}, [year,color,mileage,transmissionType,fuelType,priceRange, startDesiredDate, endDesiredDate,postal_code]);
 
   return (
     <div>
