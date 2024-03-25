@@ -18,9 +18,9 @@ function Home() {
   const [postal_code,SetPostal_code]=useState("")
   const [transmissionType, setTransmissionType] = useState("");
   const [year, setYear] = useState("");
-
+  const [allReservations, setAllReservations] = useState([]);
   const fetchCars = async () => {
-    SetPostal_code(localstorage.getitem("nearest_branch"))
+    SetPostal_code(localStorage.getItem("nearest_branch"))
     const queryParams = new URLSearchParams();
 
     // Add each filter to queryParams only if it has been selected (is not empty)
