@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Reservation.css";
 import CarCardReservation from "../components/CarCardReservation";
+import ConfirmPaymentOUT from "./Payment_pages/Checkoutpayment";
 
 const Reservation = (newStart) => {
   console.log(newStart);
   const [reservations, setReservations] = useState([]);
-
   // Check if the user is logged in, and if not, redirect to the login page
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
@@ -17,7 +17,7 @@ const Reservation = (newStart) => {
     const username = localStorage.getItem("user_session_name");
     // Make sure username is not null or undefined
 
-    console.log(username)
+    console.log(username);
     if (!username) {
       console.error("Username is not set");
       // Redirect to login or handle the error as needed
@@ -43,6 +43,12 @@ const Reservation = (newStart) => {
 
     fetchReservations();
   }, []); // Dependency array is empty, so this effect runs once after the initial render
+
+  window.addEventListener("popstate", function (reservation) {
+    if (window.location.href === "/ConfirmPaymentOUT") {
+      cancelReservation(reservation.reservation_id);
+    }
+  });
 
   const cancelReservation = async (reservationId) => {
     console.log(`Cancel reservation ${reservationId}`);
@@ -119,7 +125,9 @@ const Reservation = (newStart) => {
               //car={{car: "info"}}
               key={reservation.reservation_id}
               reservation={reservation}
-              onCancel={() => cancelReservation(reservation.reservation_id)}
+              onCancel={() => {
+                cancelReservation(reservation.reservation_id);
+              }}
               onUpdate={handleDateUpdate}
             />
           ))}

@@ -7,3 +7,5 @@ pymysql
 axios
 React
 flask_cors
+html2canvas 
+jspdf

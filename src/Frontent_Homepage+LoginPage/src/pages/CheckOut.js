@@ -6,8 +6,7 @@ const Checkout = () => {
   const [carData, setCarData] = useState(null); // State to store car details
   const [agreementAccepted, setAgreementAccepted] = useState(false);
   const [carCondition, setCarCondition] = useState("");
-  const [carDamaged, setCarDamaged] = useState(false); 
-  
+  const [carDamaged, setCarDamaged] = useState(false);
 
   useEffect(() => {
     // Fetch reservation data when the component mounts
@@ -55,28 +54,34 @@ const Checkout = () => {
     const diffTime = Math.abs(end - start);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays;
-};
-
+  };
 
   const calculateTotalPrice = () => {
-    if (!reservationData || !carData || !reservationData.date_start || !reservationData.date_end) {
-        return 0; // Not enough data to calculate
+    if (
+      !reservationData ||
+      !carData ||
+      !reservationData.date_start ||
+      !reservationData.date_end
+    ) {
+      return 0; // Not enough data to calculate
     }
-    const days = getDaysBetweenDates(reservationData.date_start, reservationData.date_end);
+    const days = getDaysBetweenDates(
+      reservationData.date_start,
+      reservationData.date_end
+    );
     return days * carData.price;
-};
+  };
 
-const totalPrice = calculateTotalPrice();
+  const totalPrice = calculateTotalPrice();
 
   const handleSubmit = () => {
     if (!agreementAccepted) {
-        alert("You must accept the terms and conditions to proceed to payment.");
-        return;
-      }
-    
-      
-      console.log("Form submitted!");
-      window.location.href = "/ConfirmPayment";
+      alert("You must accept the terms and conditions to proceed to payment.");
+      return;
+    }
+
+    console.log("Form submitted!");
+    window.location.href = "/ConfirmPaymentOUT";
   };
 
   return (
@@ -127,28 +132,27 @@ const totalPrice = calculateTotalPrice();
           </>
         )}
 
-<div className="input">
-  <input
-    type="radio"
-    id="carDamaged"
-    name="carCondition"
-    checked={carDamaged}
-    onChange={() => setCarDamaged(true)}
-  />
-  <label htmlFor="carDamaged">Car is not in  same condition</label>
-</div>
+        <div className="input">
+          <input
+            type="radio"
+            id="carDamaged"
+            name="carCondition"
+            checked={carDamaged}
+            onChange={() => setCarDamaged(true)}
+          />
+          <label htmlFor="carDamaged">Car is not in same condition</label>
+        </div>
 
-<div className="input">
-  <input
-    type="radio"
-    id="sameCondition"
-    name="carCondition"
-    checked={!carDamaged}
-    onChange={() => setCarDamaged(false)}
-  />
-  <label htmlFor="sameCondition">Car is in the same condition</label>
-</div>
-
+        <div className="input">
+          <input
+            type="radio"
+            id="sameCondition"
+            name="carCondition"
+            checked={!carDamaged}
+            onChange={() => setCarDamaged(false)}
+          />
+          <label htmlFor="sameCondition">Car is in the same condition</label>
+        </div>
 
         <div className="input">
           <span className="icon">📝</span>
@@ -161,15 +165,47 @@ const totalPrice = calculateTotalPrice();
           ></textarea>
         </div>
 
-         <div className="info-box">
+        <div className="info-box">
           <span className="info-title">Important Points:</span>
           <ul className="info-list">
-            <li>Booking Confirmation: Once you confirm your booking, you'll receive a confirmation email containing all the details of your rental, including pick-up instructions and rental specifics. Please review this information carefully to ensure accuracy.</li>
-            <li>Payment Information: Your payment information will be securely processed using industry-standard encryption methods. Rest assured that your financial data is handled with the utmost confidentiality and security.</li>
-            <li>Rental Agreement: Prior to finalizing your booking, you'll be asked to review and accept our rental agreement. This document outlines the terms and conditions of your rental, including responsibilities, liabilities, and usage guidelines. Please take the time to read through it thoroughly.</li>
-            <li>Deposit Requirement: As part of our policy, a deposit of 500 CAD will be authorized on your credit card at the time of pick-up. This deposit is held temporarily and will be released upon the successful return of the vehicle, provided there are no damages or outstanding fees.</li>
-            <li>Return Process: When returning the vehicle, please ensure that it's in the same condition as when you received it, barring normal wear and tear. Our staff will conduct a brief inspection to assess any damages and finalize the rental transaction accordingly.</li>
-            <li>Receipt and Feedback: Upon completion of the rental, you'll receive a detailed receipt outlining the charges incurred during your rental period. We also value your feedback, so feel free to share your experience with us to help us improve our services.</li>
+            <li>
+              Booking Confirmation: Once you confirm your booking, you'll
+              receive a confirmation email containing all the details of your
+              rental, including pick-up instructions and rental specifics.
+              Please review this information carefully to ensure accuracy.
+            </li>
+            <li>
+              Payment Information: Your payment information will be securely
+              processed using industry-standard encryption methods. Rest assured
+              that your financial data is handled with the utmost
+              confidentiality and security.
+            </li>
+            <li>
+              Rental Agreement: Prior to finalizing your booking, you'll be
+              asked to review and accept our rental agreement. This document
+              outlines the terms and conditions of your rental, including
+              responsibilities, liabilities, and usage guidelines. Please take
+              the time to read through it thoroughly.
+            </li>
+            <li>
+              Deposit Requirement: As part of our policy, a deposit of 500 CAD
+              will be authorized on your credit card at the time of pick-up.
+              This deposit is held temporarily and will be released upon the
+              successful return of the vehicle, provided there are no damages or
+              outstanding fees.
+            </li>
+            <li>
+              Return Process: When returning the vehicle, please ensure that
+              it's in the same condition as when you received it, barring normal
+              wear and tear. Our staff will conduct a brief inspection to assess
+              any damages and finalize the rental transaction accordingly.
+            </li>
+            <li>
+              Receipt and Feedback: Upon completion of the rental, you'll
+              receive a detailed receipt outlining the charges incurred during
+              your rental period. We also value your feedback, so feel free to
+              share your experience with us to help us improve our services.
+            </li>
           </ul>
         </div>
 
@@ -180,7 +216,9 @@ const totalPrice = calculateTotalPrice();
             checked={agreementAccepted}
             onChange={() => setAgreementAccepted(!agreementAccepted)}
           />
-          <label htmlFor="acceptAgreement">I agree to the terms and condition</label>
+          <label htmlFor="acceptAgreement">
+            I agree to the terms and condition
+          </label>
         </div>
 
         <div className="submit-container">

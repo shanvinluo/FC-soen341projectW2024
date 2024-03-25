@@ -18,7 +18,8 @@ function CarCardReservation({ car, onCancel, onUpdate, reservation }) {
 
   const onCheckOut = () => {
     // Toggle the edit mode to show/hide the date inputs
-    window.location.href="/CheckOut"
+    window.location.href = "/CheckOut";
+    onCancel();
   };
 
   const handleSaveDates = async () => {

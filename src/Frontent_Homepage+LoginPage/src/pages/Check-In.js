@@ -97,6 +97,7 @@ const fetchUserData = async () => {
     console.log(email);
     console.log(userData.postal_code)
     if (driverLicenseInput.value && printNameInput.value && licenseInput.value) {
+      
       //const pdfBlob = await generatePDF(); // You need to implement this function
 
       try {
@@ -318,6 +319,7 @@ const fetchUserData = async () => {
             <div className="input">
               <span className="icon">🚗</span>
               <span className="label">Licence Plate Number:</span>
+
               <span>{carLicencePlate}</span>
             </div>
             <div className="input">

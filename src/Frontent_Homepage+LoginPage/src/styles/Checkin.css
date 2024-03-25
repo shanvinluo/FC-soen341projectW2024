@@ -77,6 +77,21 @@
     font-size: 1.5rem; /* Adjust font size as needed */
     font-weight: bold; /* Adjust font weight as needed */
     color: purple; /* Adjust text color as needed */
+    text-align: justify;
+
+
+    /* Add any other styles you want for the subtitle class */
+  }
+
+  .subtitle-low {
+    font-size: 15px; /* Adjust font size as needed */
+    /*font-weight: bold; /* Adjust font weight as needed */
+    color: black; /* Adjust text color as needed */
+    text-align: justify;
+    font-style: italic;
+    margin-top:10px;
+    margin-bottom:10px;
+
     /* Add any other styles you want for the subtitle class */
   }
   
