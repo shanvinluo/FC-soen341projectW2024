@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PostalCodeToCoordinates from '../components/convertPostalCode';
 import "../styles/Checkin.css"; 
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 const CheckInPage = () => {
   const [bookingConfirmation, setBookingConfirmation] = useState(false);
@@ -119,12 +121,55 @@ const fetchUserData = async () => {
     } else {
       alert('Please fill in all required fields.');
     }
+    const pdfBlob = await generatePDF(); // You need to implement this function
+
+    // Create form data object to send the PDF and email
+    const formData = new FormData();
+    formData.append('pdf', pdfBlob, 'pdf.pdf');
+    formData.append('email', userData.email); // Replace with recipient's email
+
+    try {
+        const response = await fetch('http://127.0.0.1:5002/user/verification', {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to send email');
+        }
+
+        console.log('Email sent successfully');
+    } catch (error) {
+        console.error('Error sending email:', error.message);
+        alert('An error occurred while sending the email.');
+    }
   };
   
+  const generatePDF = () => {
+    // Get the target element to capture the screenshot
+    const targetElement = document.body;
   
+    // Use html2canvas to capture the screenshot
+    html2canvas(targetElement).then(canvas => {
+      // Convert the canvas to an image data URL
+      const imgData = canvas.toDataURL('image/png');
+  
+      // Initialize jsPDF
+      const pdf = new jsPDF('p', 'mm', 'a4');
+  
+      // Add the image data to the PDF
+      pdf.addImage(imgData, 'PNG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
+  
+      // Save the PDF
+      pdf.save('website_screenshot.pdf');
+    });
+  };
 
 
-
+  const handleCheckInAndGeneratePDF = () => {
+    handleCheckIn();
+    generatePDF();
+  };
 
   const callUsername =()=>{
 
@@ -371,7 +416,7 @@ The Renter acknowledges receiving and reviewing a copy of the vehicle's insuranc
             <li>Date:{today} </li>
           </ul>
 
-          <button onClick={handleCheckIn}>Check In</button>
+          <button onClick={handleCheckInAndGeneratePDF}>Check In</button>
         </div>
         </div>
 
