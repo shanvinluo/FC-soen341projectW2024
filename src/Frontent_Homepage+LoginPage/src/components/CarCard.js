@@ -52,7 +52,7 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
         setCarAdded(true);
         const username = localStorage.getItem("user_session_name");
         console.log(username);
-        alert("Car added to reservations for the user: " + username);
+        // alert("Car added to reservations for the user: " + username);
       } else {
         const errorData = await response.json();
         alert(`Failed to add car: ${errorData.error}`);
@@ -62,7 +62,7 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
       alert("Network error when trying to add car.");
     }
 
-    window.location.href = "/Checkin";
+    window.location.href = "/CheckIn";
   };
   return (
     <div className="car-card">
@@ -111,7 +111,7 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
         onClick={handleAddCar}
         className={`addCarbtn ${carAdded ? "car-added" : ""}`} // This allows you to use CSS for styling as well
       >
-        {carAdded ? "Car Added" : "Add Car"}
+        {carAdded ? "Car Added" : "Reserve this Car"}
       </button>
     </div>
   );

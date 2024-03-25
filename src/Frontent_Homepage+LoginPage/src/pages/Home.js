@@ -21,9 +21,11 @@ function Home() {
   const [allReservations, setAllReservations] = useState([]);
   const fetchCars = async () => {
     SetPostal_code(localStorage.getItem("nearest_branch"))
+    // console.log(localStorage.getItem("nearest_branch"));
     const queryParams = new URLSearchParams();
 
     // Add each filter to queryParams only if it has been selected (is not empty)
+    queryParams.append('postal_code',postal_code)
     if (priceRange) queryParams.append("priceRange", priceRange);
     if (startDesiredDate)
       queryParams.append("startDesiredDate", formatDate(startDesiredDate));
@@ -35,7 +37,6 @@ function Home() {
     if (transmissionType)
       queryParams.append("transmissionType", transmissionType);
     if (year) queryParams.append("year", year);
-    queryParams.append('postal_code',postal_code)
     const url = `http://127.0.0.1:5000/Cars/list?${queryParams.toString()}`;
 
     try {
@@ -99,7 +100,7 @@ function Home() {
     setShowResults(true);
   }
   useEffect(() => {
-    fetchAllReservations();}, [year,color,mileage,transmissionType,fuelType,priceRange, startDesiredDate, endDesiredDate,postal_code]);
+    fetchAllReservations();}, [year,color,mileage,transmissionType,fuelType,priceRange, startDesiredDate, endDesiredDate]);
 
   return (
     <div>
