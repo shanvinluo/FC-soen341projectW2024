@@ -92,31 +92,33 @@ const fetchUserData = async () => {
     const licenseInput = document.querySelector('input[name="license"]');
     const email = userData.email;
     if (driverLicenseInput.value && printNameInput.value && licenseInput.value) {
+      const pdfBlob = await generatePDF(); // You need to implement this function
+
+      try {
+        
+        const queryParams = new URLSearchParams();
+          const response = await fetch(`http://127.0.0.1:5002/user/verification?${queryParams.toString()}`, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/pdf', // Set the content type to application/pdf
+              },
+              body: pdfBlob, email, 
+          });
+  
+          if (!response.ok) {
+              throw new Error('Failed to send email');
+          }
+  
+          console.log('Email sent successfully');
+      } catch (error) {
+          console.error('Error sending email:', error.message);
+          alert('An error occurred while sending the email.');
+      }
+      window.location.href = '/ConfirmPaymentIN';
     } else {
       alert('Please fill in all required fields.');
     }
-    const pdfBlob = await generatePDF(); // You need to implement this function
 
-    try {
-      
-      const queryParams = new URLSearchParams();
-        const response = await fetch(`http://127.0.0.1:5002/user/verification?${queryParams.toString()}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/pdf', // Set the content type to application/pdf
-            },
-            body: pdfBlob, email, 
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to send email');
-        }
-
-        console.log('Email sent successfully');
-    } catch (error) {
-        console.error('Error sending email:', error.message);
-        alert('An error occurred while sending the email.');
-    }
   };
   
   const generatePDF = () => {
@@ -390,7 +392,7 @@ The Renter acknowledges receiving and reviewing a copy of the vehicle's insuranc
             <li>Date:{today} </li>
           </ul>
 
-          <button onClick={handleCheckInAndGeneratePDF}>Check In</button>
+          <button onClick={handleCheckIn}>Check In</button>
         </div>
         </div>
 
