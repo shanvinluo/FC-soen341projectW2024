@@ -79,6 +79,9 @@ The repository will be split into 4 sprint folders. All of those folders will in
 Below, there is the link to a video demonstrating the features and how to deploy the project
 [Video](https://www.youtube.com/watch?v=IiXKNtkSfwk)
 
+Below, there is the link to a video demonstrating the features and how to deploy the project
+[Video]([https://www.youtube.com/watch?v=IiXKNtkSfwk](https://www.youtube.com/watch?v=9_--RetahP8))
+
 ### Contributors and roles
 * <strong> Shanvin Luo (40248485) (github.com/shanvinluo) </strong>: Product Manager, Full-Stack Developer: <br>
 As the Product Manager, I oversee the strategic development and execution of our car rental website, managing all aspects of its development while also actively participating in full-stack coding to ensure a seamless and robust application.
