@@ -32,6 +32,9 @@ jobs:
         
       - name: Install Flask-Cors
         run: pip3 install Flask-Cors
+
+      - name: Install Gmail API dependencies
+        run: pip3 install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
         
       - name: Install Flask-MySQLdb
         run: pip3 install Flask-MySQLdb
