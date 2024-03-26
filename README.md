@@ -51,11 +51,12 @@ For the application to run properly, all of the following services need to be st
     * On Windows: ```set FLASK_APP=app.py```
     * On macOS and Linux: ```export FLASK_APP=app.py```
   * Start the Flask development server: ```flask run```
+  * <strong>** Note </strong>: Ensure that no other application is running on port 5000 on your local machine. 
 * Run maps_api.py
   * Open a new Terminal in VSCode.
   * Copy the path to maps_api.py.
   * Run the script by replacing <path> with the copied path: ```python3 -u "<path>"```
-<strong>** Note </strong>: Ensure that no other application is running on port 5000 on your local machine. 
+
 
 ### Repository Structure
 The repository will be split into 4 sprint folders. All of those folders will include the meeting minutes, the documentation needed as well as a detailed log of each member's activity. User stories and plans for the next sprint can be found in the wiki. The code can be found in the src folder.
