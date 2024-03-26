@@ -2,10 +2,7 @@ from flask import Flask, request, jsonify
 from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS #modification
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.base import MIMEBase
-from email import encoders
+from Gmail_Api import sendMessage
 
 app = Flask(__name__)
 
@@ -117,29 +114,74 @@ def update_location(username):
 
 
 @app.route('/user/verification', methods=['POST'])
-def receive_pdf_and_email():
-    
-    if request.method == 'POST':
-        # Check if request contains a PDF file
-        if 'application/pdf' in request.content_type:
-            pdf_data = request.data
-            # Process the received PDF data here
-            # For example, save it to a file
-            with open('received_pdf.pdf', 'wb') as f:
-                f.write(pdf_data)
+def receiveVerificationInfo():
+    receipt = """
+                                                                                             Receipt
+    1. Rental Terms and Conditions:\n
+    - The Renter acknowledges receiving the vehicle described above in good condition and agrees to return it to the Rental Company in the same condition, subject to normal wear and tear.\n
+    - The Renter agrees to use the vehicle solely for personal or business purposes and not for any illegal activities.\n
+    - The Renter agrees to pay the Rental Company the agreed-upon rental rate for the specified rental period. Additional charges may apply for exceeding the mileage limit, late returns, fuel refueling, or other damages.\n
+    - The Renter agrees to bear all costs associated with traffic violations, tolls, and parking fines incurred during the rental period.\n
+    - The Renter acknowledges that they are responsible for any loss or damage to the vehicle, including theft, vandalism, accidents, or negligence, and agrees to reimburse the Rental Company for all repair or replacement costs.\n
+    - The Renter agrees to return the vehicle to the designated drop-off location at the agreed-upon date and time. Failure to do so may result in additional charges.\n
+    - The Rental Company reserves the right to terminate this agreement and repossess the vehicle without prior notice if the Renter breaches any terms or conditions of this agreement.\n
+    - The Renter acknowledges receiving and reviewing a copy of the vehicle's insurance coverage and agrees to comply with all insurance requirements during the rental period.\n
 
-            # Check if the request contains email data
-            if 'email' in request.form:
-                email = request.form['email']
-                # Process the received email here
-                print('Email received:', email)
-                # You can perform further actions with the email data here
+    2. Indemnification:\n
+    - The Renter agrees to indemnify and hold harmless the Rental Company, its employees, agents, and affiliates from any claims, liabilities, damages, or expenses arising out of or related to the Renter's use of the vehicle.\n
 
-            return 'PDF and email received successfully', 200
-        else:
-            return 'Unsupported Media Type', 415
-    else:
-        return 'Method Not Allowed', 405
+    3. Entire Agreement:\n
+    - This Agreement constitutes the entire understanding between the parties concerning the subject matter hereof and supersedes all prior agreements and understandings, whether written or oral.\n
+
+    4. Execution Date:\n
+    - The parties hereto have executed this Agreement as of the date first written above.\n
+    """
+    data = request.json
+    if(data): 
+        renter_info = data["RenterInformation"]
+        vehicle_info = data["VehicleInformation"]
+        rental_info = data["RentalDetails"]
+        signature_info = data['SignatureDetails']
+
+        renter_name = renter_info["Name"]
+        renter_email = renter_info["Email"]
+        renter_postal_code = renter_info["PostalCode"]
+        renter_driver_license = renter_info["DriverLicense"]
+
+        car_make = vehicle_info["CarMake"]
+        car_model = vehicle_info["CarModel"]
+        car_year = vehicle_info["Year"]
+        car_color = vehicle_info["Color"]
+        car_mileage = vehicle_info["Mileage"]
+        car_license_plate = vehicle_info["LicencePlateNumber"]
+
+        rent_start = rental_info["RentStart"]
+        rent_end = rental_info["RentEnd"]
+        pickup_location = rental_info["PickupLocation"]
+        dropoff_location = rental_info["DropoffLocation"]
+
+        signature = signature_info["Signature"]
+        signee_name = signature_info["SigneeName"]
+        signature_date = signature_info["Date"]
+        
+        all_variables = [
+            renter_name, renter_email, renter_postal_code, renter_driver_license,
+            car_make, car_model, car_year, car_color, car_mileage, car_license_plate,
+            rent_start, rent_end, pickup_location, dropoff_location,
+            signature, signee_name, signature_date
+        ]
+        keys = [
+            "Name", "Email", "PostalCode", "DriverLicense",
+            "CarMake", "CarModel", "Year", "Color", "Mileage", "LicencePlateNumber",
+            "RentStart", "RentEnd", "PickupLocation", "DropoffLocation",
+            "Signature", "SigneeName", "Date"
+        ]
+        for i in range(len(all_variables)):
+            receipt += "\n" + keys[i] + ": " + str(all_variables[i]) +"\n"
+        sendMessage(receipt, renter_email, "confirmation")
+        
+        return "good boy", 200
+    else: return "so-so boy", 500
 
 
 @app.route('/user/<string:username>', methods=['GET'])
