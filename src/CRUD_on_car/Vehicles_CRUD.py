@@ -1,9 +1,9 @@
 from CRUD_on_car.VehiclesDB import create_app, db
 from CRUD_on_car.Vehicles_model import Car
-from flask import jsonify, abort, request, make_response
+from flask import jsonify, abort, request
 from sqlalchemy.exc import IntegrityError
 from flask_cors import CORS
-from datetime import datetime,date
+from datetime import datetime
 
 
 
@@ -140,7 +140,7 @@ def create_Car():
             fuel_type=request.json.get("fuel_type"),
             transmission=request.json.get("transmission"),
             color=request.json.get("color"),
-
+            postal_code= request.json.get("postal_code")
         )
         db.session.add(car)
         db.session.commit()
