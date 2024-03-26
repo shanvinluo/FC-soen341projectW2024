@@ -21,6 +21,17 @@ const CheckInPage = () => {
   const[email,setEmail]=useState("");
   const[postal_code,setPostalCode]=useState("");
   const [agreementAccepted, setAgreementAccepted] = useState(false);
+  const [signature, setSignature] = useState('');
+  const [printName, setPrintName] = useState('');
+  const handleSignatureChange = (event) => {
+    setSignature(event.target.value);
+  };
+  const handlePrintNameChange = (event) => {
+    setPrintName(event.target.value);
+  };
+  const handleLicenseChange = (event) => {
+    setLicense(event.target.value);
+  }
   
   useEffect(() => {
 
@@ -94,10 +105,8 @@ const fetchUserData = async () => {
     const printNameInput = document.querySelector('input[name="printName"]');
     const licenseInput = document.querySelector('input[name="license"]');
     const email = userData.email;
-    console.log(email);
-    console.log(userData.postal_code)
+    
     if (driverLicenseInput.value && printNameInput.value && licenseInput.value) {
-      
       //const pdfBlob = await generatePDF(); // You need to implement this function
 
       try {
@@ -107,9 +116,9 @@ const fetchUserData = async () => {
         {
           "RenterInformation": {
             "Name": username,
-            "Email": userData.email,
+            "Email": email,
             "PostalCode": userData.postal_code,
-            "DriversLicense": "Enter valid driver's license"
+            "DriverLicense": license
           },
           "VehicleInformation": {
             "CarMake": carData.make_name,
@@ -118,16 +127,18 @@ const fetchUserData = async () => {
             "Color": carData.color,
             "Mileage": carData.mileage,
             "LicencePlateNumber": carLicencePlate,
-            "VIN": "XXXXXXXXXXXXX",
-            "damages": ""
           },
           "RentalDetails": {
             "RentStart": reservationData.date_start,
             "RentEnd": reservationData.date_end,
             "PickupLocation": carData.postal_code,
             "DropoffLocation": carData.postal_code,
-            "AdditionalServices": ""
-          }
+          },
+         "SignatureDetails":{
+            "Signature": signature,
+            "SigneeName": printName,
+            "Date":today, 
+         }
         }
         
         );
@@ -230,6 +241,7 @@ const fetchUserData = async () => {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays;
 };
+
   return (
     <div className="checkin-container">
       <div className="container">
@@ -275,7 +287,7 @@ const fetchUserData = async () => {
 
         <div className="input">
         <span className="label">Drivers license:</span>
-        <input name="license" type="text" placeholder="Enter valid driver's license"/>
+        <input name="license" type="text" placeholder="Enter valid driver's license" value={license} onChange={handleLicenseChange}/>
         </div>
 
         
@@ -319,7 +331,6 @@ const fetchUserData = async () => {
             <div className="input">
               <span className="icon">🚗</span>
               <span className="label">Licence Plate Number:</span>
-
               <span>{carLicencePlate}</span>
             </div>
             <div className="input">
@@ -430,8 +441,8 @@ The Renter acknowledges receiving and reviewing a copy of the vehicle's insuranc
           </ul>
           <span>Renter:</span>
           <ul>
-            <li>Signature:<input name="driverLicense" type="text" placeholder="Signature"/></li>
-            <li>Print Name:<input name="printName" type="text" placeholder="Name"/> </li>
+            <li>Signature:<input name="driverLicense" type="text" placeholder="Signature"value={signature} onChange={handleSignatureChange}/></li>
+            <li>Print Name:<input name="printName" type="text" placeholder="Name" value={printName} onChange={handlePrintNameChange}/> </li>
             <li>Date:{today} </li>
           </ul>
 
