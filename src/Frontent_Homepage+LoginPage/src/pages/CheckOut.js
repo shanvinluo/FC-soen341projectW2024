@@ -165,6 +165,16 @@ const Checkout = () => {
           ></textarea>
         </div>
 
+        <div className="input">
+          <span className="icon">📝</span>
+          <span className="label">Leave a comment:</span>
+          <textarea
+          rows="4"
+          cols="50"
+            
+          ></textarea>
+        </div>
+
         <div className="info-box">
           <span className="info-title">Important Points:</span>
           <ul className="info-list">
