@@ -4,9 +4,12 @@ import user_icon from "../Assets/person.png";
 //import { useState } from "react";
 import { useState, useEffect } from "react";
 //import { createReservationData } from '../components/reservationData';
+import Comment from './Comment'; // Adjust the path as needed
+
 
 function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
   const [carAdded, setCarAdded] = useState(false); // State to track if car is successfully added
+  const [showComments, setShowComments] = useState(false);
 
   function generateReservationId() {
     const timestamp = new Date().getTime() / 100000000000000;
@@ -14,7 +17,11 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
 
     return `${timestamp}-${randomNum}`;
   }
+  const toggleComments = () => {
+    setShowComments(!showComments);
+  };
 
+  
   const handleAddCar = async () => {
     if (!localStorage.getItem("isLoggedIn")) {
       alert("Please log in first!");
@@ -66,6 +73,7 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
   };
   return (
     <div className="car-card">
+      <div className="car-card-content">
       <div className="car-image" />
       <div className="car-details">
         <div className="car-feature">
@@ -112,7 +120,18 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
         className={`addCarbtn ${carAdded ? "car-added" : ""}`} // This allows you to use CSS for styling as well
       >
         {carAdded ? "Car Added" : "Reserve this Car"}
-      </button>
+        </button>
+
+        <span className="view-comments-button" onClick={toggleComments}>           View Reviews
+ </span>
+      </div>
+
+        {showComments && (
+        <div className="Comments">
+          <Comment carId={car.vehicule_id} />
+        </div>
+      )}
+
     </div>
   );
 }

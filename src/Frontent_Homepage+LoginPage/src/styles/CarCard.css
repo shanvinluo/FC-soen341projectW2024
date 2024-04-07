@@ -1,13 +1,20 @@
 
 .car-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     background: #5058cb60; /* Light green background */
     margin-bottom: 30px; /* Space between cards */
     margin-right: 40px;
     padding: 20px;
     border-radius: 10px; /* Rounded corners for card */
+    flex-direction: column; /* Stack children vertically */
+
+  }
+  .car-card-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* Rest of the styles */
+    position: relative;
+
   }
   
   .car-image {
@@ -77,4 +84,29 @@
     }
   
   }
+
+  .view-comments-button {
+    cursor: pointer;
+    color: #5d04c2; /* The traditional color for hyperlinks */
+    padding: 5px;
+    margin-left: 5px; 
+    bottom: 0px;
+    right:0px;
+    position: absolute;
+    align-self: flex-start; /* Align to the start of the flex container */
+
+  }
+
+  .Comments{
+    width: 95%;
+    margin: 20px auto 0 auto; /* Adds margin on the top and centers horizontally */
+    padding: 15px; /* Optional: Adds padding inside the comments container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow to lift the comments section off the card */
+    border-radius: 10px; /* Optional: Rounds the corners of the comments container */
   
+  }
+  
+
+
+  
+ 
