@@ -4,9 +4,13 @@ import user_icon from "../Assets/person.png";
 //import { useState } from "react";
 import { useState, useEffect } from "react";
 //import { createReservationData } from '../components/reservationData';
+import Comment from './Comment'; // Adjust the path as needed
+
 
 function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
   const [carAdded, setCarAdded] = useState(false); // State to track if car is successfully added
+  const [comments, setComments] = useState([]);
+  const [showComments, setShowComments] = useState(false);
 
   function generateReservationId() {
     const timestamp = new Date().getTime() / 100000000000000;
@@ -14,7 +18,15 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
 
     return `${timestamp}-${randomNum}`;
   }
+  const toggleComments = () => {
+    setShowComments(!showComments);
+    if (!showComments) { // If comments are about to be shown, re-fetch them
+      fetchComments();
+    }
+  };
+  
 
+  
   const handleAddCar = async () => {
     if (!localStorage.getItem("isLoggedIn")) {
       alert("Please log in first!");
@@ -64,8 +76,26 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
 
     window.location.href = "/CheckIn";
   };
+
+  const fetchComments = async () => {
+    try {
+      const response = await fetch(`http://127.0.0.1:5004/comments/${car.vehicule_id}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      setComments(data);
+    } catch (error) {
+      console.error("Fetching comments failed:", error);
+    }
+  };
+  useEffect(() => {
+    fetchComments();
+  }, []); // The empty array means it will run once on mount
+  
   return (
     <div className="car-card">
+      <div className="car-card-content">
       <div className="car-image" />
       <div className="car-details">
         <div className="car-feature">
@@ -112,7 +142,18 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
         className={`addCarbtn ${carAdded ? "car-added" : ""}`} // This allows you to use CSS for styling as well
       >
         {carAdded ? "Car Added" : "Reserve this Car"}
-      </button>
+        </button>
+
+        <span className="view-comments-button" onClick={toggleComments}>           View Reviews
+ </span>
+      </div>
+
+        {showComments && (
+        <div className="Comments">
+          <Comment vehicule_id={car.vehicule_id} />
+        </div>
+      )}
+
     </div>
   );
 }
