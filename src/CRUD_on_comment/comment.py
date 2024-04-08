@@ -20,11 +20,9 @@ def get_comments(vehicle_id):
     comments = cursor.fetchall()
     cursor.close()
 
-    if not comments:
-        return jsonify({'message': 'no comments :((((('}), 404
 
     comments_list = [comment[0] for comment in comments]
-    return jsonify({'comments': comments_list}), 200
+    return jsonify(comments_list), 200 
 
 @app.route('/comments', methods=['POST'])
 def add_comment():
@@ -44,4 +42,4 @@ def add_comment():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5003)
+    app.run(debug=True, port=5004)

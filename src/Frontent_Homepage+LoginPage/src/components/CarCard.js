@@ -9,6 +9,7 @@ import Comment from './Comment'; // Adjust the path as needed
 
 function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
   const [carAdded, setCarAdded] = useState(false); // State to track if car is successfully added
+  const [comments, setComments] = useState([]);
   const [showComments, setShowComments] = useState(false);
 
   function generateReservationId() {
@@ -19,7 +20,11 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
   }
   const toggleComments = () => {
     setShowComments(!showComments);
+    if (!showComments) { // If comments are about to be shown, re-fetch them
+      fetchComments();
+    }
   };
+  
 
   
   const handleAddCar = async () => {
@@ -71,6 +76,23 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
 
     window.location.href = "/CheckIn";
   };
+
+  const fetchComments = async () => {
+    try {
+      const response = await fetch(`http://127.0.0.1:5004/comments/${car.vehicule_id}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      setComments(data);
+    } catch (error) {
+      console.error("Fetching comments failed:", error);
+    }
+  };
+  useEffect(() => {
+    fetchComments();
+  }, []); // The empty array means it will run once on mount
+  
   return (
     <div className="car-card">
       <div className="car-card-content">
@@ -128,7 +150,7 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
 
         {showComments && (
         <div className="Comments">
-          <Comment carId={car.vehicule_id} />
+          <Comment vehicule_id={car.vehicule_id} />
         </div>
       )}
 
