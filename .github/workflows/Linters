@@ -2,9 +2,13 @@ name: Lint Code Base
 
 on:
   push:
-    branches-ignore: [main]
-  pull_request: {}
-    branches: {main}
+    branches:
+      - '*'  # Trigger on all branches
+    branches-ignore:
+      - main  # Except the main branch
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
@@ -12,14 +16,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
-    - name: Lint Code Base
-      uses: github/super-linter/action@v3.
-      env:
-        VALIDATE_ALL_CODEBASE: false
-        DEFAULT_BRANCH: main
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Lint Code Base
+        uses: github/super-linter/action@v3
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
