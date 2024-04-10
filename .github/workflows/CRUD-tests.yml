@@ -59,7 +59,7 @@ jobs:
         run: |
           echo '{ "extends": "stylelint-config-standard" }' > .stylelintrc
           
-        # Install Pylint for Python linting
+      # Install Pylint for Python linting
       - name: Install Pylint
         run: pip install pylint
 
@@ -75,8 +75,10 @@ jobs:
       - name: Run Stylelint
         run: npx stylelint "**/*.css"
 
+      # Add pre-commit hooks
+      - name: Add pre-commit hooks
+        run: npx husky install
 
-
-
-
-
+      # Configure lint-staged for pre-commit hooks
+      - name: Configure lint-staged
+        run: npx lint-staged install
