@@ -54,6 +54,14 @@ jobs:
       # Steps to lint code base
       - name: Checkout code
         uses: actions/checkout@v2
+
+      # Install ESLint for JavaScript linting (assuming you want to use it for Flask)
+      - name: Install ESLint
+        run: npm install eslint eslint-plugin-react --save-dev
+
+      # Run ESLint for JavaScript files (assuming they're used in Flask)
+      - name: Run ESLint
+        run: npx eslint "**/*.js"
         
       - name: Generate Stylelint config
         run: |
@@ -75,10 +83,4 @@ jobs:
       - name: Run Pylint
         run: pylint src/*.py
 
-      # Install ESLint for JavaScript linting (assuming you want to use it for Flask)
-      - name: Install ESLint
-        run: npm install eslint eslint-plugin-react --save-dev
 
-      # Run ESLint for JavaScript files (assuming they're used in Flask)
-      - name: Run ESLint
-        run: npx eslint "**/*.js"
