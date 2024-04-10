@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Reservation.css";
 import CarCardReservation from "../components/CarCardReservation";
-import ConfirmPaymentOUT from "./Payment_pages/Checkoutpayment";
 
 const Reservation = (newStart) => {
   console.log(newStart);

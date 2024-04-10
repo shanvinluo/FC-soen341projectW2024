@@ -3,13 +3,12 @@ import "../styles/Login.css";
 import axios from "axios";
 
 import user_icon from "../Assets/person.png";
-import email_icon from "../Assets/email.png";
 import password_icon from "../Assets/password.png";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [,setErrorMessage] = useState("");
 
   const handleLogin = async () => {
     try {

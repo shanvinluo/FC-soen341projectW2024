@@ -12,11 +12,11 @@ const Signup = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [action, setAction] = useState("Sign up");
+  const [action, ] = useState("Sign up");
   const [status, setStatus] = useState("0");
 
   const signUpUser = async () => {
-    const result = await handleSignup();
+   await handleSignup();
   };
 
   const handleSignup = async () => {
@@ -31,7 +31,7 @@ const Signup = () => {
       });
       if (response && response.data && response.data.message) {
         console.log(response.data.message);
-        if (response.data.code == "OK") {
+        if (response.data.code === "OK") {
           window.location.href = "/login";
         }
       } else {
