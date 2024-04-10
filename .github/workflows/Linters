@@ -1,30 +1,17 @@
-name: Linters
-on:
-  push:
-    branches:
-      - main
+name: Super-Linter
+
+on: push
 
 jobs:
-  lint:
-    name: Linters
+  super-lint:
+    name: Lint code base
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Node.js and Python
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-      - name: Install ESLint
-        run: npm install eslint
-
-      - name: Run ESLint
-        run: npx eslint .
-
-      - name: Install Pylint
-        run: pip install pylint
-
-      - name: Run Pylint
-        run: pylint .
+      - name: Run Super-Linter
+        uses: github/super-linter@v4
+        env:
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
