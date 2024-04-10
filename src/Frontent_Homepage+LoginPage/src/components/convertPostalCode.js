@@ -2,10 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { GoogleMap, LoadScript, TrafficLayer } from '@react-google-maps/api';
 import "../styles/Checkin.css"; 
-const containerStyle = {
-  width: '400px',
-  height: '400px'
-};
+
 
 let key = "AIzaSyCg9ZMC5lLuUeTEt3H2jC5WjaScuJRCh2o"
 const username = localStorage.getItem("user_session_name");
@@ -17,9 +14,8 @@ function PostalCodeToCoordinates() {
     console.log(username);
     const [postalCode, setPostalCode] = useState('H1A 0A1');
     const [coordinates, setCoordinates] = useState(null);
-    const [error, setError] = useState('');
-    const [fetchingComplete, setFetchingComplete] = useState('');
-    const[carID, setCarID] = useState("");
+    const [, setError] = useState('');
+    const[, setCarID] = useState("");
     
     
 

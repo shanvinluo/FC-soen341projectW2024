@@ -9,7 +9,7 @@ import Comment from './Comment'; // Adjust the path as needed
 
 function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
   const [carAdded, setCarAdded] = useState(false); // State to track if car is successfully added
-  const [comments, setComments] = useState([]);
+  const [, setComments] = useState([]);
   const [showComments, setShowComments] = useState(false);
 
   function generateReservationId() {
