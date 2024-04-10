@@ -1,28 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import PostalCodeToCoordinates from '../components/convertPostalCode';
-import "../styles/Checkin.css"; 
+import React, { useState, useEffect } from "react";
+import PostalCodeToCoordinates from "../components/convertPostalCode";
+import "../styles/Checkin.css";
 import axios from "axios";
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 const CheckInPage = () => {
   const [bookingConfirmation, setBookingConfirmation] = useState(false);
-  const [license, setLicense] = useState('');
+  const [license, setLicense] = useState("");
   const [today, setToday] = useState(new Date().toLocaleDateString());
   const [reservationData, setReservationData] = useState("");
   const [damages, setDamages] = useState(false);
   const [depositRequested, setDepositRequested] = useState(false);
   const [carCondition, setCarCondition] = useState("");
-  const [carDamaged, setCarDamaged] = useState(false); 
-  const [showDamagesMessage, setShowDamagesMessage] = useState(false); // State to control the visibility of damages message
+  const [carDamaged, setCarDamaged] = useState(false);
+  const [showDamagesMessage, setShowDamagesMessage] = useState(false);
   const [carData, setCarData] = useState("");
   const [userData, setUserData] = useState("");
   const[usernamee, setUsernamee]= useState("");
   const[email,setEmail]=useState("");
   const[postal_code,setPostalCode]=useState("");
   const [agreementAccepted, setAgreementAccepted] = useState(false);
-  const [signature, setSignature] = useState('');
-  const [printName, setPrintName] = useState('');
+  const [signature, setSignature] = useState("");
+  const [printName, setPrintName] = useState("");
   const handleSignatureChange = (event) => {
     setSignature(event.target.value);
   };
@@ -32,7 +32,7 @@ const CheckInPage = () => {
   const handleLicenseChange = (event) => {
     setLicense(event.target.value);
   }
-  
+
   useEffect(() => {
 
     fetchUserData();
@@ -40,7 +40,6 @@ const CheckInPage = () => {
 
     fetchReservationData();
 
-    
   }, []);
 
 
@@ -55,16 +54,15 @@ const fetchUserData = async () => {
   try {
     const response = await fetch(userUrl);
     if (!response.ok) {
-      throw new Error('Failed to fetch user data');
+      throw new Error("Failed to fetch user data");
     }
     const data = await response.json();
-    console.log('User data:', data);
+    console.log("User data:", data);
     setUserData(data.user); // Assuming the user data is nested under 'user' key
   } catch (error) {
-    console.error('Error fetching user data:', error);
+    console.error("Error fetching user data:", error);
   }
 };
-  
 
   const fetchReservationData = async () => {
     try {
@@ -75,7 +73,7 @@ const fetchUserData = async () => {
       const data = await response.json();
       setReservationData(data.reservations[0]);
       // Extract car ID from reservation data and fetch car details
-      const carId = data.reservations[0].vehicle_id; // Assuming "vehicle_id" is the key for car ID in reservation data
+      const carId = data.reservations[0].vehicle_id;
       if (carId) {
         fetchCarData(carId);
       }
@@ -105,13 +103,11 @@ const fetchUserData = async () => {
     const printNameInput = document.querySelector('input[name="printName"]');
     const licenseInput = document.querySelector('input[name="license"]');
     const email = userData.email;
-    
     if (driverLicenseInput.value && printNameInput.value && licenseInput.value) {
-      //const pdfBlob = await generatePDF(); // You need to implement this function
 
       try {
 
-        const response = await axios.post("http://127.0.0.1:5002/user/verification", 
+        const response = await axios.post("http://127.0.0.1:5002/user/verification",
 
         {
           "RenterInformation": {
@@ -137,43 +133,40 @@ const fetchUserData = async () => {
          "SignatureDetails":{
             "Signature": signature,
             "SigneeName": printName,
-            "Date":today, 
+            "Date":today,
          }
         }
-        
+
         );
 
-          
+
         if (response.status < 200 || response.status >= 300) {
-          throw new Error('Failed to send the reservation info');
+          throw new Error("Failed to send the reservation info");
         }
-  
-          console.log('Info sent successfully:' + response.status);
+
+          console.log("Info sent successfully:" + response.status);
       } catch (error) {
-          console.error('Error sending information:', error.message);
-          alert('An error occurred while sending the information.');
+          console.error("Error sending information:", error.message);
+          alert("An error occurred while sending the information.");
       }
-      window.location.href = '/ConfirmPaymentIN';
+      window.location.href = "/ConfirmPaymentIN";
     } else {
-      alert('Please fill in all required fields.');
+      alert("Please fill in all required fields.");
     }
 };
   /*
   const generatePDF = () => {
     // Get the target element to capture the screenshot
     const targetElement = document.body;
-  
     // Use html2canvas to capture the screenshot
     html2canvas(targetElement).then(canvas => {
       // Convert the canvas to an image data URL
       const imgData = canvas.toDataURL('image/png');
-  
       // Initialize jsPDF
       const pdf = new jsPDF('p', 'mm', 'a4');
-  
+
       // Add the image data to the PDF
-      pdf.addImage(imgData, 'PNG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
-  
+
       // Save the PDF
       pdf.save('website_screenshot.pdf');
     });
@@ -189,7 +182,6 @@ const fetchUserData = async () => {
 
     const username = localStorage.getItem("user_session_name");
     setUsernamee(username)
-    
   }
 
   function showBookingConfirmation() {
@@ -198,23 +190,21 @@ const fetchUserData = async () => {
 
   //Inutile
   function generateLicensePlate() {
-    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const numbers = '0123456789';
-  
-    let licensePlate = '';
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const numbers = "0123456789";
+    let licensePlate = "";
     // Generate 3 random letters
     for (let i = 0; i < 3; i++) {
       const randomIndex = Math.floor(Math.random() * letters.length);
       licensePlate += letters.charAt(randomIndex);
     }
     // Add a dash
-    licensePlate += '-';
+    licensePlate += "-";
     // Generate 4 random numbers
     for (let i = 0; i < 4; i++) {
       const randomIndex = Math.floor(Math.random() * numbers.length);
       licensePlate += numbers.charAt(randomIndex);
     }
-  
     return licensePlate;
   }
 
@@ -223,14 +213,12 @@ const fetchUserData = async () => {
     // Convert both dates to milliseconds
     const startMillis = startDate.getTime();
     const endMillis = endDate.getTime();
-  
     // Calculate the difference in milliseconds
     const differenceMillis = endMillis - startMillis;
-  
     // Convert milliseconds to days
     const millisecondsInDay = 1000 * 60 * 60 * 24;
     const daysElapsed = Math.floor(differenceMillis / millisecondsInDay);
-  
+
     return daysElapsed;
   }
 
@@ -254,21 +242,17 @@ const fetchUserData = async () => {
       </div>
       <div className="checkin-form">
         <PostalCodeToCoordinates/>
-
-       
         {showDamagesMessage && <p>Contact the branch for further instructions</p>}
         {depositRequested && <p>Deposit requested successfully.</p>}
       </div>
       <div>
       </div>
-        
         <div className="container">
         <div className="text">Car Rental Agreement</div>
         <div className='subtitle'>Rental Agreement Number: <span>{reservationData.reservation_id} </span></div>
 
         <div className='subtitle-low'>This Rental Agreement ("Agreement") is entered into between Car Rental Montreal, located at {carData.postal_code}, hereinafter referred to as the "Rental Company," and the individual or entity identified below, hereinafter referred to as the "Renter":
         </div>
-  
         <div className='subtitle'>1. Renter's Information:</div>
         <div className="inputs">
         <div className="input">
@@ -290,9 +274,6 @@ const fetchUserData = async () => {
         <input name="license" type="text" placeholder="Enter valid driver's license" value={license} onChange={handleLicenseChange}/>
         </div>
 
-        
-
-        
             <div className='subtitle'>2. Vehicle Information:</div>
             </div>
 
@@ -393,7 +374,6 @@ const fetchUserData = async () => {
               <span className="label">Rental Period: </span>
               <span>{getDaysBetweenDates(reservationData.date_start,reservationData.date_end)} days</span>
               <span>{}</span>
-              
             </div>
           </>
         )}
@@ -407,9 +387,7 @@ const fetchUserData = async () => {
               <span className="label">Drop-off Location:</span>
               <span>{carData.postal_code}</span>
             </div>
-            
-            
-            
+
             <div className="input">
               <span className="icon">⚠️</span>
               <span className="label">Additional Services: Any additional service made by car rental montreal</span>
@@ -461,7 +439,6 @@ The Renter acknowledges receiving and reviewing a copy of the vehicle's insuranc
         </div>
 
       </div>
-      
     </div>
   );
 };
