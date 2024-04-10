@@ -29,7 +29,7 @@ const Checkout = () => {
         },
         body: JSON.stringify({
           vehicle_id: carID,
-          comment, 
+          comment,
         }),
       });
       if (!response.ok) {
@@ -51,9 +51,10 @@ const Checkout = () => {
       const data = await response.json();
       setReservationData(data.reservations[0]);
       // Extract car ID from reservation data and fetch car details
-      const carId = data.reservations[0].vehicle_id; // Assuming "vehicle_id" is the key for car ID in reservation data
+      const carId = data.reservations[0].vehicle_id; 
+      // Assuming "vehicle_id" is the key for car ID in reservation data
       const fetchedCarId = data.reservations[0].vehicle_id;
-      setCarId(fetchedCarId); 
+      setCarId(fetchedCarId);
       if (carId) {
         fetchCarData(carId);
       }

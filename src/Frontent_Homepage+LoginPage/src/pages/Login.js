@@ -25,7 +25,6 @@ const Login = () => {
         localStorage.setItem("user_session_name", username);
         const storedUsername = localStorage.getItem("user_session_name");
         console.log("user_session_name:", storedUsername, "aussi type:", typeof storedUsername);
-        
         window.location.href = "/FindBranch";
       } else {
         console.log("Login pas successful womp womp!");

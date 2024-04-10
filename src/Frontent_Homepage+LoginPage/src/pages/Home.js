@@ -24,8 +24,9 @@ function Home() {
     // console.log(localStorage.getItem("nearest_branch"));
     const queryParams = new URLSearchParams();
 
-    // Add each filter to queryParams only if it has been selected (is not empty)
-    queryParams.append('postal_code',postal_code)
+    /* Add each filter to queryParams only
+    if it has been selected (is not empty)*/
+    queryParams.append("postal_code",postal_code)
     if (priceRange) queryParams.append("priceRange", priceRange);
     if (startDesiredDate)
       queryParams.append("startDesiredDate", formatDate(startDesiredDate));
@@ -41,29 +42,29 @@ function Home() {
 
     try {
       const response = await fetch(url);
-      
+
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
       const cars = await response.json();
       return cars; // Assuming the backend directly returns the filtered cars
     } catch (error) {
-      console.error('Failed to fetch cars:', error);
+      console.error("Failed to fetch cars:", error);
       return []; // Return an empty array in case of error
     }
   };
-  
+
   const fetchAllReservations = async () => {
     const url = `http://127.0.0.1:5001/reservation/AllReservations`;
     try {
       const response = await fetch(url);
       if (!response.ok) {
-        throw new Error('Failed to fetch reservations');
+        throw new Error("Failed to fetch reservations");
       }
       const data = await response.json();
       setAllReservations(data.reservations);
     } catch (error) {
-      console.error('Error fetching reservations:', error);
+      console.error("Error fetching reservations:", error);
       setAllReservations([]);
     }
   };
@@ -79,28 +80,29 @@ function Home() {
     const availableCars = fetchedCars.filter(car => {
       const hasOverlappingReservation = allReservations.some(reservation => {
         if (reservation.vehicle_id !== car.vehicule_id) return false;
-  
+
         const reservationStart = new Date(reservation.date_start);
         const reservationEnd = new Date(reservation.date_end);
         const desiredStart = new Date(startDesiredDate);
         const desiredEnd = new Date(endDesiredDate);
-  
+
         // overlaps conditions
         const startsDuringDesired = desiredStart < reservationStart && reservationStart < desiredEnd;
         const endsDuringDesired = desiredStart < reservationEnd && reservationEnd < desiredEnd;
         const encompassesDesired = reservationStart <= desiredStart && desiredEnd <= reservationEnd;
-  
+
         return startsDuringDesired || endsDuringDesired || encompassesDesired;
       });
-  
+
       return !hasOverlappingReservation;
     });
-  
+
     setResults(availableCars);
     setShowResults(true);
   }
   useEffect(() => {
-    fetchAllReservations();}, [year,color,mileage,transmissionType,fuelType,priceRange, startDesiredDate, endDesiredDate]);
+    fetchAllReservations();},
+    [year,color,mileage,transmissionType,fuelType,priceRange, startDesiredDate, endDesiredDate]);
 
   return (
     <div>
