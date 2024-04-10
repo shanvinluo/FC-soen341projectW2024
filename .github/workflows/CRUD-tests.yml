@@ -55,6 +55,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Include ESLint Configuration
+        run: |
+          echo 'linter_configs:
+                  eslint:
+                    enabled: true
+                    config-file: .eslintrc.js
+                    exclude: |
+                      **/*.json
+                      **/*.js
+                      directoryName/**' >> .github/super-linter.yml
+
       - name: Run Super-Linter
         uses: github/super-linter@v4
         env:
