@@ -2,24 +2,17 @@ import React, { useState, useEffect } from "react";
 import PostalCodeToCoordinates from "../components/convertPostalCode";
 import "../styles/Checkin.css";
 import axios from "axios";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
 
 const CheckInPage = () => {
-  const [bookingConfirmation, setBookingConfirmation] = useState(false);
   const [license, setLicense] = useState("");
-  const [today, setToday] = useState(new Date().toLocaleDateString());
+  const [today] = useState(new Date().toLocaleDateString());
   const [reservationData, setReservationData] = useState("");
-  const [damages, setDamages] = useState(false);
-  const [depositRequested, setDepositRequested] = useState(false);
+  const [depositRequested] = useState(false);
   const [carCondition, setCarCondition] = useState("");
   const [carDamaged, setCarDamaged] = useState(false);
-  const [showDamagesMessage, setShowDamagesMessage] = useState(false);
+  const [showDamagesMessage] = useState(false);
   const [carData, setCarData] = useState("");
   const [userData, setUserData] = useState("");
-  const[usernamee, setUsernamee]= useState("");
-  const[email,setEmail]=useState("");
-  const[postal_code,setPostalCode]=useState("");
   const [agreementAccepted, setAgreementAccepted] = useState(false);
   const [signature, setSignature] = useState("");
   const [printName, setPrintName] = useState("");
@@ -178,15 +171,7 @@ const fetchUserData = async () => {
     generatePDF();
   };*/
 
-  const callUsername =()=>{
-
-    const username = localStorage.getItem("user_session_name");
-    setUsernamee(username)
-  }
-
-  function showBookingConfirmation() {
-    setBookingConfirmation(true);
-  }
+  
 
   //Inutile
   function generateLicensePlate() {
@@ -209,19 +194,6 @@ const fetchUserData = async () => {
   }
 
   //Inutile
-  function getDaysElapsed(startDate, endDate) {
-    // Convert both dates to milliseconds
-    const startMillis = startDate.getTime();
-    const endMillis = endDate.getTime();
-    // Calculate the difference in milliseconds
-    const differenceMillis = endMillis - startMillis;
-    // Convert milliseconds to days
-    const millisecondsInDay = 1000 * 60 * 60 * 24;
-    const daysElapsed = Math.floor(differenceMillis / millisecondsInDay);
-
-    return daysElapsed;
-  }
-
   const getDaysBetweenDates = (startDate, endDate) => {
     const start = new Date(startDate);
     const end = new Date(endDate);
