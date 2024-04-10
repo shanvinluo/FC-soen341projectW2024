@@ -84,6 +84,9 @@ Sprint 3
 Below, there is the link to a video demonstrating the features and how to deploy the project
 [Video](https://www.youtube.com/watch?v=9_--RetahP8)
 
+Sprint 4
+Below, there is the link to a video demonstrating the features and how to deploy the project
+[Video](https://www.youtube.com/watch?v=S3RME54ORUE)
 
 ### Contributors and roles
 * <strong> Shanvin Luo (40248485) (github.com/shanvinluo) </strong>: Product Manager, Full-Stack Developer: <br>
