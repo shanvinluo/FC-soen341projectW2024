@@ -45,7 +45,7 @@ jobs:
       - name: Run tests
         run: pytest
 
-  super-lint:
+  lint:
     name: Lint Code Base
     runs-on: ubuntu-latest
     needs: test  # Specify the test job as a dependency
@@ -55,19 +55,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Include ESLint Configuration
-        run: |
-          echo 'linter_configs:
-                  eslint:
-                    enabled: true
-                    config-file: .eslintrc.js
-                    exclude: |
-                      **/*.json
-                      **/*.js
-                      node_modules/**' >> .github/super-linter.yml
+      # Install Stylelint for CSS linting
+      - name: Install Stylelint
+        run: npm install stylelint stylelint-config-standard --save-dev
 
-      - name: Run Super-Linter
-        uses: github/super-linter@v4
-        env:
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Run Stylelint for CSS files
+      - name: Run Stylelint
+        run: npx stylelint "**/*.css"
+
+      # Install Pylint for Python linting
+      - name: Install Pylint
+        run: pip install pylint
+
+      # Run Pylint for Python files
+      - name: Run Pylint
+        run: pylint src/*.py
+
+      # Install ESLint for JavaScript linting (assuming you want to use it for Flask)
+      - name: Install ESLint
+        run: npm install eslint eslint-plugin-react --save-dev
+
+      # Run ESLint for JavaScript files (assuming they're used in Flask)
+      - name: Run ESLint
+        run: npx eslint "**/*.js"
