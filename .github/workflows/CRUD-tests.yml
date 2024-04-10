@@ -54,7 +54,11 @@ jobs:
       # Steps to lint code base
       - name: Checkout code
         uses: actions/checkout@v2
-
+        
+      - name: Generate Stylelint config
+        run: |
+          echo '{ "extends": "stylelint-config-standard" }' > .stylelintrc
+          
       # Install Stylelint for CSS linting
       - name: Install Stylelint
         run: npm install stylelint stylelint-config-standard --save-dev
