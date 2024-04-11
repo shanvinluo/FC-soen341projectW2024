@@ -7,6 +7,7 @@
   background: #fff;
   border-radius: 10px;
 }
+
 .more-filter {
   padding-left: 62px;
   margin-top: 27px;
@@ -14,11 +15,13 @@
   font-size: 18px;
   cursor: pointer;
 }
+
 .inputss {
   margin-top: 55px;
   display: flex;
   gap: 25px;
 }
+
 .inputa,
 p {
   display: flex;
@@ -55,6 +58,7 @@ h1 {
   width: 100%;
   margin-top: 30px;
 }
+
 .submit-containerr {
   display: flex;
   gap: 30px;
