@@ -1,5 +1,5 @@
 """ Tests the car model for the existence of its attributes"""
-from CRUD_on_car.vehicles_model import Car
+from .vehicles_model import Car
 
 def test_new_vehicle():
     """
