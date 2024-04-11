@@ -1,7 +1,7 @@
 """This module contains the tests for the car crud operations"""
 import pytest
-from .vehicles_crud import app1
-from .vehicles_db import db
+from models.CRUD_on_car.vehicles_crud import app1
+from models.CRUD_on_car.vehicles_db import db
 
 
 

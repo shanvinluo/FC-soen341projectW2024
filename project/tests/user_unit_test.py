@@ -1,5 +1,5 @@
 import pytest 
-from .user import app
+from models.CRUD_on_user.user import app
 
 ENDPOINT = "http://127.0.0.1:5000"
 
