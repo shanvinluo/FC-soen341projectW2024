@@ -6,6 +6,7 @@
   border-radius: 10px; /* Rounded corners for card */
   flex-direction: column; /* Stack children vertically */
 }
+
 .car-card-content {
   display: flex;
   align-items: center;
@@ -51,7 +52,7 @@
   margin-right: 10px; /* Space between icon and text */
 }
 
-.addCarbtn {
+.add-car-btn {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -66,13 +67,13 @@
   margin-right: 30px;
 }
 
-.addCarbtn.car-added {
+.add-car-btn.car-added {
   background-color: grey !important; /* Override color when car is added */
   pointer-events: none;
 }
 
 /* Add responsive design adjustments if necessary */
-@media (max-width: 768px) {
+@media (min-width: 500px) and (max-width: 768px) {
   .car-card {
     flex-direction: column;
     align-items: flex-start;
@@ -84,16 +85,16 @@
   color: #5d04c2; /* The traditional color for hyperlinks */
   padding: 5px;
   margin-left: 5px;
-  bottom: 0px;
-  right: 0px;
+  bottom: 0;
+  right: 0;
   position: absolute;
   align-self: flex-start; /* Align to the start of the flex container */
 }
 
-.Comments {
+.comments {
   width: 95%;
-  margin: 20px auto 0 auto; /* Adds margin on the top and centers horizontally */
+  margin: 20px auto 0; /* Adds margin on the top and centers horizontally */
   padding: 15px; /* Optional: Adds padding inside the comments container */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow to lift the comments section off the card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 10%); /* Optional: Adds a subtle shadow to lift the comments section off the card */
   border-radius: 10px; /* Optional: Rounds the corners of the comments container */
 }

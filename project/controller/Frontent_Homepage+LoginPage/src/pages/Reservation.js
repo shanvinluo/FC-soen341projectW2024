@@ -111,12 +111,12 @@ const Reservation = (newStart) => {
   };
 
   return (
-    <div className="reservationLayout">
+    <div className="reservation-layout">
       <div className="sidebar">
-        <button className="sidebarButton">User Information</button>
-        <button className="sidebarButton">Manage Rentals</button>
+        <button className="sidebar-button">User Information</button>
+        <button className="sidebar-button">Manage Rentals</button>
       </div>
-      <div className="containerHome">
+      <div className="container-home">
         <h1>Manage Rentals</h1>
         <ul>
           {reservations.map((reservation) => (

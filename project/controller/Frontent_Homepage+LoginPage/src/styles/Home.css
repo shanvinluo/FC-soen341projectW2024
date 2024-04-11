@@ -1,4 +1,4 @@
-.containerHome {
+.container-home {
   display: flex;
   width: 90%;
   flex-direction: column;
@@ -7,10 +7,10 @@
   background: #fff;
   border-radius: 10px;
 }
-.More_Filter{
+.more-filter {
   padding-left: 62px;
   margin-top: 27px;
-  color:#4c00b4;
+  color: #4c00b4;
   font-size: 18px;
   cursor: pointer;
 }
@@ -61,7 +61,7 @@ h1 {
   margin: 60px auto;
 }
 
-.submitButton {
+.submit-button {
   display: flex;
   justify-content: center;
   align-items: center;

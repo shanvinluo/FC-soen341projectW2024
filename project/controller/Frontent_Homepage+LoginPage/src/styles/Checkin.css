@@ -70,9 +70,11 @@
   margin-bottom: 10px;
   list-style-type: decimal;
 }
+
 ol {
   list-style-type: decimal;
 }
+
 .subtitle {
   font-size: 1.5rem; /* Adjust font size as needed */
   font-weight: bold; /* Adjust font weight as needed */
@@ -84,7 +86,6 @@ ol {
 
 .subtitle-low {
   font-size: 15px; /* Adjust font size as needed */
-  /*font-weight: bold; /* Adjust font weight as needed */
   color: black; /* Adjust text color as needed */
   text-align: justify;
   font-style: italic;

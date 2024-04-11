@@ -11,14 +11,13 @@ import ConfirmPaymentOUT from "./pages/Payment_pages/Checkoutpayment";
 import ConfirmPaymentIN from "./pages/Payment_pages/Checkinpayment";
 import Price from "./pages/Payment_pages/Price";
 
-
-import FindBranch from "./pages/FindBranch"
-import CheckOut from "./pages/CheckOut"
+import FindBranch from "./pages/FindBranch";
+import CheckOut from "./pages/CheckOut";
 import CheckInPage from "./pages/Check-In";
 
 function App() {
   return (
-    <div className="App">
+    <div className="app">
       <Router>
         <Navbar />
         <Routes>
@@ -34,7 +33,6 @@ function App() {
           <Route path="/CheckOut" element={<CheckOut />} />
           <Route path="/Price" element={<Price />} />
           <Route path="/CheckIn" element={<CheckInPage />} />
-
           {/* Add more Route components as needed */}
           {/* Add more Route components as needed */}
         </Routes>
