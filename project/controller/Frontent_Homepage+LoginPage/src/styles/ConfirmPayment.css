@@ -22,18 +22,21 @@
   font-size: 48px;
   font-weight: 700;
 }
+
 .underline {
   width: 61px;
   height: 6px;
-  background: 3c009d;
+  background: #3c009d;
   border-radius: 9px;
 }
+
 .inputs {
   margin-top: 55px;
   display: flex;
   flex-direction: column;
   gap: 25px;
 }
+
 .input-card-name {
   display: flex;
   align-items: center;
@@ -43,9 +46,11 @@
   background: #eaeaea;
   border-radius: 6px;
 }
+
 .input img {
   margin-left: 30px;
 }
+
 .input input {
   width: 400px;
   height: 50px;

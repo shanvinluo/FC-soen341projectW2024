@@ -1,17 +1,14 @@
 .footer {
-    position: fixed; /* Fixed position */
-    bottom: 0;      /* Anchored to the bottom */
-    width: 100%;
-    height: 50px;
-    background-color: #FFFFFF;
-    display: flex;
-    padding-top: 10px;
-  }
-  
-  
-  .footer p {
-    justify-content: right;
-    color: rgb(0, 0, 0);
-  }
+  position: fixed; /* Fixed position */
+  bottom: 0; /* Anchored to the bottom */
+  width: 100%;
+  height: 50px;
+  background-color: #fff;
+  display: flex;
+  padding-top: 10px;
+}
 
- 
+.footer p {
+  justify-content: right;
+  color: black;
+}
