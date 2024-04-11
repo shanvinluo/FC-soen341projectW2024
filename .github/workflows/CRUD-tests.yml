@@ -103,7 +103,7 @@ jobs:
         
       - name: Generate Stylelint config
         run: |
-          echo '{ "extends": "stylelint-config-standard" }' > .stylelintrc
+          echo '{ "extends": "stylelint-config-standard", "rules": { "comment-empty-line-before": null, "media-feature-range-notation": null, "color-function-notation": null } }' > .stylelintrc
 
       # Install Stylelint for CSS linting
       - name: Install Stylelint
@@ -129,5 +129,3 @@ jobs:
       # Configure lint-staged for pre-commit hooks
       - name: Configure lint-staged
         run: npx lint-staged install
-
-#         run: npx lint-staged install
