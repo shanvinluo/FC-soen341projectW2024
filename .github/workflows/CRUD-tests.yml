@@ -73,7 +73,7 @@ jobs:
         run: pip install pylint
 
       - name: Run Pylint
-        run: pylint "project/models/*.py"
+        run: pylint project/models/**/*.py
 
           
       # Add pre-commit hooks
