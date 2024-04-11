@@ -72,7 +72,7 @@ jobs:
       - name: Install Pylint
         run: pip install pylint
 
-      - name: Run Pylint
+      # - name: Run Pylint
         # run: pylint project/models/**/*.py
 
           
