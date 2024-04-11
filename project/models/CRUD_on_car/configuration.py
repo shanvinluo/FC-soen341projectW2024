@@ -1,12 +1,5 @@
 import os
-'''
-username = "sql5686988"
-password = "jSrGqLGIWE"
-host = "sql5.freemysqlhosting.net"
-port = "3306"
-dbname = "sql5686988"
-db_url = f"mysql+pymysql://{username}:{password}@{host}:{port}/{dbname}"
-'''
+
 
 class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False

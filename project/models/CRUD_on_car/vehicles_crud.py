@@ -1,9 +1,10 @@
-from CRUD_on_car.VehiclesDB import create_app, db
-from CRUD_on_car.Vehicles_model import Car
+"""Contains the crud operations for the the car object"""
+from datetime import datetime
 from flask import jsonify, abort, request
 from sqlalchemy.exc import IntegrityError
 from flask_cors import CORS
-from datetime import datetime
+from CRUD_on_car.vehicles_db import create_app, db
+from CRUD_on_car.vehicles_model import Car
 
 
 
@@ -28,12 +29,12 @@ cors = CORS(app1, resources={r"/*": {"origins": "*"}})
 
 #CORS(app1)
 @app1.route("/")
-def home():
-    return "welcome"
+
 
 
 @app1.route("/Cars/list", methods=["GET"])
 def list_cars():
+    """Gets a list of car objects from the database"""
     query = Car.query
     # Filters
     price_range = request.args.get('priceRange')
@@ -49,7 +50,7 @@ def list_cars():
     if price_range:
         low, high = map(int, price_range.split('-'))
         query = query.filter(Car.price.between(low, high))
-        
+
     if start_desired_date:
         start_desired_date_object=datetime.strptime(start_desired_date, '%Y-%m-%d').date()
         query = query.filter(Car.availability_start_date <= (start_desired_date_object))
@@ -95,21 +96,23 @@ def list_cars():
 
 
 @app1.route("/Car/<int:vehicule_id>", methods=["GET"])
-def get_Car(vehicule_id):
+def get_car(vehicule_id):
+    """Gets a car object from the database"""
     car = db.session.get(Car,vehicule_id)
     if car is None:
         abort(404)
-    
+
 
     return jsonify(car.to_json())
 
 @app1.route('/Car', methods=['POST'])
-def create_Car():
-
+def create_car():
+    """Deletes a car from the database"""
     if not request.json:
         abort(400)
     #if the request is made without an id, alert the user
-    if (not isinstance(request.json.get('vehicule_id'),int) or request.json.get('vehicule_id') == None):
+    if (not isinstance(request.json.get('vehicule_id'),int) or
+        request.json.get('vehicule_id') is None):
         db.session.rollback()
         return "Must enter an ID that is composed of integers", 400
 
@@ -121,7 +124,7 @@ def create_Car():
         cars = Car.query.all()
         car_ids = [ i.to_json()["vehicule_id"] for i in cars]
         check_id = request.json.get('vehicule_id')
-        while(check_id in car_ids):
+        while check_id in car_ids:
             check_id += 1
         request.json["vehicule_id"] = check_id
 
@@ -147,7 +150,8 @@ def create_Car():
         return jsonify(car.to_json()), 201
 
 @app1.route('/Car/<int:vehicule_id>', methods=['PUT'])
-def update_Car(vehicule_id):
+def update_car(vehicule_id):
+    """Updates the attributes of a car object, can be any number of values"""
     car = db.session.get(Car,vehicule_id)#fetch the car based on ID
 
     cars = Car.query.all()
@@ -155,7 +159,7 @@ def update_Car(vehicule_id):
     #This incriments the id to avoid collision
     ################################
     check_id = request.json.get('vehicule_id', car.vehicule_id)
-    while(check_id in car_ids):
+    while check_id in car_ids:
         check_id += 1
     ################################
     if car is None:
@@ -173,7 +177,8 @@ def update_Car(vehicule_id):
     car.make_name=request.json.get("make_name", car.make_name)
     car.model_year = request.json.get("model_year", car.make_name)
     car.availability = request.json.get("availability", car.availability)
-    car.availability_start_date = request.json.get("availability_start_date", car.availability_start_date)
+    car.availability_start_date = request.json.get("availability_start_date",
+                                                   car.availability_start_date)
     car.availability_end_date = request.json.get("availability_end_date", car.availability_end_date)
     car.price = request.json.get("price", car.price)
     car.mileage=request.json.get("mileage",car.mileage)
@@ -184,14 +189,14 @@ def update_Car(vehicule_id):
     return jsonify(car.to_json()),200
 
 @app1.route("/Car/<int:vehicule_id>", methods=["DELETE"])
-def delete_Car(vehicule_id):
-
+def delete_car(vehicule_id):
+    """deletes a car from the database"""
     car = db.session.get(Car,vehicule_id)
     if car is None:
         abort(404)
     try:
         db.session.delete(car)
-    except IntegrityError as e:
+    except IntegrityError:
         return "The current car model serves as a parent row to another model. Can't delete it"
     except Exception as e1:
         return f"Unknown error: {e1}"

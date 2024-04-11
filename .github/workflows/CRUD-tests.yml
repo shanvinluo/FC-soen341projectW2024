@@ -58,16 +58,18 @@ jobs:
       - name: Generate Stylelint config
         run: |
           echo '{ "extends": "stylelint-config-standard" }' > .stylelintrc
-          
+
+
+        
       # Install Pylint for Python linting
       - name: Install Pylint
         run: pip install pylint
 
       # Run Pylint for Python files
       - name: Run Pylint
-        run: pylint src/*.py
+        run: pylint "**/*.py"
           
-      # Install Stylelint for CSS linting
+        # Install Stylelint for CSS linting
       - name: Install Stylelint
         run: npm install stylelint stylelint-config-standard --save-dev
 
