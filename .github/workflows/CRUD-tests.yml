@@ -119,7 +119,20 @@ jobs:
 
       # Run Pylint for Python files
       - name: Run Pylint
-        run: pylint "**/*.py" --ignore="project/tests" --disable=missing-module-docstring,too-few-public-methods,consider-merging-isinstance,redefined-builtin,bare-except,line-too-long,unnecessary-semicolon,missing-function-docstring,redefined-argument-from-local,missing-final-newline,import-error,redefined-outer-name,no-else-return,broad-exception-caught,too-many-instance-attributes,too-many-arguments,too-many-locals,invalid-name,unnecessary-comprehension,pointless-string-statement,consider-using-enumerate,unused-variable,missing-timeout,invalid-name --ignore=node_modules --ignore=project/models/CRUD_on_reservation/test_reservations.py,project/models/CRUD_on_reservation/__init__.py,project/models/CRUD_on_reservation/reservation.py,project/models/CRUD_on_car/vehicles_crud.py,project/models/CRUD_on_car/configuration.py,project/models/CRUD_on_car/test_api.py,project/models/CRUD_on_car/vehicles_model.py,project/models/CRUD_on_car/vehicles_db.py,project/models/CRUD_on_comment/comment.py,project/models/CRUD_on_user/Gmail_Api.py,project/models/CRUD_on_user/user.py,project/models/CRUD_on_user/Google.py,project/models/CRUD_on_user/user_unit_test.py,project/models/branch/maps_api.py <your_directory_or_file>
+        run: pylint **/*.py \
+                --ignore=project/tests \
+                --ignore=node_modules \
+                --ignore=project/models/CRUD_on_reservation/test_reservations.py \
+                --ignore=project/models/CRUD_on_reservation/__init__.py \
+                --ignore=project/models/CRUD_on_reservation/reservation.py \
+                --ignore=project/models/CRUD_on_car/vehicles_crud.py \
+                --ignore=project/models/CRUD_on_car/configuration.py \
+                --ignore=project/models/CRUD_on_car/test_api.py \
+                --ignore=project/models/CRUD_on_car/vehicles_model.py \
+                --ignore=project/models/CRUD_on_car/vehicles_db.py \
+                --ignore=project/models/CRUD_on_comment/comment.py \
+                --ignore=project/models/CRUD_on_use \
+                --disable=missing-module-docstring,too-few-public-methods,consider-merging-isinstance,redefined-builtin,bare-except,line-too-long,unnecessary-semicolon,missing-function-docstring,redefined-argument-from-local,missing-final-newline,import-error,redefined-outer-name,no-else-return,broad-exception-caught,too-many-instance-attributes,too-many-arguments,too-many-locals,invalid-name,unnecessary-comprehension,pointless-string-statement,consider-using-enumerate,unused-variable,missing-timeout,invalid-name
           
       # Add pre-commit hooks
       - name: Add pre-commit hooks
