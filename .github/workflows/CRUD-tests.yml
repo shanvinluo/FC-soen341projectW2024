@@ -1,90 +1,4 @@
-# name: Run Tests and Lint Code Base
-
-# on:
-#   push:
-#     branches:
-#       - main  
-
-# jobs:
-#   test:
-#     name: Run Tests
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       # Steps to set up and run tests
-#       - name: Checkout code
-#         uses: actions/checkout@v2  # Checkout the repository's code
-
-#       # Install dependencies
-#       - name: Set up Python
-#         uses: actions/setup-python@v2
-#         with:
-#           python-version: '3.12'  # Specify the Python version
-
-#       - name: Install dependencies
-#         run: |
-#           pip3 install pytest requests Flask Flask-SQLAlchemy Flask-Cors google-api-python-client google-auth-httplib2 google-auth-oauthlib Flask-MySQLdb pymysql
-
-#       # Start applications
-#       - name: Start application 1
-#         run: python3 -u src/CRUD_on_car/Vehicles_CRUD.py --port 5000 &
-
-#       - name: Start application 2 
-#         run: python3 -u src/CRUD_on_reservation/reservation.py --port 5001 &
-
-#       - name: Start application 3 
-#         run: python3 -u src/CRUD_on_user/user.py --port 5002 &
-
-#       # Clean Python cache
-#       - name: Clean Python Cache
-#         run: |
-#           find . -name "*.pyc" -exec rm -f {} +
-#           find . -name "__pycache__" -exec rm -rf {} +
-
-#       # Run tests
-#       - name: Run tests
-#         run: pytest
-
-#   lint:
-#     name: Lint Code Base
-#     runs-on: ubuntu-latest
-#     needs: test  # Specify the test job as a dependency
-
-#     steps:
-#       # Steps to lint code base
-#       - name: Checkout code
-#         uses: actions/checkout@v2
-        
-#       - name: Generate Stylelint config
-#         run: |
-#           echo '{ "extends": "stylelint-config-standard" }' > .stylelintrc
-
-#       # Install Stylelint for CSS linting
-#       - name: Install Stylelint
-#         run: npm install stylelint stylelint-config-standard --save-dev
-
-#       # Run Stylelint for CSS files
-#       - name: Run Stylelint
-#         run: npx stylelint "**/*.css"
-        
-#       # Install Pylint for Python linting
-#       - name: Install Pylint
-#         run: pip install pylint
-
-#       # Run Pylint for Python files
-#       - name: Run Pylint
-#         run: pylint "**/*.py" --ignore="project/tests"
-          
-
-#       # Add pre-commit hooks
-#       - name: Add pre-commit hooks
-#         run: npx husky install
-
-#       # Configure lint-staged for pre-commit hooks
-#       - name: Configure lint-staged
-
-
-name: Run Lint
+name: Run Tests and Lint Code Base
 
 on:
   push:
@@ -92,6 +6,47 @@ on:
       - main  
 
 jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      # Steps to set up and run tests
+      - name: Checkout code
+        uses: actions/checkout@v2  # Checkout the repository's code
+
+      # Install dependencies
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12'  # Specify the Python version
+
+      - name: Install dependencies
+        run: |
+          pip3 install pytest requests Flask Flask-SQLAlchemy Flask-Cors google-api-python-client google-auth-httplib2 google-auth-oauthlib Flask-MySQLdb pymysql
+
+      # Start applications
+      - name: Start application 1
+        run: python3 -u src/CRUD_on_car/Vehicles_CRUD.py --port 5000 &
+
+      - name: Start application 2 
+        run: python3 -u src/CRUD_on_reservation/reservation.py --port 5001 &
+
+      - name: Start application 3 
+        run: python3 -u src/CRUD_on_user/user.py --port 5002 &
+
+      # Clean Python cache
+      - name: Clean Python Cache
+        run: |
+          find . -name "*.pyc" -exec rm -f {} +
+          find . -name "__pycache__" -exec rm -rf {} +
+
+      # Run tests
+      - name: Run tests
+        run: pytest
+
+
+
   lint:
     name: Lint Code Base
     runs-on: ubuntu-latest
@@ -117,22 +72,6 @@ jobs:
       - name: Install Pylint
         run: pip install pylint
 
-      # Run Pylint for Python files
-      - name: Run Pylint
-        run: pylint **/*.py \
-                --ignore=project/tests \
-                --ignore=node_modules \
-                --ignore=project/models/CRUD_on_reservation/test_reservations.py \
-                --ignore=project/models/CRUD_on_reservation/__init__.py \
-                --ignore=project/models/CRUD_on_reservation/reservation.py \
-                --ignore=project/models/CRUD_on_car/vehicles_crud.py \
-                --ignore=project/models/CRUD_on_car/configuration.py \
-                --ignore=project/models/CRUD_on_car/test_api.py \
-                --ignore=project/models/CRUD_on_car/vehicles_model.py \
-                --ignore=project/models/CRUD_on_car/vehicles_db.py \
-                --ignore=project/models/CRUD_on_comment/comment.py \
-                --ignore=project/models/CRUD_on_use \
-                --disable=missing-module-docstring,too-few-public-methods,consider-merging-isinstance,redefined-builtin,bare-except,line-too-long,unnecessary-semicolon,missing-function-docstring,redefined-argument-from-local,missing-final-newline,import-error,redefined-outer-name,no-else-return,broad-exception-caught,too-many-instance-attributes,too-many-arguments,too-many-locals,invalid-name,unnecessary-comprehension,pointless-string-statement,consider-using-enumerate,unused-variable,missing-timeout,invalid-name
           
       # Add pre-commit hooks
       - name: Add pre-commit hooks
