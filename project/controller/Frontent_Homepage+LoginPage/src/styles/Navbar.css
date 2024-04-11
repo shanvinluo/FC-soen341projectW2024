@@ -1,12 +1,12 @@
 .navbar {
   width: 100%;
   height: 100px;
-  background-color: #ffffff;
+  background-color: #fff;
   display: flex;
   flex-direction: row;
 }
 
-.navbar .leftSide {
+.navbar .left-side {
   flex: 100%;
   height: 100%;
   display: flex;
@@ -15,12 +15,13 @@
   font-size: 40px;
 }
 
-.navbar .rightSide {
+.navbar .right-side {
   flex: 50%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 20px;
 }
 
 .navbar a {
@@ -29,20 +30,17 @@
   margin: 40px;
 }
 
-.navbar .rightSide button {
+.navbar .right-side button {
   background-color: transparent;
   border: none;
   color: black;
   cursor: pointer;
 }
 
-.navbar .rightSide {
-  font-size: 20px;
+.navbar #open {
+  padding-left: 0;
 }
 
-.navbar #open {
-  padding-left: 0px;
-}
 .navbar #open img {
   display: none;
 }
@@ -51,12 +49,12 @@
   display: inherit;
 }
 
-.navbar #open .hiddenLinks {
+.navbar #open .hidden-links {
   display: inherit;
   margin-left: 30px;
 }
 
-.navbar #close .hiddenLinks {
+.navbar #close .hidden-links {
   display: none;
 }
 
@@ -65,27 +63,27 @@
   margin: 5px;
 }
 
-@media only screen and (max-width: 600px) {
-  .navbar .rightSide a {
+@media only screen and (min-width: 400px) and (max-width: 600px) {
+  .navbar .right-side a {
     display: none;
   }
 
-  .navbar .rightSide {
+  .navbar .right-side {
     justify-content: flex-end;
     padding-right: 50px;
   }
 
-  .navbar .rightSide button {
+  .navbar .right-side button {
     display: inherit;
   }
 }
 
-@media only screen and (min-width: 600px) {
-  .navbar .rightSide button {
+@media only screen and (min-width: 600px) and (max-width: 10000px) {
+  .navbar .right-side button {
     display: none;
   }
 
-  .hiddenLinks {
+  .hidden-links {
     display: none;
   }
 }

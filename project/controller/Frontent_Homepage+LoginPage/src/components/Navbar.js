@@ -13,10 +13,10 @@ const logout = () => {
 function Navbar() {
   return (
     <div className="navbar">
-      <div className="leftSide">
+      <div className="left-side">
         <Link to="/home">Car Rental Montreal</Link>
       </div>
-      <div className="rightSide">
+      <div className="right-side">
         <Link to="/FindBranch">Find Branch</Link>
         <Link to="/signup">Sign Up</Link>
         <Link to="/login">Log In</Link>
