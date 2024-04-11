@@ -1,7 +1,7 @@
 """Tests the reservation crud operations"""
 import pytest
 from flask import json
-from .reservation import app
+from models.CRUD_on_reservation.reservation import app
 
 
 @pytest
