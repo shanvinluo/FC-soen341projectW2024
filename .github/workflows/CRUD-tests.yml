@@ -65,7 +65,7 @@ jobs:
 
       # Run Pylint for Python files
       - name: Run Pylint
-        run: pylint /*.py
+        run: pylint /project/models/*.py
           
       # Install Stylelint for CSS linting
       - name: Install Stylelint
