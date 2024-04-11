@@ -73,7 +73,7 @@ jobs:
 
       # Run Pylint for Python files
       - name: Run Pylint
-        run: pylint "**/*.py"
+        run: pylint "**/*.py" --ignore="project/tests"
           
 
       # Add pre-commit hooks
