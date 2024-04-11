@@ -59,13 +59,7 @@ jobs:
         run: |
           echo '{ "extends": "stylelint-config-standard" }' > .stylelintrc
 
-        # Install Stylelint for CSS linting
-      - name: Install Stylelint
-        run: npm install stylelint stylelint-config-standard --save-dev
 
-      # Run Stylelint for CSS files
-      - name: Run Stylelint
-        run: npx stylelint "**/*.css"
         
       # Install Pylint for Python linting
       - name: Install Pylint
@@ -73,9 +67,15 @@ jobs:
 
       # Run Pylint for Python files
       - name: Run Pylint
-        run: pylint project/models/*.py
+        run: pylint "**/*.py"
           
+        # Install Stylelint for CSS linting
+      - name: Install Stylelint
+        run: npm install stylelint stylelint-config-standard --save-dev
 
+      # Run Stylelint for CSS files
+      - name: Run Stylelint
+        run: npx stylelint "**/*.css"
 
       # Add pre-commit hooks
       - name: Add pre-commit hooks
