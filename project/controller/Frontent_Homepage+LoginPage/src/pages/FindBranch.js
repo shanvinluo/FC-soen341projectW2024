@@ -115,7 +115,7 @@ function FindBranch() {
           <div className="submit-container">
             <button
               type="submit"
-              className="submitButton"
+              className="submit-button"
               onClick={submitPress}
             >
               Find a car near me

@@ -4,8 +4,7 @@ import user_icon from "../Assets/person.png";
 //import { useState } from "react";
 import { useState, useEffect } from "react";
 //import { createReservationData } from '../components/reservationData';
-import Comment from './Comment'; // Adjust the path as needed
-
+import Comment from "./Comment"; // Adjust the path as needed
 
 function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
   const [carAdded, setCarAdded] = useState(false); // State to track if car is successfully added
@@ -20,13 +19,12 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
   }
   const toggleComments = () => {
     setShowComments(!showComments);
-    if (!showComments) { // If comments are about to be shown, re-fetch them
+    if (!showComments) {
+      // If comments are about to be shown, re-fetch them
       fetchComments();
     }
   };
-  
 
-  
   const handleAddCar = async () => {
     if (!localStorage.getItem("isLoggedIn")) {
       alert("Please log in first!");
@@ -79,7 +77,9 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
 
   const fetchComments = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:5004/comments/${car.vehicule_id}`);
+      const response = await fetch(
+        `http://127.0.0.1:5004/comments/${car.vehicule_id}`
+      );
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -92,68 +92,69 @@ function CarCard({ car, startDesiredDate, endDesiredDate, isLoggedIn }) {
   useEffect(() => {
     fetchComments();
   }, []); // The empty array means it will run once on mount
-  
+
   return (
     <div className="car-card">
       <div className="car-card-content">
-      <div className="car-image" />
-      <div className="car-details">
-        <div className="car-feature">
-          <span className="icon">🚗</span>
-          <span>
-            {car.model_year} {car.model_name} {car.make_name}
-          </span>
-        </div>
-        <div className="features-container">
+        <div className="car-image" />
+        <div className="car-details">
           <div className="car-feature">
-            <span className="icon">
-              {" "}
-              <img src={user_icon} alt="" />
+            <span className="icon">🚗</span>
+            <span>
+              {car.model_year} {car.model_name} {car.make_name}
             </span>
-            <span>{car.seats}</span>
           </div>
-          <div className="car-feature">
-            <span className="icon">💰</span>
-            <span>{car.price}</span>
+          <div className="features-container">
+            <div className="car-feature">
+              <span className="icon">
+                {" "}
+                <img src={user_icon} alt="" />
+              </span>
+              <span>{car.seats}</span>
+            </div>
+            <div className="car-feature">
+              <span className="icon">💰</span>
+              <span>{car.price}</span>
+            </div>
+            <div className="car-feature">
+              <span className="icon"></span>
+              <span>Mileage: {car.mileage} km</span>
+            </div>
           </div>
-          <div className="car-feature">
-            <span className="icon"></span>
-            <span>Mileage: {car.mileage} km</span>
+          <div className="features-container">
+            <div className="car-feature">
+              <span className="icon"></span>
+              <span>Color: {car.color}</span>
+            </div>
+            <div className="car-feature">
+              <span className="icon"></span>
+              <span>Transmission Type: {car.transmission} </span>
+            </div>
+            <div className="car-feature">
+              <span className="icon"></span>
+              <span>Fuel Type:{car.fuel_type}</span>
+            </div>
           </div>
         </div>
-        <div className="features-container">
-          <div className="car-feature">
-            <span className="icon"></span>
-            <span>Color: {car.color}</span>
-          </div>
-          <div className="car-feature">
-            <span className="icon"></span>
-            <span>Transmission Type: {car.transmission} </span>
-          </div>
-          <div className="car-feature">
-            <span className="icon"></span>
-            <span>Fuel Type:{car.fuel_type}</span>
-          </div>
-        </div>
-      </div>
 
-      <button
-        onClick={handleAddCar}
-        className={`addCarbtn ${carAdded ? "car-added" : ""}`} // This allows you to use CSS for styling as well
-      >
-        {carAdded ? "Car Added" : "Reserve this Car"}
+        <button
+          onClick={handleAddCar}
+          className={`add-car-btn ${carAdded ? "car-added" : ""}`} // This allows you to use CSS for styling as well
+        >
+          {carAdded ? "Car Added" : "Reserve this Car"}
         </button>
 
-        <span className="view-comments-button" onClick={toggleComments}>           View Reviews
- </span>
+        <span className="view-comments-button" onClick={toggleComments}>
+          {" "}
+          View Reviews
+        </span>
       </div>
 
-        {showComments && (
-        <div className="Comments">
+      {showComments && (
+        <div className="comments">
           <Comment vehicule_id={car.vehicule_id} />
         </div>
       )}
-
     </div>
   );
 }

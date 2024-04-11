@@ -15,18 +15,18 @@ function Home() {
   const [fuelType, setFuelType] = useState("");
   const [color, setColor] = useState("");
   const [mileage, setMileage] = useState("");
-  const [postal_code,SetPostal_code]=useState("")
+  const [postal_code, SetPostal_code] = useState("");
   const [transmissionType, setTransmissionType] = useState("");
   const [year, setYear] = useState("");
   const [allReservations, setAllReservations] = useState([]);
   const fetchCars = async () => {
-    SetPostal_code(localStorage.getItem("nearest_branch"))
+    SetPostal_code(localStorage.getItem("nearest_branch"));
     // console.log(localStorage.getItem("nearest_branch"));
     const queryParams = new URLSearchParams();
 
     /* Add each filter to queryParams only
     if it has been selected (is not empty)*/
-    queryParams.append("postal_code",postal_code)
+    queryParams.append("postal_code", postal_code);
     if (priceRange) queryParams.append("priceRange", priceRange);
     if (startDesiredDate)
       queryParams.append("startDesiredDate", formatDate(startDesiredDate));
@@ -73,12 +73,11 @@ function Home() {
     setShowMoreFilters(!showMoreFilters);
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const fetchedCars = await fetchCars();
-    const availableCars = fetchedCars.filter(car => {
-      const hasOverlappingReservation = allReservations.some(reservation => {
+    const availableCars = fetchedCars.filter((car) => {
+      const hasOverlappingReservation = allReservations.some((reservation) => {
         if (reservation.vehicle_id !== car.vehicule_id) return false;
 
         const reservationStart = new Date(reservation.date_start);
@@ -87,9 +86,12 @@ function Home() {
         const desiredEnd = new Date(endDesiredDate);
 
         // overlaps conditions
-        const startsDuringDesired = desiredStart < reservationStart && reservationStart < desiredEnd;
-        const endsDuringDesired = desiredStart < reservationEnd && reservationEnd < desiredEnd;
-        const encompassesDesired = reservationStart <= desiredStart && desiredEnd <= reservationEnd;
+        const startsDuringDesired =
+          desiredStart < reservationStart && reservationStart < desiredEnd;
+        const endsDuringDesired =
+          desiredStart < reservationEnd && reservationEnd < desiredEnd;
+        const encompassesDesired =
+          reservationStart <= desiredStart && desiredEnd <= reservationEnd;
 
         return startsDuringDesired || endsDuringDesired || encompassesDesired;
       });
@@ -99,14 +101,23 @@ function Home() {
 
     setResults(availableCars);
     setShowResults(true);
-  }
+  };
   useEffect(() => {
-    fetchAllReservations();},
-    [year,color,mileage,transmissionType,fuelType,priceRange, startDesiredDate, endDesiredDate]);
+    fetchAllReservations();
+  }, [
+    year,
+    color,
+    mileage,
+    transmissionType,
+    fuelType,
+    priceRange,
+    startDesiredDate,
+    endDesiredDate,
+  ]);
 
   return (
     <div>
-      <form onSubmit={handleSubmit} className="containerHome">
+      <form onSubmit={handleSubmit} className="container-home">
         <div className="inputss">
           <div className="inputa">
             <p> Start Date</p>
@@ -125,7 +136,7 @@ function Home() {
             />
           </div>
         </div>
-        <div className="More_Filter" onClick={toggleMoreFilters}>
+        <div className="more-filter" onClick={toggleMoreFilters}>
           Add More Filters+
         </div>
         {showMoreFilters && (
@@ -216,13 +227,13 @@ function Home() {
           </div>
         )}
         <div className="submit-container">
-          <button type="submit" className="submitButton">
+          <button type="submit" className="submit-button">
             Select Car
           </button>
         </div>
       </form>
       {showResults && (
-        <div className="containerHome">
+        <div className="container-home">
           <h1>Results</h1>
           <ul>
             {results.map((car) => (
