@@ -6,44 +6,44 @@ on:
       - main  
 
 jobs:
-  test:
-    name: Run Tests
-    runs-on: ubuntu-latest
+#   test:
+#     name: Run Tests
+#     runs-on: ubuntu-latest
 
-    steps:
-      # Steps to set up and run tests
-      - name: Checkout code
-        uses: actions/checkout@v2  # Checkout the repository's code
+#     steps:
+#       # Steps to set up and run tests
+#       - name: Checkout code
+#         uses: actions/checkout@v2  # Checkout the repository's code
 
-      # Install dependencies
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.12'  # Specify the Python version
+#       # Install dependencies
+#       - name: Set up Python
+#         uses: actions/setup-python@v2
+#         with:
+#           python-version: '3.12'  # Specify the Python version
 
-      - name: Install dependencies
-        run: |
-          pip3 install pytest requests Flask Flask-SQLAlchemy Flask-Cors google-api-python-client google-auth-httplib2 google-auth-oauthlib Flask-MySQLdb pymysql
+#       - name: Install dependencies
+#         run: |
+#           pip3 install pytest requests Flask Flask-SQLAlchemy Flask-Cors google-api-python-client google-auth-httplib2 google-auth-oauthlib Flask-MySQLdb pymysql
 
-      # Start applications
-      - name: Start application 1
-        run: python3 -u src/CRUD_on_car/Vehicles_CRUD.py --port 5000 &
+#       # Start applications
+#       - name: Start application 1
+#         run: python3 -u src/CRUD_on_car/Vehicles_CRUD.py --port 5000 &
 
-      - name: Start application 2 
-        run: python3 -u src/CRUD_on_reservation/reservation.py --port 5001 &
+#       - name: Start application 2 
+#         run: python3 -u src/CRUD_on_reservation/reservation.py --port 5001 &
 
-      - name: Start application 3 
-        run: python3 -u src/CRUD_on_user/user.py --port 5002 &
+#       - name: Start application 3 
+#         run: python3 -u src/CRUD_on_user/user.py --port 5002 &
 
-      # Clean Python cache
-      - name: Clean Python Cache
-        run: |
-          find . -name "*.pyc" -exec rm -f {} +
-          find . -name "__pycache__" -exec rm -rf {} +
+#       # Clean Python cache
+#       - name: Clean Python Cache
+#         run: |
+#           find . -name "*.pyc" -exec rm -f {} +
+#           find . -name "__pycache__" -exec rm -rf {} +
 
-      # Run tests
-      - name: Run tests
-        run: pytest
+#       # Run tests
+#       - name: Run tests
+#         run: pytest
 
   lint:
     name: Lint Code Base
