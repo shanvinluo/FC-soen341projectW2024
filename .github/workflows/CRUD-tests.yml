@@ -72,8 +72,8 @@ jobs:
       - name: Install Pylint
         run: pip install pylint
 
-      # - name: Run Pylint
-        # run: pylint project/models/**/*.py
+      - name: Run Pylint
+        run: npx stylelint "**/*.css"
 
           
       # Add pre-commit hooks
