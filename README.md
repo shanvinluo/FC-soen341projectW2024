@@ -32,7 +32,7 @@ The core features are:
 For the application to run properly, all of the following services need to be started. Each service runs on a different port, allowing them to operate simultaneously without interference.
 * Run the Frontend
   * Open a Terminal in VSCode.
-  * Navigate to the frontend directory: ```cd src/Frontent_Homepage+LoginPage/src```
+  * Navigate to the frontend directory: ```cd /Users/linataalba/FC-soen341projectW2024/project/controller/Frontent_Homepage+LoginPage/src/pages```
   * Start the frontend application: ```npm start```
   * This will launch the frontend on your default web browser on http://localhost:3000.
 * Run reservation.py
