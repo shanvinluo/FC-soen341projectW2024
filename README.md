@@ -109,3 +109,7 @@ Contributions are welcome! Please follow these guidelines:
 * Fork the repository and create a new branch.
 * Make your changes and ensure the codebase passes linting and tests.
 * Submit a pull request with a clear description of your changes.
+* 
+
+### Project Architecture
+[Link]([https://www.youtube.com/watch?v=S3RME54ORUE](https://app.creately.com/d/zem7vxnPaxr/view ))
