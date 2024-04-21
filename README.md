@@ -112,4 +112,4 @@ Contributions are welcome! Please follow these guidelines:
 * 
 
 ### Project Architecture
-[Link]([https://www.youtube.com/watch?v=S3RME54ORUE](https://app.creately.com/d/zem7vxnPaxr/view ))
+[Link](https://app.creately.com/d/zem7vxnPaxr/view).
